@@ -8,14 +8,14 @@
 import Image from "next/image";
 const AuthLayout = ({ children }) => (
   <div>
-    <div className="auth-wrapper" style={divStyle}>
+    <div className="auth-wrapper" >
       <div className="auth-content">
         <div className="card">
           <div className="row align-items-center text-center">
             <div className="col-md-12">
               <div className=" card-body">
                 <Image
-                  src="assets/images/logo-small-prod.png"
+                  src="/"
                   alt=""
                   className="logo-main"
                 />

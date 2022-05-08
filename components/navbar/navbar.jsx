@@ -1,17 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-
 //import "./navbar.scss";
-import { Link, useLocation } from "react-router-dom";
+import Link from 'next/link'
 import $ from "jquery";
 import "./pcoded";
 import { GlobalContext } from "../../context/Provider";
-import NavBarAdmin from "./navbar-admin";
-import NavBarCarrier from "./navbar-carrier";
-import NavBarShipper from "./navbar-shipper";
-import NavBarAudit from "./navbar-audit";
-import NavBarDriver from "./navabar-driver";
-import NavBarPublic from "./navbar-public";
-
 import Menu from "./vertical/navbar-vertical-menu";
 import {
   menuItemsAdmin,
@@ -33,7 +25,7 @@ const NavBar = (history) => {
   //  const { dispatch } = useContext(AuthContext);
 
   //assigning location variable
-  const location = useLocation();
+ // const location = useLocation();
 
   //destructuring pathname from location
   // const { pathname } = location;
@@ -105,8 +97,10 @@ const NavBar = (history) => {
   const a = 1;
   useEffect(() => {
     //let controller = new AbortController();
-
+    if (typeof window !== "undefined") {
     handleMenu();
+
+    }
    // user===null &&  history.push(`sigin`)
     //  setUser(JSON.parse(localStorage.getItem("user")));
   //  return () => controller?.abort();

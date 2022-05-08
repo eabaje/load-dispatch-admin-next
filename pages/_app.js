@@ -1,7 +1,4 @@
 import "../styles/globals.css";
-import { SnackbarProvider } from "notistack";
-import "./index.css";
-import App from "./App";
 import { createContext, useContext } from 'react';
 import GlobalProvider from "../context/Provider";
 import Slide from "@material-ui/core/Slide";
@@ -11,20 +8,21 @@ import Slide from "@material-ui/core/Slide";
 
 // export default MyApp
 
-import authLayout from "../layout/authLayout";
+import AuthLayout from "../layout/authLayout";
 import mainLayout from "../layout/mainLayout";
-const layouts = {
-  auth: authLayout,
-  main: mainLayout,
-};
-const AppContext = createContext();
+// const layouts = {
+//   auth: authLayout,
+//   main: mainLayout,
+// };
+//const AppContext = createContext();
 const App = ({ Component, pageProps }) => {
-  const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
+//  const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
+ // const Layout=authLayout;
   return (
     <GlobalProvider>
-    <Layout>
+    <AuthLayout>
       <Component {...pageProps} />
-    </Layout>
+    </AuthLayout>
     </GlobalProvider>
   );
 };

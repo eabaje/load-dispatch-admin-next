@@ -2,7 +2,7 @@ import React,{useContext} from "react";
 import { IMG_URL, LOG_IN } from "../../constants";
 import { GlobalContext } from "../../context/Provider";
 import { signout } from "../../context/actions/auth/auth.action";
-import { Link } from "react-router-dom";
+import Link from 'next/link'
 import { ROLES } from "../../constants/enum";
 
 function TopHeaderBar() {
@@ -187,7 +187,7 @@ function TopHeaderBar() {
                       <span></span>
 
                       <Link
-                        to={`#`}
+                        href={`#`}
                         onClick={logOut}
                         className="dud-logout"
                         title=" Logout"

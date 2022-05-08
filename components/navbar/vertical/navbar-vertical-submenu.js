@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from 'next/link'
 
 const Submenu = ({ submenus }) => {
   // depthLevel = depthLevel + 1;depthLevel > 0 ?: ""
@@ -8,10 +8,11 @@ const Submenu = ({ submenus }) => {
       <ul className={`${dropdownClass}`}>
         {submenus.map((submenu, index) => (
           <li id={`Sub${index}`} key={`${index}`}>
-            <Link to={submenu.path} title={submenu.title}>
-              
-              {submenu.title}
-            </Link>{" "}
+            <Link href={submenu.path} >
+                <a >{submenu.title} </a>
+                              
+            </Link>
+           
           
           </li>
         ))}

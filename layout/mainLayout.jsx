@@ -1,6 +1,8 @@
 import Header from "../components/header/header";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
 const MainLayout = ({ children }) => {
 
 
@@ -11,7 +13,7 @@ const MainLayout = ({ children }) => {
                 <div className="loader-fill"></div>
             </div>
         </div>
-    <Header />
+    <Header/>
     <div className="pcoded-main-container">
       {/* <div className="pcoded-wrapper container"> */}
       <div className="pcoded-content">
