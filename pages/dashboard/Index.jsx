@@ -12,7 +12,7 @@ import NewsFlash from "../../components/home/newsFlash";
 import SideLink from "../../components/home/sideLink";
 import isAuthenticated from "../../utils/isAuthenticated";
 
-function Home() {
+function Dashboard() {
   
   
  
@@ -26,6 +26,8 @@ function Home() {
       Interests: { data: dataInterest }, //loading
     },
   } = useContext(GlobalContext);
+
+  
   const loadData=()=>{
 
    
@@ -104,5 +106,5 @@ function Home() {
     </>
   );
 }
-Login.layout = "main";
-export default Home;
+Dashboard.layout = "main";
+export default Dashboard;
