@@ -1,28 +1,32 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-
 import React from "react";
 import axios from "axios";
 import { useContext, useState } from "react";
-import { GlobalContext } from "../context/Provider";
-
+import { GlobalContext } from "../../context/Provider";
+import { useSnackbar } from "notistack";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 //import { yupResolver } from 'react-hook-form-resolvers';
 import * as Yup from "yup";
-
-import { signin2 } from "../context/actions/auth/auth.action";
+import {
+  LOAD_TYPE,
+  LOAD_CAPACITY,
+  LOAD_UNIT,
+  TRIP_STATUS,
+  API_URL,
+} from "../../constants/enum";
+import { signin2 } from "../../context/actions/auth/auth.action";
+import { getError } from "../../utils/error";
 
 function Login() {
- 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-
- 
+  const history = useHistory();
 
   const {
     register,
     formState: { errors },
+    reset,
     handleSubmit,
   } = useForm();
 
@@ -48,10 +52,17 @@ function Login() {
     // e.preventDefault();
     //  console.log("state:", formdata);
 
-    signin2(formdata)(authDispatch)((success) => {
-      history.push("/dashboard");
+    signin2(formdata)(authDispatch)((res) => {
+      // const userId=success.data.UserId;
+      // res.user.isActivated===true ?
+      // history.push(`/dashboard`)
+      //  : history.push(`/user-profile/${res.user.UserId}`)
+      // alert(res.user.UserId)
+       history.push(`/dashboard`);
+     
     })((err) => {
-      console.log(`err`, err);
+      document.forms[0].reset();
+      
       enqueueSnackbar(err, { variant: "error" });
     });
   };
@@ -60,7 +71,9 @@ function Login() {
     <div>
       <form onSubmit={handleSubmit(SubmitForm)}>
         <div className="form-group mb-3">
-          <label className="floating-label">Email address</label>
+          <label className="floating-label" htmlFor="Email">
+            Email address
+          </label>
           <input
             type="text"
             className="form-control"
@@ -72,7 +85,9 @@ function Login() {
           />
         </div>
         <div className="form-group mb-4">
-          <label className="floating-label">Password</label>
+          <label className="floating-label" htmlFor="Password">
+            Password
+          </label>
           <input
             type="password"
             className="form-control"
@@ -87,28 +102,22 @@ function Login() {
             className="custom-control-input"
             id="customCheck1"
           />
-          <label className="custom-control-label">Save credentials.</label>
+          <label className="custom-control-label" htmlFor="customCheck1">
+            Save credentials.
+          </label>
         </div>
         <button className="btn btn-block btn-primary mb-4">
-          {loading && <i classNameName="fa fa-spinner fa-spin"></i>} Signin
+          {loading && <i className="fa fa-spinner fa-spin"></i>} Signin
         </button>
         <p className="mb-2 text-muted">
           Forgot password?{" "}
-          <a href="auth-reset-password.html" className="f-w-400">
+          <a href="/reset-password" className="f-w-400">
             Reset
-          </a>
-        </p>
-        <p className="mb-0 text-muted">
-          Don’t have an account?{" "}
-          <a href="   `" className="f-w-400">
-            Signup
           </a>
         </p>
       </form>
     </div>
   );
 }
-
-Login.layout = "auth";
 
 export default Login;

@@ -5,7 +5,7 @@
 //   backgroundImage: `url(${imgMyimageexample})`,
 //   backgroundSize: "cover",
 // };
-import Image from "next/image";
+
 const AuthLayout = ({ children }) => (
   <div>
     <div className="auth-wrapper" >
@@ -14,8 +14,9 @@ const AuthLayout = ({ children }) => (
           <div className="row align-items-center text-center">
             <div className="col-md-12">
               <div className=" card-body">
-                <Image
-                  src="/"
+               
+                  <img
+                  src="/assets/images/logo-small-prod.png"
                   alt=""
                   className="logo-main"
                 />

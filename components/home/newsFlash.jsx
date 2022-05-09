@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useSnackbar } from "notistack";
-import { Link } from "react-router-dom";
+import Link from 'next/link'
 
 
 function NewsFlash(
@@ -34,7 +33,7 @@ function NewsFlash(
                       <div className="media-body">
                         <h6>Total Shipment Post</h6>
                         <Link to={"/list-all-shipments"}>
-                          <span>click for more details</span>
+                        <a><span>click for more details</span></a> 
                         </Link>
                       </div>
                       <div className="align-self-center">
@@ -56,8 +55,8 @@ function NewsFlash(
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Interest</h6>
-                        <Link to={"/list-all-shipments-interest"}>
-                          <span>click for more details</span>
+                        <Link href={"/list-all-shipments-interest"}>
+                        <a><span>click for more details</span></a> 
                         </Link>
                       </div>
                       <div className="align-self-center">
@@ -81,8 +80,8 @@ function NewsFlash(
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Assigned</h6>
-                        <Link to={"/list-all-shipments-assigned"}>
-                          <span>click for more details</span>
+                        <Link href={"/list-all-shipments-assigned"}>
+                         <a><span>click for more details</span></a> 
                         </Link>
                       </div>
                       <div className="align-self-center">
@@ -110,8 +109,8 @@ function NewsFlash(
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Delivered </h6>
-                        <Link to={"/list-all-shipments-sent"}>
-                          <span>click for more details</span>
+                        <Link href={"/list-all-shipments-sent"}>
+                        <a><span>click for more details</span></a> 
                         </Link>
                       </div>
                       <div className="align-self-center">

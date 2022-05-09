@@ -9,20 +9,20 @@ import Slide from "@material-ui/core/Slide";
 // export default MyApp
 
 import AuthLayout from "../layout/authLayout";
-import mainLayout from "../layout/mainLayout";
-// const layouts = {
-//   auth: authLayout,
-//   main: mainLayout,
-// };
+import MainLayout from "../layout/mainLayout";
+const layouts = {
+  auth: AuthLayout,
+  main: MainLayout,
+};
 //const AppContext = createContext();
 const App = ({ Component, pageProps }) => {
-//  const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
+  const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
  // const Layout=authLayout;
   return (
     <GlobalProvider>
-    <AuthLayout>
+    <Layout>
       <Component {...pageProps} />
-    </AuthLayout>
+    </Layout>
     </GlobalProvider>
   );
 };
