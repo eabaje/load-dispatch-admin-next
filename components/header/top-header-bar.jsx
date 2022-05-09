@@ -1,20 +1,16 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { IMG_URL, LOG_IN } from "../../constants";
 import { GlobalContext } from "../../context/Provider";
 import { signout } from "../../context/actions/auth/auth.action";
-import Link from 'next/link'
+import Link from "next/link";
 import { ROLES } from "../../constants/enum";
 
 function TopHeaderBar() {
   const {
     authDispatch,
-    authState: {user, isLoggedIn },
+    authState: { user, isLoggedIn },
   } = useContext(GlobalContext);
 
- 
-
- 
-   
   const logOut = () => {
     signout()(authDispatch);
   };
@@ -87,8 +83,8 @@ function TopHeaderBar() {
                           <p>
                             <strong>John Doe</strong>
                             <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>5
-                              min
+                              <i className="icon feather icon-clock m-r-10"></i>
+                              5 min
                             </span>
                           </p>
                           <p>New ticket Added</p>
@@ -109,8 +105,8 @@ function TopHeaderBar() {
                           <p>
                             <strong>Joseph William</strong>
                             <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>10
-                              min
+                              <i className="icon feather icon-clock m-r-10"></i>
+                              10 min
                             </span>
                           </p>
                           <p>Prchace New Theme and make payment</p>
@@ -128,8 +124,8 @@ function TopHeaderBar() {
                           <p>
                             <strong>Sara Soudein</strong>
                             <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>12
-                              min
+                              <i className="icon feather icon-clock m-r-10"></i>
+                              12 min
                             </span>
                           </p>
                           <p>currently login</p>
@@ -147,8 +143,8 @@ function TopHeaderBar() {
                           <p>
                             <strong>Joseph William</strong>
                             <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>30
-                              min
+                              <i className="icon feather icon-clock m-r-10"></i>
+                              30 min
                             </span>
                           </p>
                           <p>Prchace New Theme and make payment</p>
@@ -165,7 +161,11 @@ function TopHeaderBar() {
             <li>
               {user && (
                 <div className="dropdown drp-user">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                  <a
+                    href="#"
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                  >
                     <i className="feather icon-user"></i>
                   </a>
                   <div className="dropdown-menu dropdown-menu-right profile-notification">
@@ -186,41 +186,33 @@ function TopHeaderBar() {
                       </span>
                       <span></span>
 
-                      <Link
-                        href={`#`}
-                        onClick={logOut}
-                        className="dud-logout"
-                        title=" Logout"
-                      >
-                        <i className="feather icon-log-out"></i>
+                      <Link href={`#`} onClick={logOut}>
+                        <a className="dud-logout" title=" Logout">
+                          <i className="feather icon-log-out"></i>
+                        </a>
                       </Link>
                     </div>
                     <ul className="pro-body">
                       <li>
-                        <Link
-                          to={`/user-profile/${user.UserId}`}
-                          className="dropdown-item"
-                          title="My Profile"
-                        >
-                          <i className="feather icon-user"></i> My Profile
+                        <Link href={`/user-profile/${user.UserId}`}>
+                          <a className="dropdown-item" title="My Profile">
+                            <i className="feather icon-user"></i> My Profile
+                          </a>
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          className="dropdown-item"
-                          to={`/user-subscription/${user.UserId}`}
-                          title=" My Subscription"
-                        >
-                          <i className="feather icon-box"></i> My Subscription
+                        <Link href={`/user-subscription/${user.UserId}`}>
+                          <a className="dropdown-item" title=" My Subscription">
+                            <i className="feather icon-box"></i> My Subscription
+                          </a>
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          className="dropdown-item"
-                          to={`/my-messages/${user.UserId}`}
-                          title=" My Messages"
-                        >
-                          <i className="feather icon-mail"></i> My Messages
+                        <Link href={`/my-messages/${user.UserId}`}>
+                          <a className="dropdown-item" title=" My Messages">
+                            {" "}
+                            <i className="feather icon-mail"></i> My Messages
+                          </a>
                         </Link>
                       </li>
                       {/* <li>

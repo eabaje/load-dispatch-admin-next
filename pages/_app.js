@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 import GlobalProvider from "../context/Provider";
 import Slide from "@material-ui/core/Slide";
 // function MyApp({ Component, pageProps }) {
@@ -15,16 +15,22 @@ const layouts = {
   main: MainLayout,
 };
 //const AppContext = createContext();
+// const App = ({ Component, pageProps }) => {
+//   const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
+//  // const Layout=authLayout;
+//   return (
+//     <GlobalProvider>
+//     <Layout>
+//       <Component {...pageProps} />
+//     </Layout>
+//     </GlobalProvider>
+//   );
+// };
 const App = ({ Component, pageProps }) => {
-  const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
- // const Layout=authLayout;
   return (
     <GlobalProvider>
-    <Layout>
       <Component {...pageProps} />
-    </Layout>
     </GlobalProvider>
   );
 };
-
 export default App;

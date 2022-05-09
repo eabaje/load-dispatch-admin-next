@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 //import "./navbar.scss";
-import Link from 'next/link'
+import Link from "next/link";
 import $ from "jquery";
 import "./pcoded";
 import { GlobalContext } from "../../context/Provider";
@@ -17,15 +17,13 @@ import { IMG_URL } from "../../constants";
 import { ROLES } from "../../constants/enum";
 
 const NavBar = (history) => {
- 
-
   const {
-    authState: { user},
+    authState: { user },
   } = useContext(GlobalContext);
   //  const { dispatch } = useContext(AuthContext);
 
   //assigning location variable
- // const location = useLocation();
+  // const location = useLocation();
 
   //destructuring pathname from location
   // const { pathname } = location;
@@ -91,19 +89,16 @@ const NavBar = (history) => {
         }
       }
     }
-
-  
   };
   const a = 1;
   useEffect(() => {
     //let controller = new AbortController();
     if (typeof window !== "undefined") {
-    handleMenu();
-
+      handleMenu();
     }
-   // user===null &&  history.push(`sigin`)
+    // user===null &&  history.push(`sigin`)
     //  setUser(JSON.parse(localStorage.getItem("user")));
-  //  return () => controller?.abort();
+    //  return () => controller?.abort();
   }, [a]);
 
   return (
@@ -136,7 +131,7 @@ const NavBar = (history) => {
                   </div>
                 </div>
               </div>
-              <div className="collapse" id="nav-user-link">
+              {/* <div className="collapse" id="nav-user-link">
                 <ul className="list-unstyled">
                   <li className="list-group-item">
                     <a href="user-profile.html">
@@ -154,11 +149,11 @@ const NavBar = (history) => {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
 
             <ul className="nav pcoded-inner-navbar ">
-                  {/* {
+              {/* {
                   user.isActivated === false && user.roles !== "admin" 
                   ? menuItemsAudit(user).map((menu, index) => {
                     return <Menu id={index} items={menu} user={user} />
@@ -191,17 +186,17 @@ const NavBar = (history) => {
                   })
                   
                 } */}
-               
-            {user.isActivated === false &&
+
+              {user.isActivated === false &&
                 menuItemsPublic(user).map((menu, index) => {
                   return <Menu id={index} items={menu} user={user} />;
                 })}
-    
-               {user.isExpired === true &&
+
+              {user.isExpired === true &&
                 menuItemsPublic(user).map((menu, index) => {
                   return <Menu id={index} items={menu} user={user} />;
                 })}
-    
+
               {user.roles === "carrier" &&
                 menuItemsCarrier(user).map((menu, index) => {
                   return <Menu id={index} items={menu} user={user} />;

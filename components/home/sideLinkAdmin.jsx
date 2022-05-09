@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "next/link";
 
-function SideLinkMenu({menuData }) {
+function SideLinkMenu({ menuData }) {
   return (
     <>
       <div className="card">
@@ -13,22 +13,25 @@ function SideLinkMenu({menuData }) {
             id="learningCenterVideos"
             style={{
               marginBottom: "15px",
-             marginLeft: "-20px",
+              marginLeft: "-20px",
               listStyle: "none",
             }}
           >
-             {menuData.map((menu, index) => (
-          <li key={index}  style={{
-           display: "flex",
-            alignItems: "center",
-          }}>
-            <Link to={menu.path} title={menu.title}>
-             
-              <span> {menu.title}</span>
-            </Link>{" "}
-          </li>
-        ))}
-          
+            {menuData.map((menu, index) => (
+              <li
+                key={index}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Link href={menu.path} title={menu.title}>
+                  <a>
+                    <span> {menu.title}</span>
+                  </a>
+                </Link>{" "}
+              </li>
+            ))}
           </ul>
         </div>
       </div>
