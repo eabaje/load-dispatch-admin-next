@@ -1,24 +1,29 @@
-import React, { useEffect } from "react";
-import { useContext, useState } from "react";
-import SideLinkMenu from "./sideLinkAdmin";
-import SideLinkAdmin from "./sideLinkAdmin";
-import SideLinkCarrier from "./sideLinkCarrier";
-import { menuData } from "./sideLinkData";
-import SideLinkShipper from "./sideLinkShipper";
+import React, { useEffect, useContext} from "react";
+import { GlobalContext } from "../../context/Provider";
+import SideLinkMenu from "./sideLinkMenu";
+import  {menuData}  from "./sideLinkData";
 
-function SideLink() {
-  const [user, setUser] = useState({});
+
+const SideLink=()=> {
+
+  const {
+    authDispatch,
+    authState: { user},
+  } = useContext(GlobalContext);
+
+ 
 
   useEffect(() => {
     let controller = new AbortController();
-    setUser(JSON.parse(localStorage.getItem("user")));
     return () => controller?.abort();
-  
+ 
   }, []);
+  console.log('menuData', menuData)
   return (
     <>
-    <SideLinkMenu menuData={menuData(user)} />
-      {/* {(user.roles === "carrier" && <SideLinkCarrier />) ||
+ 
+  {/*  <SideLinkMenu menudata={menuData(user)} />
+       {(user.roles === "carrier" && <SideLinkCarrier />) ||
         (user.roles === "shipper" && <SideLinkShipper />) ||
         (user.roles === "broker" && <SideLinkShipper />) ||
         (user.roles === "audit" && <SideLinkAdmin />) ||

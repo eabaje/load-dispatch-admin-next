@@ -44,6 +44,7 @@ const MainLayout = ({ children }) => {
           {/* <div className="pcoded-inner-content">
             <div className="main-body"> 
               <div className="page-wrapper">*/}
+               <ToastContainer position="bottom-right" />
           <div className="row">{children}</div>
 
           {/* </div>

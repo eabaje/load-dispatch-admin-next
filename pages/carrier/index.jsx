@@ -1,12 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { useSnackbar } from "notistack";
-import { useHistory } from "react-router-dom";
-import { API_URL } from "../../constants";
-import { getError } from "../../utils/error";
+
 import { ChevronsDown, Edit, Trash, Truck } from "react-feather";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
@@ -20,13 +15,15 @@ import {
   listCarriersById,
 } from "../../context/actions/carrier/carrier.action";
 import LoadingBox from "../../components/notification/loadingbox";
+import MainLayout from "../../layout/mainLayout";
+import { toast } from 'react-toastify'
+import Datatable from "../../components/datatable/datatable-m";
 
 function ListCarrier() {
  // const { companyId } = match.params; { history, match }
   const { companyId } = useParams();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [data2, setData] = useState([]);
  
+  
   const {
     authState: { user },
   } = useContext(GlobalContext)
@@ -44,12 +41,12 @@ function ListCarrier() {
       ? listCarriersByCompany(companyId)(carrierDispatch)((res) => {
           // setData(res.data);
         })((err) => {
-          enqueueSnackbar(err, { variant: "error" });
+          toast.error(err);
         })
       : listCarriers()(carrierDispatch)((res) => {
           // setData(res.data);
         })((err) => {
-          enqueueSnackbar(err, { variant: "error" });
+          toast.error(err);
         });
   };
   // Calling the function on component mount
@@ -63,6 +60,7 @@ function ListCarrier() {
   }, []);
   // console.log(`data`, JSON.parse(localStorage.getItem("user")));
   return (
+    <MainLayout>
     <div className="col-sm-12">
       <div className="card">
         <div className="card-header alert alert-info">
@@ -73,47 +71,19 @@ function ListCarrier() {
             <li>Assign Drivers to Vehicle</li>
           </ul>
         </div>
-        <div className="card-body table-border-style">
-          <div className="table-responsive">
-            {/* <DataTableExtensions {...tableData}> */}
+        <Datatable loading={loading} col={columns(user)} data={
+           companyId
+           ? data.data?.filter(
+               (item) => item?.CompanyId === parseInt(companyId)
+             )
+           : data?.data
 
-            {loading ? (
-              <LoadingBox />
-            ) : (
-              <DataTableExtensions
-                exportHeaders
-                columns={columns(user)}
-                data={
-                  companyId
-                    ? data.data?.filter(
-                        (item) => item?.CompanyId === parseInt(companyId)
-                      )
-                    : data?.data
-                }
-              >
-                <DataTable
-                  columns={columns(user)}
-                  data={
-                    companyId
-                      ? data.data?.filter(
-                          (item) => item?.CompanyId === parseInt(companyId)
-                        )
-                      : data?.data
-                  }
-                  classNameName="table table-striped table-bordered table-hover table-checkable"
-                  defaultSortField={1}
-                  sortIcon={<ChevronsDown />}
-                  defaultSortAsc={true}
-                  pagination
-                  highlightOnHover
-                />
-              </DataTableExtensions>
-            )}
-          </div>
-        </div>
+        }/>
+     
       </div>
     </div>
+    </MainLayout>
   );
 }
-Login.layout = "main";
+//Login.layout = "main";
 export default ListCarrier;

@@ -32,12 +32,12 @@ function NewsFlash(
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Post</h6>
-                        <Link to={"/list-all-shipments"}>
+                        <Link href={"/list-all-shipments"}>
                         <a><span>click for more details</span></a> 
                         </Link>
                       </div>
                       <div className="align-self-center">
-                        <h6>{dataShipment.data?.length}</h6>
+                        <h6>{dataShipment.data?.length || 0}</h6>
                       </div>
                     </div>
                   </div>
@@ -60,7 +60,7 @@ function NewsFlash(
                         </Link>
                       </div>
                       <div className="align-self-center">
-                        <h6>{dataInterest.data?.length}</h6>
+                        <h6>{dataInterest.data?.length || 0}</h6>
                       </div>
                     </div>
                   </div>
@@ -89,7 +89,7 @@ function NewsFlash(
                           {
                             dataShipment.data?.filter(
                               (item) => item.AssignedShipment === true
-                            ).length
+                            ).length || 0 
                           }
                         </h6>
                       </div>
@@ -118,7 +118,7 @@ function NewsFlash(
                           {
                             dataShipment.data?.filter(
                               (item) => item.ShipmentStatus === "Delivered"
-                            ).length
+                            ).length || 0 
                           }
                         </h6>
                       </div>

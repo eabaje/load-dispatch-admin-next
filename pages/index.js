@@ -3,15 +3,15 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 import React from "react";
-import axios from "axios";
+//import axios from "axios";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../context/Provider";
 
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+//import { yupResolver } from "@hookform/resolvers/yup";
 //import { yupResolver } from 'react-hook-form-resolvers';
 import * as Yup from "yup";
-
+import { toast } from 'react-toastify'
 import { signin2 } from "../context/actions/auth/auth.action";
 import AuthLayout from "../layout/authLayout";
 
@@ -45,22 +45,25 @@ function Login() {
     //  console.log("state:", formdata);
 
     signin2(formdata)(authDispatch)((success) => {
-      history.push("/dashboard");
+      window.location.href = '/dashboard/'
+     // history.push("/dashboard");
     })((err) => {
       console.log(`err`, err);
-      enqueueSnackbar(err, { variant: "error" });
+      toast.error(err);
+    //  enqueueSnackbar(err, { variant: "error" });
     });
   };
 
   return (
     <AuthLayout>
-      <div>
+      
         <form onSubmit={handleSubmit(SubmitForm)}>
           <div className="form-group mb-3">
-            <label className="floating-label">Email address</label>
+            {/* <label className="floating-label">Email address</label> */}
             <input
               type="text"
               className="form-control"
+              placeholder="Email address"
               name="Email"
               {...register("Email", {
                 required: true,
@@ -69,10 +72,11 @@ function Login() {
             />
           </div>
           <div className="form-group mb-4">
-            <label className="floating-label">Password</label>
+            {/* <label className="floating-label">Password</label> */}
             <input
               type="password"
               className="form-control"
+               placeholder="Password"
               name="Password"
               {...register("Password")}
               required
@@ -102,7 +106,7 @@ function Login() {
             </a>
           </p>
         </form>
-      </div>
+     
     </AuthLayout>
   );
 }

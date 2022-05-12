@@ -51,10 +51,10 @@ function Index() {
           <div className="card">
             <div className="card-body">
               <div className="alert alert-info " role="alert">
-                {/* <NewsFlash
+                <NewsFlash
                 dataShipment={dataShipment}
                 dataInterest={dataInterest}
-              /> */}
+              />
               </div>
 
               {/* <h3 className="text-uppercase">Latest News</h3>
@@ -67,7 +67,7 @@ function Index() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">{/* <SideLink /> */}</div>
+        <div className="col-md-4"> <SideLink /></div> 
 
         <div className="row">
           <div className="col-sm-12">

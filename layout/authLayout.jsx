@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // const imgMyimageexample = require("../assets/slider_2.jpg");
 // const divStyle = {
 //   width: "100vw",
@@ -21,7 +23,7 @@ const AuthLayout = ({ children }) => (
                   className="logo-main"
                 />
                 <h4 className="mb-3 f-w-700">Global Load Dispatch</h4>
-
+                <ToastContainer position="bottom-right" />
                 {children}
               </div>
             </div>
