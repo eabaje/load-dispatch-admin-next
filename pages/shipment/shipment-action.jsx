@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import MainLayout from "../../layout/mainLayout";
-import { toast } from 'react-toastify';
 import AddEditShipment from "../../components/form/shipment/AddEditShipment";
+import { GlobalContext } from "../../context/Provider";
 
 function AddShipment() {
 
@@ -29,7 +29,7 @@ function AddShipment() {
     
 
    
-    // console.log(`user`, user.CompanyId);
+   
   
   }, []);
 

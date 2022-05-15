@@ -14,16 +14,17 @@ import {
 } from "../../../constants/actionTypes";
 import { CONNECTION_ERROR } from "../../../constants/api";
 import axios from "../../../helpers/axiosInstance";
+import axiosInstance from "../../../helpers/axiosInstance-2";
 
 export const listShipments = () => (dispatch) => (onSuccess) => (onError) => {
   dispatch({
     type: GET_SHIPMENTS_REQUEST,
   });
-  axios
+  axiosInstance()
     .get(`/shipment/findAll/`)
     .then((res) => {
       dispatch({ type: GET_SHIPMENTS_SUCCESS, payload: res.data });
-      // console.log(`res.data`, res.data);
+       console.log(`res.data`, res.data);
       onSuccess(res.data);
     })
 

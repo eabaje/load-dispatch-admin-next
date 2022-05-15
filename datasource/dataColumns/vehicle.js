@@ -1,19 +1,19 @@
 import {Form} from "react-bootstrap"
-import { Link } from "react-router-dom";
+import { Link } from "next/link";
 import { LOAD_TYPE } from "../../constants/enum";
 export const columns = (params) => [
-  // {
-  //   id: 1,
-  //   name: "Carrier Name",
-  //   selector: (row) => row.Carrier.CarrierType,
-  //   sortable: true,
-  //   reorder: true,
-  // },
+  {
+    id: 1,
+    name: "Carrier Name",
+    selector: (row) => row.Carrier.CarrierType,
+    sortable: true,
+    reorder: true,
+  },
   {
     id: 2,
     name: "Vehicle Type",
     selector: (row) =>
-      LOAD_TYPE.find((item) => item.value === row.VehicleType).text,
+      LOAD_TYPE.find((item) => item.value === row?.VehicleType).text,
     sortable: true,
     reorder: true,
   },
@@ -113,38 +113,39 @@ export const columns = (params) => [
     reorder: true,
   }),
 
-  {
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      (params?.roles === "carrier" || params?.roles === "admin") && (
-        <Link
-          to={"/edit-vehicle-info/" + row.VehicleId}
-          className="btn btn-sm"
-          title="Edit  Vehcile"
-        >
-          <i className="first fas fa-pen"></i>
-        </Link>
-      ),
-      params?.roles === "carrier" && (
-        <Link
-          to={"/assign-vehicle-to-driver/"+ row.CompanyId+ "/" + row.VehicleId + "/driverId"}
-          className="btn btn-sm"
-          title="Assign Driver to Vehicle"
-        >
-          <i className="first fas fa-user"></i>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          to={"/delete-data/Vehicles/" + row.VehicleId}
-          className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"
-        >
-          <i className="fas fa-trash-alt"></i>
-        </Link>
-      ),
-    ],
-  },
+  // {
+  //   name: "Action",
+  //   sortable: false,
+  //   selector: "null",
+  //   cell: (row) => [
+  //     (params?.roles === "carrier" ) && (
+  //       <Link
+  //         href={"/edit-vehicle-info/" + row.VehicleId}
+          
+  //       >
+  //           <a className="btn btn-sm"
+  //         title="Edit  Vehcile">
+  //         <i className="first fas fa-pen"></i></a>
+  //       </Link>
+  //     ),
+  //     // params?.roles === "carrier" && (
+  //     //   <Link
+  //     //     to={"/assign-vehicle-to-driver/"+ row.CompanyId+ "/" + row.VehicleId + "/driverId"}
+  //     //     className="btn btn-sm"
+  //     //     title="Assign Driver to Vehicle"
+  //     //   >
+  //     //     <i className="first fas fa-user"></i>
+  //     //   </Link>
+  //     // ),
+  //     // params?.roles === "admin" && (
+  //     //   <Link
+  //     //     to={"/delete-data/Vehicles/" + row.VehicleId}
+  //     //     className="btn btn-sm"
+  //     //     title="Delete/Archive (Redundant/Incorrect data)"
+  //     //   >
+  //     //     <i className="fas fa-trash-alt"></i>
+  //     //   </Link>
+  //     // ),
+  //   ],
+  // },
 ];

@@ -1,17 +1,12 @@
 import {Form} from "react-bootstrap"
-import { Link } from "react-router-dom";
+import { Link } from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE, TRIP_STATUS } from "../../constants/enum";
 import { Country, State } from "country-state-city";
 
-// import {
-//   listShipments,
-//   showInterest,
-// } from "../../context/actions/shipment/shipment.action";
-import { useContext } from "react";
-export const columns = (params) => [
+export  const columns = (params) => [
   {
     id: 1,
-    name: "Name",
+    name: `Name ${params?.UserId}`,
     selector: (row) => row.User.FullName,
     sortable: true,
     reorder: true,
@@ -230,64 +225,54 @@ export const columns = (params) => [
       reorder: true,
     }),
 
-  {
-    id: 27,
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      <></>,
+  // {
+  //   id: 27,
+  //   name: "Action",
+  //   sortable: false,
+  //   selector: "null",
+  //   cell: (row) => [
+  //     <></>,
 
-      (params?.UserId === row.UserId || params?.roles === "admin") && (
-        <Link
-          to={"/edit-shipment-info/" + row.ShipmentId}
-          className="btn btn-sm"
-          title="Edit  Shipment"
-        >
-          <i className="first fas fa-pen"></i>
-        </Link>
-      ),
-      params?.UserId === row.UserId && params?.roles !== "carrier" && (
-        <Link
-          to={"/list-interest-for-shipment/" + row.ShipmentId}
-          className="btn btn-sm"
-          title="Check shipment interests"
-        >
-          <i className="first fas fa-check"></i>
-        </Link>
-      ),
-      params?.UserId !== row.UserId && params?.roles !== "shipper" && (
-        <Link
-          to={"/place-interest-for-shipment/IsReadOnly/" + row.ShipmentId}
-          className="btn btn-sm"
-          title="Place shipment interests"
-        >
-          <i className="first fas fa-heart"></i>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          to={"/delete-data/Shipments/" + row.ShipmentId}
-          className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"
-        >
-          <i className="fas fa-trash-alt"></i>
-        </Link>
-      ),
-    ],
-  },
+  //      (params?.roles === "admin"|| params?.roles === "carrier"|| params?.UserId === row?.UserId  ) && (
+  //       <Link
+  //         href={"/shipment-action/?shipmentId=" + row.ShipmentId}
+         
+  //       >
+  //         <a  className="btn btn-sm"
+  //         title="Edit  Shipment"> 
+  //         <i className="first fas fa-pen"></i></a>
+  //       </Link>
+  //     ),
+  //     params?.UserId === row?.UserId && params?.roles !== "carrier" && (
+  //       <Link
+  //         href={"/shipment-interest-list/?shipmentId=" + row.ShipmentId}
+         
+  //       >
+  //          <a  className="btn btn-sm"
+  //         title="Check shipment interests">  <i className="first fas fa-check"></i></a>
+  //       </Link>
+  //     ),
+  //     params?.UserId !== row?.UserId && params?.roles !== "shipper" && (
+  //       <Link
+  //         href={"/shipment-interest-list/?IsReadOnly=IsReadOnly" + row.ShipmentId}
+         
+  //       >
+  //           <a  className="btn btn-sm"
+  //         title="Place interest"> 
+  //         <i className="first fas fa-heart"></i></a>
+  //       </Link>
+  //     ),
+  //     params?.roles === "admin" && (
+  //       <Link
+  //         to={"/data/delete-data/?tbl=Shipments&col=ShipmentId&id=" + row.ShipmentId}
+         
+  //       >
+  //         <a  className="btn btn-sm"
+  //         title="Delete/Archive (Redundant/Incorrect data)"> 
+  //         <i className="fas fa-trash-alt"></i></a>
+  //       </Link>
+  //     ),
+  //   ],
+  // },
 ];
 
-// function ShowInterest(ShipmentId, userId) {
-//   const {
-//     shipmentDispatch,
-//     shipmentState: {
-//       Shipments: { data, loading },
-//       createShipment: { data: createdata }, //loading
-//     },
-//   } = useContext(GlobalContext);
-
-//   showInterest(ShipmentId, userId)(shipmentDispatch)((res) => {})((err) => {
-//     // enqueueSnackbar(err, { variant: "error" });
-//   });
-// }

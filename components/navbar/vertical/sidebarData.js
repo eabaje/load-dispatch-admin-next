@@ -41,7 +41,7 @@ const menuItemsDriver = (user) => [
   },
   {
     title: "Find all Vehicles",
-    path: "/list-all-shipments",
+    path: "/shipment/",
     icon: "first fas fa-car",
   },
 
@@ -51,17 +51,17 @@ const menuItemsDriver = (user) => [
     submenu: [
       {
         title: "Update Driver Profile",
-        path: `/edit-driver-info/${user.UserId}`,
+        path: `/driver/driver-action/?userid=${user.UserId}`,
       },
       {
         title: " View Assigned Vehicle To Driver",
-        path: `/list-assign-vehicle-driver/${user.UserId}`,
+        path: `/vehicle/?userid=${user.UserId}`,
       },
     ],
   },
   {
     title: "List All Trips",
-    path: `/list-trip-info/${user.UserId}`,
+    path: `/trip/?userId=${user.UserId}`,
     icon: "first fas fa-road",
   },
 ];
@@ -78,18 +78,18 @@ const menuItemsShipper = (user) => [
     submenu: [
       {
         title: "Post a Vehicle/Shipment",
-        path: `/add-shipment`,
+        path: `/shipment/shipment-action`,
       },
       {
         title: "My Shipment(s)",
-        path: `/my-shipments-info/${user.UserId}`,
+        path: `/shipment/?userId=${user.UserId}`,
       },
     ],
   },
 
   {
     title: "Connect with Drivers",
-    path: `/list-drivers-profile`,
+    path: `/driver/driver-profile-list`,
     icon: "first fas fa-users",
   },
 ];
@@ -100,11 +100,7 @@ const menuItemsCarrier = (user) => [
     path: "/dashboard",
     icon: "first fas fa-home",
   },
-  {
-    title: "My Shipments",
-    path:`/my-shipments-info/${user.UserId}`,
-    icon: "first fas fa-car",
-  },
+  
   {
     title: "Ship Vehicles",
     icon: "first fas fa-car",
@@ -113,20 +109,20 @@ const menuItemsCarrier = (user) => [
     submenu: [
       {
         title: "Post a Vehicle",
-        path: `/add-shipment`,
+        path: `/shipment/shipment-action`,
       },
       {
         title: "List all Shipments",
-        path: `/list-all-shipments`,
+        path: `/shipment/`,
       },
       {
         title: "My Shipments",
-        path: `/my-shipments-info/${user.UserId}`,
+        path:`/shipment/?userId=${user.UserId}`,
       },
      
       {
         title: "Vehicle List",
-        path: `/list-vehicles-info/${user.CompanyId}`,
+        path: `/vehicle/?companyId=${user.CompanyId}`,
       },
     ],
   },
@@ -136,19 +132,19 @@ const menuItemsCarrier = (user) => [
     submenu: [
        {
         title: "List carrier Info",
-        path: `/list-carriers-info/${user.CompanyId}`,
+        path: `/carrier/?companyId=${user.CompanyId}`,
       },
       {
         title: "Create carrier Info",
-        path: `/add-carrier`,
+        path: `/carrier/carrier-action`,
       },
       {
         title: " Find all Vehicles",
-        path: `/list-all-shipments`,
+        path: `/vehicle/?companyId=${user.CompanyId}`,
       },
       {
         title: "Vehicle List",
-        path: `/list-vehicles-info/${user.CompanyId}`,
+        path: `/vehicle/?companyId=${user.CompanyId}`,
       },
     ],
   },
@@ -159,17 +155,17 @@ const menuItemsCarrier = (user) => [
     submenu: [
       {
         title: "List Drivers",
-        path: `/list-carrier-drivers-info/${user.CompanyId}`,
+        path: `/driver/?companyId=${user.CompanyId}`,
       },
       {
         title: "Create Driver Profile",
-        path: `/add-driver-info`,
+        path: `/driver/driver-action`,
       },
     ],
   },
   {
     title: "Check Trips Made",
-    path: `/list-trip/${user.CompanyId}`,
+    path: `/trip/?companyId=${user.CompanyId}`,
     icon: "first fas fa-road",
   },
 ];
@@ -186,19 +182,19 @@ const menuItemsAdmin = (user) => [
     submenu: [
       {
         title: "Post a Vehicle/Shipment",
-        path: `/add-shipment`,
+        path: `/shipment/shipment-action`,
       },
       {
         title: "List all Vehicles",
-        path: `/list-all-shipments`,
+        path: `/vehicle/`,
       },
       {
         title: "List all Assigned Shipment",
-        path: `/list-all-shipments-assigned/assigned`,
+        path: `/shipment/?assigned=assigned`,
       },
       {
         title: "List all sent/delivered Shipment",
-        path: `/list-all-shipments-sent/sent`,
+        path: `/shipment/?sent=sent`,
       },
     ],
   },
@@ -208,30 +204,27 @@ const menuItemsAdmin = (user) => [
     submenu: [
       {
         title: "List carrier Info",
-        path: `/list-carriers`,
+        path: `/carrier/`,
       },
       {
         title: "View Drivers",
-        path: ` /list-drivers-info`,
+        path: ` /driver/`,
       },
 
       {
         title: "View Requests",
-        path: `/view-vehicle-request`,
+        path: `/shipment/shipment-interest-list`,
       },
-      {
-        title: "Connect to Shippers",
-        path: `/list-vehicle`,
-      },
+      
       {
         title: "View All Company record(s)",
-        path: `/list-company-info`,
+        path: `/company/`,
       },
     ],
   },
   {
     title: "View All Trips made",
-    path: "/list-trip",
+    path: "/trip/",
     icon: "first fas fa-road",
   },
   {
@@ -240,11 +233,11 @@ const menuItemsAdmin = (user) => [
     submenu: [
       {
         title: "List All Subscription Types",
-        path: `/list-subscription`,
+        path: `/subscription/`,
       },
       {
         title: "Create Subscription",
-        path: `/add-subscription`,
+        path: `/subscription/subscription-action`,
       },
     ],
   },
@@ -254,11 +247,11 @@ const menuItemsAdmin = (user) => [
     submenu: [
       {
         title: "View list user",
-        path: `/list-users`,
+        path: `/user/`,
       },
       {
         title: "View Payment Transaction",
-        path: `/list-payment`,
+        path: `/payment/`,
       },
     ],
   },

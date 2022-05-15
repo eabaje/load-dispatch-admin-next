@@ -16,13 +16,12 @@ import Datatable from "../../components/datatable/datatable-m";
 
 function UserSubscription() {
 
-  // const router = useRouter()
-  // const {
-  //   query
-  // } = router
-  // const { subscribeId } = match.params;
-  // const { userId } = match.params;
-  // const isSingleMode = !subscribeId;
+  const router = useRouter()
+  const {
+    query:{subscribeId,userId}
+  } = router
+ 
+  const isSingleMode = !subscribeId;
  
   const [res, setData] = useState([]);
   

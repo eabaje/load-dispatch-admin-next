@@ -1,21 +1,21 @@
-import React, { useContext, useEffect } from "react";
-import { Camera, Trash, Truck, List, Edit, ChevronsDown } from "react-feather";
-import { useState } from "react";
+import React, {useState, useContext, useEffect } from "react";
+
+import { useRouter } from "next/router";
 
 
 import { columns } from "../../datasource/dataColumns/shipment";
 import { GlobalContext } from "../../context/Provider";
 import {
-  listShipments,
-  showInterest,
+  listShipments
+ 
 } from "../../context/actions/shipment/shipment.action";
-import LoadingBox from "../../components/notification/loadingbox";
+
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import Datatable from "../../components/datatable/datatable-m";
 
 
-function ListShipment({ history, match }) {
+function ListShipment() {
  
 
   const router = useRouter()
@@ -23,7 +23,7 @@ function ListShipment({ history, match }) {
     query:userId,assigned,sent 
   } = router
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+ 
   const [data2, setData] = useState([]);
  // const [user, setUser] = useState({});
   const [show, setShow] = useState(false);
@@ -46,7 +46,10 @@ function ListShipment({ history, match }) {
   }
 
   const loadData = () => {
-   
+    // listShipments()(shipmentDispatch)((result) => {})((err) => {
+    //   toast.error(err);
+
+    // });
     userId
       ?   listShipments()(shipmentDispatch)((result) => {})((err) => {
         toast.error(err);
@@ -56,7 +59,7 @@ function ListShipment({ history, match }) {
       });;
 
 
-       // setData(data.data?.filter((item) => item.UserId === userId));
+     //  setData(data.data?.filter((item) => item.UserId === userId));
   };
 
   useEffect(() => {
@@ -68,7 +71,7 @@ function ListShipment({ history, match }) {
     }
   //  setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
-  // console.log(`userid`, userId);
+   console.log(`user`, user);
  
   return (
     
@@ -86,8 +89,10 @@ function ListShipment({ history, match }) {
           </div>
           <div class="card-body table-border-style">
           <Datatable loading={loading} col={columns(user)} 
-            data={ userId
-              ? data.data
+            data={ data?.data}/>
+
+{/* userId
+              ? data?.data
               : assigned
               ? data.data?.filter(
                   (item) => item?.AssignedShipment === true
@@ -98,9 +103,7 @@ function ListShipment({ history, match }) {
                     item?.ShipmentStatus === "Arrived" ||
                     item?.ShipmentStatus === "Delivered"
                 )
-              : data?.data}/>
-
-           
+              : */}
            
           </div>
         </div>

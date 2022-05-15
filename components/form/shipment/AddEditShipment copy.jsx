@@ -14,7 +14,7 @@ import {
   showInterest,
 } from "../../../context/actions/shipment/shipment.action";
 
-//import "bootstrap";
+import "bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { fetchData } from "../../../helpers/query";

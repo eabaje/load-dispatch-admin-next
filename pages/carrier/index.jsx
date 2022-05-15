@@ -1,27 +1,28 @@
 import React, { useContext, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+
 import { useState } from "react";
 
-import { ChevronsDown, Edit, Trash, Truck } from "react-feather";
-import DataTable from "react-data-table-component";
-import DataTableExtensions from "react-data-table-component-extensions";
-import Form from "react-bootstrap/Form";
+import { useRouter } from "next/router";
 import "react-data-table-component-extensions/dist/index.css";
 import { columns } from "../../datasource/dataColumns/carrier";
 import { GlobalContext } from "../../context/Provider";
 import {
   listCarriers,
-  listCarriersByCompany,
-  listCarriersById,
+  listCarriersByCompany
+
 } from "../../context/actions/carrier/carrier.action";
-import LoadingBox from "../../components/notification/loadingbox";
+
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify'
 import Datatable from "../../components/datatable/datatable-m";
 
 function ListCarrier() {
  // const { companyId } = match.params; { history, match }
-  const { companyId } = useParams();
+  const router = useRouter()
+  const {
+    query:companyId
+  } = router
+ 
  
   
   const {

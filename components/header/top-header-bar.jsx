@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect,useContext } from "react";
 import { IMG_URL, LOG_IN } from "../../constants";
 import { GlobalContext } from "../../context/Provider";
 import { signout } from "../../context/actions/auth/auth.action";
@@ -12,8 +12,18 @@ function TopHeaderBar() {
   } = useContext(GlobalContext);
 
   const logOut = () => {
+    alert("Kindly redirect")
     signout()(authDispatch);
   };
+
+  // useEffect(() => {
+   
+  //   const logOut = () => {
+  //     signout()(authDispatch);
+  //   };
+  // //  setUser(JSON.parse(localStorage.getItem("user")));
+  // }, []);
+
   return (
     <>
       {" "}
@@ -186,22 +196,22 @@ function TopHeaderBar() {
                       </span>
                       <span></span>
 
-                      <Link href={`#`} onClick={logOut}>
-                        <a className="dud-logout" title=" Logout">
+                      <Link href='/' >
+                        <a className="dud-logout" title=" Logout"onClick={logOut}>
                           <i className="feather icon-log-out"></i>
                         </a>
                       </Link>
                     </div>
                     <ul className="pro-body">
                       <li>
-                        <Link href={`/user-profile/${user.UserId}`}>
+                        <Link href={`/user/user-profile/?userId=${user.UserId}`}>
                           <a className="dropdown-item" title="My Profile">
                             <i className="feather icon-user"></i> My Profile
                           </a>
                         </Link>
                       </li>
                       <li>
-                        <Link href={`/user-subscription/${user.UserId}`}>
+                        <Link href={`/user/user-subscription-list/?userId=${user.UserId}`}>
                           <a className="dropdown-item" title=" My Subscription">
                             <i className="feather icon-box"></i> My Subscription
                           </a>
