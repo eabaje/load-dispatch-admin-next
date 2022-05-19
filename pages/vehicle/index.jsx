@@ -67,7 +67,7 @@ function ListVehicle() {
    
     
   }, []);
- // console.log(`data`, data);
+  console.log(`data`, data);
  
   return (
     
@@ -85,7 +85,7 @@ function ListVehicle() {
           </div>
           <div class="card-body table-border-style">
           <Datatable loading={loading} col={columns(user)} 
-            data={data}/>
+            data={data.data}/>
            
           </div>
         </div>

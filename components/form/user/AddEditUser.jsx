@@ -11,7 +11,7 @@ import {
   editUser,
   resetPassword,
   updateCompany,
-  UploadUserFile,
+ 
 } from "../../../context/actions/user/user.action";
 
 import ImageUpload from "../../../components/upload/uploadImage";
@@ -22,13 +22,15 @@ import { SPECIALIZATION_TYPE } from "../../../constants/enum";
 import CustomPopup from "../../../components/popup/popup.component";
 import UpdateUserFileUpload from "../../../components/upload/edit-user-file-upload";
 import { toast } from 'react-toastify';
+import dynamic from 'next/dynamic';
 
 
-const AddEditUser = (query) => {
+const AddEditUser = ({query}) => {
   const { userId } = query;
+
   const isSingleMode = !userId;
 
-  const [data2, setData] = useState([]);
+ 
    const [profile, setProfile] = useState({});
   const [companyInfo, setCompanyInfo] = useState({});
 
@@ -242,7 +244,7 @@ const AddEditUser = (query) => {
       </div>
     );
   });
- // console.log("data", profile);
+  console.log("userId", userId);
   return (
   
    
@@ -901,4 +903,6 @@ const AddEditUser = (query) => {
 //Login.layout = "main";
 
 
-export default AddEditUser
+//export default AddEditUser
+
+export default dynamic(() => Promise.resolve(AddEditUser), { ssr: false });

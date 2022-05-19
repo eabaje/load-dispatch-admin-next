@@ -22,12 +22,13 @@ export const listVehicles =
   (dispatch) => {
     //(onSuccess)=>(onError) =>
     const url = vehicleType
-      ? `${API_URL}vehicle/findAll/${vehicleType}`
-      : `${API_URL}vehicle/findAll/`;
+      ? `vehicle/findAll/${vehicleType}`
+      : `vehicle/findAll/`;
+     
     dispatch({
       type: GET_VEHICLES_REQUEST,
     });
-    Axios.get(url)
+    axios.get(url)
       .then((res) => {
         dispatch({ type: GET_VEHICLES_SUCCESS, payload: res.data });
         //  onSuccess(res.data);
@@ -42,12 +43,12 @@ export const listVehicles =
   };
 export const listVehiclesByCarrier = (carrierId, vehicleType) => (dispatch) => {
   //(onSuccess)=>(onError) =>
-  const url = `${API_URL}vehicle/findAllVehiclesByCategory/${carrierId}/${vehicleType}`;
+  const url = `vehicle/findAllVehiclesByCategory/${carrierId}/${vehicleType}`;
 
   dispatch({
     type: GET_VEHICLES_REQUEST,
   });
-  Axios.get(url)
+  axios.get(url)
     .then((res) => {
       dispatch({ type: GET_VEHICLES_SUCCESS, payload: res.data });
       //  onSuccess(res.data);

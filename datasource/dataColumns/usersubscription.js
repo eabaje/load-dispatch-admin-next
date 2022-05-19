@@ -1,5 +1,5 @@
 import {Form} from "react-bootstrap"
-import { Link } from "react-router-dom";
+import { Link } from "next/link";
 export const columns = (params) => [
   {
     id: 1,
@@ -53,36 +53,35 @@ export const columns = (params) => [
     sortable: false,
     selector: "null",
     cell: (row) => [
-      (params?.UserId === row.UserId || params?.roles === "admin") && (
+      (params?.roles !== "admin") && (
         <Link
-          to={
+          href={
             "/edit-user-subscription/" +
             row.UserSubscriptionId +
             "/" +
             row.UserId
           }
-          className="btn btn-sm"
-          title="Edit User Subscription"
+         
         >
-          <i className="first fas fa-pen"></i>
+         <a  className="btn btn-sm"
+          title="Edit User Subscription"> <i className="first fas fa-pen"></i></a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
-          to={"/list-user-subscription/" + row.UserSubscriptionId}
-          className="btn btn-sm"
-          title="Edit User Subscription"
+           href={"/list-user-subscription/" + row.UserSubscriptionId}
+        
+         
         >
-          <i className="first fas fa-pen"></i>
+        <a  className="btn btn-sm"  title="Edit User Subscription">   <i className="first fas fa-pen"></i></a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/" + row.UserSubscriptionId}
-          className="btn btn-sm"
-          title="Edit User Subscription"
+           href={"/delete-data/" + row.UserSubscriptionId}
+          
         >
-          <i className="fas fa-trash-alt"></i>
+        <a  className="btn btn-sm"  title="Delete User Subscription">  <i className="fas fa-trash-alt"></i></a> 
         </Link>
       ),
     ],

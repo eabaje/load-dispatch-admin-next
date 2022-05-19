@@ -24,7 +24,7 @@ function ListDriver() {
   const [data, setData] = useState([]);
  
   const {
-    authState: { user },
+    authState: { user,loading },
   } = useContext(GlobalContext)
   // GET request function to your Mock API
   const fetchData = async () => {
@@ -70,7 +70,7 @@ function ListDriver() {
             </div>
             <div class="card-body table-border-style">
             <Datatable loading={loading} col={columns(user)} 
-            data={data}/>
+            data={data.data}/>
               
             </div>
           </div>

@@ -8,11 +8,11 @@ import { ROLES } from "../../constants/enum";
 function TopHeaderBar() {
   const {
     authDispatch,
-    authState: { user, isLoggedIn },
+    authState: { user},
   } = useContext(GlobalContext);
 
   const logOut = () => {
-    alert("Kindly redirect")
+    
     signout()(authDispatch);
   };
 
@@ -23,7 +23,7 @@ function TopHeaderBar() {
   //   };
   // //  setUser(JSON.parse(localStorage.getItem("user")));
   // }, []);
-
+// console.log('user', user)
   return (
     <>
       {" "}
@@ -190,9 +190,10 @@ function TopHeaderBar() {
                         alt=""
                       />
                       <span style={{ textAlign: "center" }}>
-                        {user.FullName}
+                        {user?.FullName}
                         <br />
                         {ROLES.find((item) => item.value === user?.roles)?.text}
+                        
                       </span>
                       <span></span>
 
@@ -204,21 +205,21 @@ function TopHeaderBar() {
                     </div>
                     <ul className="pro-body">
                       <li>
-                        <Link href={`/user/user-profile/?userId=${user.UserId}`}>
+                        <Link href={`/user/user-profile?userId=${user?.UserId}`} passHref>
                           <a className="dropdown-item" title="My Profile">
-                            <i className="feather icon-user"></i> My Profile
+                            <i className="feather icon-user"></i> My Profile 
                           </a>
                         </Link>
-                      </li>
+                      </li>-
                       <li>
-                        <Link href={`/user/user-subscription-list/?userId=${user.UserId}`}>
+                        <Link href={`/user/user-subscription-list?userId=${user?.UserId}`} passHref>
                           <a className="dropdown-item" title=" My Subscription">
                             <i className="feather icon-box"></i> My Subscription
                           </a>
                         </Link>
                       </li>
                       <li>
-                        <Link href={`/my-messages/${user.UserId}`}>
+                        <Link href={`/my-messages/${user?.UserId}`} passHref>
                           <a className="dropdown-item" title=" My Messages">
                             {" "}
                             <i className="feather icon-mail"></i> My Messages

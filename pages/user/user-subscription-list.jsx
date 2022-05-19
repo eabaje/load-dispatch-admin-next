@@ -11,15 +11,17 @@ import { columns } from "../../datasource/dataColumns/usersubscription";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import Datatable from "../../components/datatable/datatable-m";
+import dynamic from 'next/dynamic';
+
 
 // import SortIcon from "@mui/icons-material/ArrowDownward";
 
-function UserSubscription() {
+function UserSubscription({query}) {
 
-  const router = useRouter()
+ // const router = useRouter()
   const {
-    query:{subscribeId,userId}
-  } = router
+    subscribeId,userId
+  } = query
  
   const isSingleMode = !subscribeId;
  
@@ -86,4 +88,14 @@ function UserSubscription() {
   );
 }
 //Login.layout = "main";
-export default UserSubscription;
+//export default UserSubscription;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(UserSubscription), { ssr: false });

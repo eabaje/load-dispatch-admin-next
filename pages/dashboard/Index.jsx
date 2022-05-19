@@ -11,6 +11,7 @@ import NewsFlash from "../../components/home/newsFlash";
 import SideLink from "../../components/home/sideLink";
 import isAuthenticated from "../../utils/isAuthenticated";
 import MainLayout from "../../layout/mainLayout";
+import dynamic from 'next/dynamic';
 
 function Index() {
   const [dataLength, setDataLength] = useState(0);
@@ -93,4 +94,5 @@ function Index() {
   );
 }
 //Index.layout = "main";
-export default Index;
+//export default Index;
+export default dynamic(() => Promise.resolve(Index), { ssr: false });
