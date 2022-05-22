@@ -225,54 +225,54 @@ export  const columns = (params) => [
       reorder: true,
     }),
 
-  // {
-  //   id: 27,
-  //   name: "Action",
-  //   sortable: false,
-  //   selector: "null",
-  //   cell: (row) => [
-  //     <></>,
+  {
+    id: 27,
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      <></>,
 
-  //      (params?.roles === "admin"|| params?.roles === "carrier"|| params?.UserId === row?.UserId  ) && (
-  //       <Link
-  //         href={"/shipment-action/?shipmentId=" + row.ShipmentId}
+       (params?.roles === "admin"|| params?.roles === "carrier"|| params?.UserId === row?.UserId  ) && (
+        <Link
+          href={"/shipment-action/?shipmentId=" + row.ShipmentId}
          
-  //       >
-  //         <a  className="btn btn-sm"
-  //         title="Edit  Shipment"> 
-  //         <i className="first fas fa-pen"></i></a>
-  //       </Link>
-  //     ),
-  //     params?.UserId === row?.UserId && params?.roles !== "carrier" && (
-  //       <Link
-  //         href={"/shipment-interest-list/?shipmentId=" + row.ShipmentId}
+        >
+          <a  className="btn btn-sm"
+          title="Edit  Shipment"> 
+          <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+      params?.UserId === row?.UserId && params?.roles !== "carrier" && (
+        <Link
+          href={"/shipment-interest-list/?shipmentId=" + row.ShipmentId}
          
-  //       >
-  //          <a  className="btn btn-sm"
-  //         title="Check shipment interests">  <i className="first fas fa-check"></i></a>
-  //       </Link>
-  //     ),
-  //     params?.UserId !== row?.UserId && params?.roles !== "shipper" && (
-  //       <Link
-  //         href={"/shipment-interest-list/?IsReadOnly=IsReadOnly" + row.ShipmentId}
+        >
+           <a  className="btn btn-sm"
+          title="Check shipment interests">  <i className="first fas fa-check"></i></a>
+        </Link>
+      ),
+      params?.UserId !== row?.UserId && params?.roles !== "shipper" && (
+        <Link
+          href={"/shipment-interest-list/?IsReadOnly=IsReadOnly" + row.ShipmentId}
          
-  //       >
-  //           <a  className="btn btn-sm"
-  //         title="Place interest"> 
-  //         <i className="first fas fa-heart"></i></a>
-  //       </Link>
-  //     ),
-  //     params?.roles === "admin" && (
-  //       <Link
-  //         to={"/data/delete-data/?tbl=Shipments&col=ShipmentId&id=" + row.ShipmentId}
+        >
+            <a  className="btn btn-sm"
+          title="Place interest"> 
+          <i className="first fas fa-heart"></i></a>
+        </Link>
+      ),
+      params?.roles === "admin" && (
+        <Link
+          href={"/data/delete-data/?tbl=Shipments&fld=ShipmentId&val=" + row.ShipmentId}
          
-  //       >
-  //         <a  className="btn btn-sm"
-  //         title="Delete/Archive (Redundant/Incorrect data)"> 
-  //         <i className="fas fa-trash-alt"></i></a>
-  //       </Link>
-  //     ),
-  //   ],
-  // },
+        >
+          <a  className="btn btn-sm"
+          title="Delete/Archive (Redundant/Incorrect data)"> 
+          <i className="fas fa-trash-alt"></i></a>
+        </Link>
+      ),
+    ],
+  },
 ];
 

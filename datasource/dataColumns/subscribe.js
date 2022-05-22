@@ -78,28 +78,28 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          to={"/edit-subscription/" + row.SubscribeId}
-          className="btn btn-sm"
-          title="Edit  Subscription"
+          href={"/subscribe/subscription-action/?subscribeId=" + row.SubscribeId}
+          
         >
-          <i className="first fas fa-pen"></i>
+         <a className="btn btn-sm"
+          title="Edit  Subscription"> <i className="first fas fa-pen"></i></a>
         </Link>
       </>,
 
       <Link
-        to={"/list-user-subscription/" + row.SubscribeId}
-        className="btn btn-sm"
-        title="List All Users Subscribed"
+        href={"/subscribe/"}
+        
       >
-        <i className="first fas fa-user"></i>
+        <a className="btn btn-sm"
+        title="List All Users Subscribed"><i className="first fas fa-user"></i></a>
       </Link>,
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/Subscriptions/" + row.SubscribeId}
-          className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"
+          to={"/delete-data/?tbl=Subscriptions&fld=SubscribeId&val=" + row.SubscribeId}
+         
         >
-          <i className="fas fa-trash-alt"></i>
+         <a  className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
         </Link>
       ),
     ],

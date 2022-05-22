@@ -145,38 +145,38 @@ export const columns = (params) => [
     cell: (row) => [
       params?.roles === "admin" && (
         <Link
-          to={"/edit-user-info/" + row["UserId"]}
-          className="btn btn-sm"
-          title="Edit  User Info"
+          href={"/user/?userId=" + row["UserId"]}
+        
         >
-          <i className="first fas fa-pen"></i>
+         <a   className="btn btn-sm"
+          title="Edit  User Info"> <i className="first fas fa-pen"></i></a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
-          to={"/list-company-info/" + row["Company"].CompanyId}
-          className="btn btn-sm"
-          title="List Company Info"
+          href={"/company/?companyId=" + row["Company"].CompanyId}
+         
         >
-          <i className="first fas fa-cog"></i>
+          <a className="btn btn-sm"
+          title="List Company Info"><i className="first fas fa-cog"></i></a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
-          to={"/update-user-role/" + row["UserId"]}
-          className="btn btn-sm"
-          title="Update User Role"
+          href={"/user/user-role-action/?userId=" + row["UserId"]}
+       
         >
-          <i className="first fas fa-person"></i>
+          <a    className="btn btn-sm"
+          title="Update User Role"><i className="first fas fa-person"></i></a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/" + row["UserId"]}
-          className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"
+          href={"/delete-data/?tbl=Users&fld=UserId&val=" + row["UserId"]}
+         
         >
-          <i className="fas fa-trash-alt"></i>
+          <a  className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a>
         </Link>
       ),
     ],

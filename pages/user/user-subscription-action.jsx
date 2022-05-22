@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';
+import AddEditUserSubscription from "../../components/form/user/AddEditUserSubscription";
 
 function AddUserSubscription({query}) {
   // const router = useRouter()
@@ -19,7 +20,7 @@ function AddUserSubscription({query}) {
   return (
     <>
     <MainLayout>
-      <AddUserSubscription query={query} />
+      <AddEditUserSubscription query={query} />
       </MainLayout>
     </>
   );

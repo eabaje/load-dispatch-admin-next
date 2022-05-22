@@ -3,14 +3,14 @@ import { useRouter } from "next/router";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import AddEditUserRole from "../../components/form/user/AddEditUserRole";
-
+import dynamic from 'next/dynamic';
 
 function AddUserRole() {
   
-  const router = useRouter()
-  const {
-    query
-  } = router
+  // const router = useRouter()
+  // const {
+  //   query
+  // } = router
  
 
   
@@ -26,4 +26,14 @@ function AddUserRole() {
   );
 }
 //Login.layout = "main";
-export default AddUserRole;
+//export default AddUserRole;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(AddUserRole), { ssr: false });

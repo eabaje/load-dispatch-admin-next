@@ -4,19 +4,19 @@ import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import AddEditVehicle from "../../components/form/vehicle/AddEditVehicle";
 import { GlobalContext } from "../../context/Provider";
+import dynamic from 'next/dynamic';
 
-
-function AddVehicle() {
+function AddVehicle({query}) {
 
   const {
     authState: { user },
   } = useContext(GlobalContext)
 
 
- const router = useRouter()
-  const {
-    query 
-  } = router
+//  const router = useRouter()
+//   const {
+//     query 
+//   } = router
   
   
 
@@ -37,4 +37,15 @@ function AddVehicle() {
   );
 }
 //Login.layout = "main";
-export default AddVehicle;
+//export default AddVehicle;
+
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(AddVehicle), { ssr: false });

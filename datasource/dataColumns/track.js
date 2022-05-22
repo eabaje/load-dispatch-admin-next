@@ -63,11 +63,11 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          to={"/edit-track-info/" + row.TrackId}
-          className="btn btn-sm"
-          title="Update Track Info"
+          href={"/trip/track-info/?trackId=" + row.TrackId}
+         
         >
-          <i className="first fas fa-pen"></i>
+         <a className="btn btn-sm"
+          title="Update Track Info"> <i className="first fas fa-pen"></i></a>
         </Link>
       </>,
 

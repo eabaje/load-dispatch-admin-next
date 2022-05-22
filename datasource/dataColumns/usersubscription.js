@@ -53,37 +53,37 @@ export const columns = (params) => [
     sortable: false,
     selector: "null",
     cell: (row) => [
-      // params?.roles === "carrier"  && (
-      //   <Link
-      //     href={
-      //       "/edit-user-subscription/" +
-      //       row.UserSubscriptionId +
-      //       "/" +
-      //       row.UserId
-      //     }
+      params?.roles === "carrier"  && (
+        <Link
+          href={
+            "/user/user-subscription-action/?userSubscriptionId=" +
+            row.UserSubscriptionId +
+            "&userId=" +
+            row.UserId
+          }
          
-      //   >
-      //    <a  className="btn btn-sm"
-      //     title="Edit User Subscription"> <i className="first fas fa-pen"></i></a>
-      //   </Link>
-      // ),
-    //   (params?.roles.toString() === "admin") && (
-    //     <Link
-    //        href={"/list-user-subscription/" + row.UserSubscriptionId}
+        >
+         <a  className="btn btn-sm"
+          title="Edit User Subscription"> <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+      (params?.roles.toString() === "admin") && (
+        <Link
+           href={"/user/list-user-subscription/?subscribeId=" + row.UserSubscriptionId}
         
          
-    //     >
-    //     <a  className="btn btn-sm"  title="Edit User Subscription">   <i className="first fas fa-pen"></i></a>
-    //     </Link>
-    //   ),
-    //  ( params?.roles.toString() === "admin") && (
-    //     <Link
-    //        href={"/delete-data/" + row.UserSubscriptionId}
+        >
+        <a  className="btn btn-sm"  title="Edit User Subscription">   <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+     ( params?.roles.toString() === "admin") && (
+        <Link
+           href={"/delete-data/?tbl=UserSubscriptions&fld=UserSubscriptionId&val=" + row.UserSubscriptionId}
           
-    //     >
-    //     <a  className="btn btn-sm"  title="Delete User Subscription">  <i className="fas fa-trash-alt"></i></a> 
-    //     </Link>
-    //   ),
+        >
+        <a  className="btn btn-sm"  title="Delete User Subscription">  <i className="fas fa-trash-alt"></i></a> 
+        </Link>
+      ),
     ],
   },
 ];

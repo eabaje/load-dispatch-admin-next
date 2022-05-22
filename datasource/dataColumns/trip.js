@@ -135,28 +135,28 @@ export const columns = (params) => [
     cell: (row) => [
       (params?.roles === "driver" || params?.roles === "admin") && (
         <Link
-          to={"/edit-trip-info/" + row.TripId}
-          className="btn btn-sm"
-          title="Edit Trip Info"
+          href={"/trip/trip-action/?tripId=" + row.TripId}
+         
         >
-          <i className="first fas fa-pen"></i>
+         <a  className="btn btn-sm"
+          title="Edit Trip Info"> <i className="first fas fa-pen"></i></a>
         </Link>
       ),
 
       <Link
-        to={"/track-trip/" + row.TripId}
-        className="btn btn-sm"
-        title="Track Trip"
+        href={"/trip/?tripId=" + row.TripId}
+       
       >
-        <i className="first fas fa-truck-moving"></i>
+       <a  className="btn btn-sm"
+        title="Track Trip"> <i className="first fas fa-truck-moving"></i></a>
       </Link>,
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/" + row.VehicleId}
-          className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"
+          href={"/delete-data/?tbl=Vehicles&fld=VehicleId&val=" + row.VehicleId}
+         
         >
-          <i className="fas fa-trash-alt"></i>
+         <a className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
         </Link>
       ),
     ],

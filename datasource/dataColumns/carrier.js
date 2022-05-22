@@ -52,7 +52,7 @@ export const columns = (params) => [
   {
     id: 2,
     name: "Company",
-    selector: (row) => row.Company.CompanyName,
+    selector: (row) => row?.Company?.CompanyName,
     sortable: true,
     reorder: true,
   },

@@ -41,7 +41,7 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          href={"/user/role/?roleId=" + row.RoleId}
+          href={"/user/user-role-action/?roleId=" + row.RoleId}
          
         >
          <a  className="btn btn-sm"
@@ -50,7 +50,7 @@ export const columns = (params) => [
       </>,
 
       <Link
-        href={"/add-user-to-role/" + row.RoleId}
+        href={"/user/user-role-action/?roleId=" + row.RoleId}
        
       >
         <a  className="btn btn-sm"

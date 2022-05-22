@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Country, State } from "country-state-city";
-import { GlobalContext } from "../../context/Provider";
+import { GlobalContext } from "../../../context/Provider";
 import { LOAD_TYPE, LOAD_CAPACITY, LOAD_UNIT } from "../../../constants/enum";
 import {
   createVehicle,
@@ -150,7 +150,7 @@ const AddEditVehicle = (query) =>  {
   return (
     <>
      
-      <MainLayout>
+    
         <div class="col-md-12">
           <div class="card">
             <div class="card-header alert alert-info">
@@ -500,7 +500,7 @@ const AddEditVehicle = (query) =>  {
             </div>
           </div>
         </div>
-        </MainLayout>
+        
     </>
   );
 }
