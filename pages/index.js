@@ -3,19 +3,18 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 import React from "react";
-//import axios from "axios";
+
 import { useContext, useState } from "react";
 import { GlobalContext } from "../context/Provider";
-
+import { useRouter } from 'next/router';
 import { useForm } from "react-hook-form";
-//import { yupResolver } from "@hookform/resolvers/yup";
-//import { yupResolver } from 'react-hook-form-resolvers';
-import * as Yup from "yup";
+
 import { toast } from 'react-toastify'
 import { signin2 } from "../context/actions/auth/auth.action";
 import AuthLayout from "../layout/authLayout";
 
 function Login() {
+  const router = useRouter();
   const {
     register,
     formState: { errors },
@@ -44,8 +43,15 @@ function Login() {
     // e.preventDefault();
     //  console.log("state:", formdata);
 
-    signin2(formdata)(authDispatch)((success) => {
-      window.location.href = '/dashboard/'
+    signin2(formdata)(authDispatch)((res) => {
+
+      res.user.isActivated===true ?
+       router.push(`/dashboard`)
+       : res.user.roles==='carrier'? window.location.href =`/carrier/`
+       : res.user.roles==='shipper'? window.location.href =`/shipment/`
+       : window.location.href =`/user/user-profile/?userId=${res.user.UserId}`;
+
+    //  window.location.href = '/dashboard/'
      // history.push("/dashboard");
     })((err) => {
       console.log(`err`, err);

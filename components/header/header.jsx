@@ -2,6 +2,7 @@ import NavBar from "../navbar/navbar";
 import TopHeaderBar from "./top-header-bar";
 
 import React from "react";
+import dynamic from 'next/dynamic';
 
 function Header() {
 
@@ -38,4 +39,5 @@ function Header() {
   );
 }
 
-export default Header;
+//export default Header;
+export default dynamic(() => Promise.resolve(Header), { ssr: false });

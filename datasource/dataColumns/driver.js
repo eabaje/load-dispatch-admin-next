@@ -1,5 +1,5 @@
 import {Form} from "react-bootstrap"
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 import { Country, State } from "country-state-city";
 
 export const columns = (params) => [
@@ -135,28 +135,28 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          to={"/edit-driver-info/" + row.DriverId}
-          className="btn btn-sm"
-          title="Edit  Driver Info"
+          href={"/driver/driver-action/?driverId=" + row.DriverId}
+         
         >
-          <i className="first fas fa-pen"></i>
+         <a className="btn btn-sm"
+          title="Edit  Driver Info"> <i className="first fas fa-pen"></i></a>
         </Link>
       </>,
 
       <Link
-        to={"/list-company-vehicles/" + row.CompanyId }
-        className="btn btn-sm"
-        title="Assign driver to vehicle"
+        href={"/vehicle/?companyId=" + row.CompanyId }
+      
       >
-        <i className="first fas fa-car"></i>
+       <a  className="btn btn-sm"
+        title="Assign driver to vehicle"> <i className="first fas fa-car"></i></a>
       </Link>,
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/Drivers/" + row.DriverId}
-          className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"
+          href={"/delete-data/?tbl=Drivers&fld=DriverId&val=" + row.DriverId}
+         
         >
-          <i className="fas fa-trash-alt"></i>
+         <a className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a> 
         </Link>
       ),
     ],

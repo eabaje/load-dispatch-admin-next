@@ -1,13 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import { fetchData, fetchDataAll } from "../../helpers/query";
-import {
-  listUserSubscriptions,
-  listUserSubscriptionByUserId,
-} from "../../context/actions/user/user.action";
+import { listUserSubscriptions} from "../../context/actions/user/user.action";
 import { GlobalContext } from "../../context/Provider";
-
 import { columns } from "../../datasource/dataColumns/usersubscription";
-
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import Datatable from "../../components/datatable/datatable-m";
@@ -25,15 +19,9 @@ function UserSubscription({query}) {
  
   const isSingleMode = !subscribeId;
  
-  const [res, setData] = useState([]);
+ 
   
-  // const [loading, setLoading] = useState(false);
-  console.log(`userSubscriptionId`, subscribeId);
-  console.log(`isSingleMode`, isSingleMode);
-  // GET request function to your Mock API
-
-  // enqueueSnackbar(getError(err), { variant: "error" });
-  // Calling the function on component mount
+ 
   const {
     authState: { user },
   } = useContext(GlobalContext)

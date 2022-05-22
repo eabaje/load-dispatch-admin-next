@@ -1,5 +1,5 @@
 import {Form} from "react-bootstrap"
-import { Link } from "next/link";
+import  Link  from "next/link";
 import { LOAD_TYPE } from "../../constants/enum";
 export const columns = (params) => [
   {

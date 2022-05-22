@@ -1,5 +1,5 @@
 import {Form} from "react-bootstrap"
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE } from "../../constants/enum";
 export const columns = (params) => [
   {
@@ -8,42 +8,44 @@ export const columns = (params) => [
     sortable: false,
     selector: "null",
     cell: (row) => [
-      params?.roles === "carrier" && (
+      
+      params?.roles==="carrier"   && (
         <Link
-          to={"/edit-carrier-info/" + row.CarrierId}
-          className="btn btn-sm"
-          title="Add  Carrier Info"
-        >
-          <i className="first fas fa-plus"></i>
+          href={"/carrier/carrier-action/?carrierId=" + row.CarrierId}
+         
+          passHref>
+       <a className="btn btn-sm"
+          title="Edit  Carrier Info"> <i className="first fas fa-pen"></i></a>  
         </Link>
       ),
 
-       params?.roles === "carrier" && (
+       params?.roles==="carrier"  && (
         <Link
-          to={
-            "/add-vehicle-to-carrier/" +
+          href={
+            "/vehicle/vehicle-action/?companyId=" +
             row.CompanyId +
-            "/" +
+            "&carrierId=" +
             row.CarrierId +
-            "/" +
+            "&carrierType=" +
             row.CarrierType
           }
-          className="btn btn-sm"
-          title="Add Vehicle to carrier"
-        >
-          <i className="first fas fa-car"></i>
+         
+          passHref>
+         <a className="btn btn-sm"
+          title="Add Vehicle to carrier"> <i className="first fas fa-car"></i></a>
         </Link>
       ),
-      params?.roles === "carrier" && (
+      params?.roles==="carrier"  && (
         <Link
-          to={"/list-carrier-vehicles/" + row.CarrierId + "/" + row.CarrierType}
-          className="btn btn-sm"
-          title="List all Carrier Vehicle "
-        >
-          <i className="first fas fa-truck"></i>
+          href={"/carrier/?carrierId=" + row.CarrierId + "&carrierType=" + row.CarrierType}
+         
+          passHref>
+          <a className="btn btn-sm"
+          title="List all Carrier Vehicle "><i className="first fas fa-truck"></i></a>
         </Link>
+      
       )
-     
+      
     ],
   },
   
@@ -134,56 +136,56 @@ export const columns = (params) => [
     reorder: true,
   },
 
-  {
-    id: 12,
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      params?.roles === "carrier" && (
-        <Link
-          to={"/edit-carrier-info/" + row.CarrierId}
-          className="btn btn-sm"
-          title="Edit  Carrier Info"
-        >
-          <i className="first fas fa-pen"></i>
-        </Link>
-      ),
+  // {
+  //   id: 12,
+  //   name: "Action",
+  //   sortable: false,
+  //   selector: "null",
+  //   cell: (row) => [
+  //     params?.roles === "carrier" && (
+  //       <Link
+  //         href={"/edit-carrier-info/" + row.CarrierId}
+         
+  //         passHref>
+  //      <a className="btn btn-sm"
+  //         title="Edit  Carrier Info"> <i className="first fas fa-pen"></i></a>  
+  //       </Link>
+  //     ),
 
-       params?.roles === "carrier" && (
-        <Link
-          to={
-            "/add-vehicle-to-carrier/" +
-            row.CompanyId +
-            "/" +
-            row.CarrierId +
-            "/" +
-            row.CarrierType
-          }
-          className="btn btn-sm"
-          title="Add Vehicle to carrier"
-        >
-          <i className="first fas fa-car"></i>
-        </Link>
-      ),
-      params?.roles === "carrier" && (
-        <Link
-          to={"/list-carrier-vehicles/" + row.CarrierId + "/" + row.CarrierType}
-          className="btn btn-sm"
-          title="List all Carrier Vehicle "
-        >
-          <i className="first fas fa-truck"></i>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          to={"/delete-data/Carriers/" + row.CarrierId}
-          className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"
-        >
-          <i className="fas fa-trash-alt"></i>
-        </Link>
-      ),
-    ],
-  },
+  //      params?.roles === "carrier" && (
+  //       <Link
+  //         href={
+  //           "/add-vehicle-to-carrier/" +
+  //           row.CompanyId +
+  //           "/" +
+  //           row.CarrierId +
+  //           "/" +
+  //           row.CarrierType
+  //         }
+         
+  //         passHref>
+  //        <a className="btn btn-sm"
+  //         title="Add Vehicle to carrier"> <i className="first fas fa-car"></i></a>
+  //       </Link>
+  //     ),
+  //     params?.roles === "carrier" && (
+  //       <Link
+  //         href={"/list-carrier-vehicles/" + row.CarrierId + "/" + row.CarrierType}
+         
+  //         passHref>
+  //         <a className="btn btn-sm"
+  //         title="List all Carrier Vehicle "><i className="first fas fa-truck"></i></a>
+  //       </Link>
+  //     ),
+  //     params?.roles === "admin" && (
+  //       <Link
+  //         href={"/delete-data/Carriers/" + row.CarrierId}
+         
+  //         passHref>
+  //        <a className="btn btn-sm"
+  //         title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
+  //       </Link>
+  //     ),
+  //   ],
+  // },
 ];

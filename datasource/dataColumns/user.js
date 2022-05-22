@@ -1,6 +1,6 @@
 import {Form} from "react-bootstrap"
 import { Country, State } from "country-state-city";
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 export const columns = (params) => [
   {
     id: 1,

@@ -1,5 +1,5 @@
 import {Form} from "react-bootstrap"
-import { Link } from "next/link";
+import  Link  from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE, TRIP_STATUS } from "../../constants/enum";
 import { Country, State } from "country-state-city";
 

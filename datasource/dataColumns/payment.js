@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 export const columns = (params) => [
   // {
   //   id: 1,
@@ -95,11 +95,11 @@ export const columns = (params) => [
     selector: "null",
     cell: (row) => [
       <Link
-        to={"/delete-data/Payments/" + row.PaymentId}
-        className="btn btn-sm"
-        title="Delete/Archive Redundant/Incorrect data"
+        href={"/delete-data/?tbl=Payments&fld=PaymentId&val=" + row.PaymentId}
+        
       >
-        <i className="fas fa-trash-alt"></i>
+        <a className="btn btn-sm"
+        title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a>
       </Link>,
     ],
   },

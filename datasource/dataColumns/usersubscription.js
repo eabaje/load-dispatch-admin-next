@@ -1,5 +1,5 @@
 import {Form} from "react-bootstrap"
-import { Link } from "next/link";
+import  Link  from "next/link";
 export const columns = (params) => [
   {
     id: 1,
@@ -11,7 +11,7 @@ export const columns = (params) => [
   {
     id: 2,
     name: "User",
-    selector: (row) => row.User.FullName,
+    selector: (row) => row.User.FullName + "" + params?.roles,
     sortable: true,
     reorder: true,
   },
@@ -53,37 +53,37 @@ export const columns = (params) => [
     sortable: false,
     selector: "null",
     cell: (row) => [
-      (params?.roles !== "admin") && (
-        <Link
-          href={
-            "/edit-user-subscription/" +
-            row.UserSubscriptionId +
-            "/" +
-            row.UserId
-          }
+      // params?.roles === "carrier"  && (
+      //   <Link
+      //     href={
+      //       "/edit-user-subscription/" +
+      //       row.UserSubscriptionId +
+      //       "/" +
+      //       row.UserId
+      //     }
          
-        >
-         <a  className="btn btn-sm"
-          title="Edit User Subscription"> <i className="first fas fa-pen"></i></a>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-           href={"/list-user-subscription/" + row.UserSubscriptionId}
+      //   >
+      //    <a  className="btn btn-sm"
+      //     title="Edit User Subscription"> <i className="first fas fa-pen"></i></a>
+      //   </Link>
+      // ),
+    //   (params?.roles.toString() === "admin") && (
+    //     <Link
+    //        href={"/list-user-subscription/" + row.UserSubscriptionId}
         
          
-        >
-        <a  className="btn btn-sm"  title="Edit User Subscription">   <i className="first fas fa-pen"></i></a>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-           href={"/delete-data/" + row.UserSubscriptionId}
+    //     >
+    //     <a  className="btn btn-sm"  title="Edit User Subscription">   <i className="first fas fa-pen"></i></a>
+    //     </Link>
+    //   ),
+    //  ( params?.roles.toString() === "admin") && (
+    //     <Link
+    //        href={"/delete-data/" + row.UserSubscriptionId}
           
-        >
-        <a  className="btn btn-sm"  title="Delete User Subscription">  <i className="fas fa-trash-alt"></i></a> 
-        </Link>
-      ),
+    //     >
+    //     <a  className="btn btn-sm"  title="Delete User Subscription">  <i className="fas fa-trash-alt"></i></a> 
+    //     </Link>
+    //   ),
     ],
   },
 ];

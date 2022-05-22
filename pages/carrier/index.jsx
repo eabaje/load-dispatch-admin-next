@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, {useState, useContext, useEffect } from "react";
 
-import { useState } from "react";
+
 
 import { useRouter } from "next/router";
 import "react-data-table-component-extensions/dist/index.css";
@@ -11,17 +11,20 @@ import {
   listCarriersByCompany
 
 } from "../../context/actions/carrier/carrier.action";
-
+import dynamic from 'next/dynamic';
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify'
+import  Link  from "next/link";
 import Datatable from "../../components/datatable/datatable-m";
 
-function ListCarrier() {
- // const { companyId } = match.params; { history, match }
-  const router = useRouter()
-  const {
-    query:companyId
-  } = router
+
+
+function ListCarrier({query}) {
+  const { companyId } = query;
+  // const router = useRouter()
+  // const {
+  //   query:companyId
+  // } = router
  
  
   
@@ -71,7 +74,19 @@ function ListCarrier() {
             <li>Edit and delete Vehicle</li>
             <li>Assign Drivers to Vehicle</li>
           </ul>
+          <h1 className='my-5'>
+
+       <Link href='/carrier/carrier-action' passHref>
+                            <a className="mt-0 btn text-white float-right btn-danger">Create Carrier Info</a>
+                        </Link>
+
+          </h1>
+         
         </div>
+       
+      
+
+
         <Datatable loading={loading} col={columns(user)} data={
            companyId
            ? data.data?.filter(
@@ -87,4 +102,14 @@ function ListCarrier() {
   );
 }
 //Login.layout = "main";
-export default ListCarrier;
+//export default ListCarrier;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(ListCarrier), { ssr: false });

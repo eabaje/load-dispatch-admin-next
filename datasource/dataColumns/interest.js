@@ -1,11 +1,7 @@
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE, TRIP_STATUS } from "../../constants/enum";
 import { Country, State } from "country-state-city";
-// import {
-//   listShipments,
-//   showInterest,
-// } from "../../context/actions/shipment/shipment.action";
-import { useContext } from "react";
+
 export const columns = (params) => [
   {
     id: 1,
@@ -15,11 +11,12 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          to={"/user-profile/" + row.UserId}
-          className="btn btn-sm"
-          title="click to view carrier profile"
+          href={"/user/user-profile/?userId=" + row.UserId}
+         
         >
-          {row.User?.FullName}
+         
+          <a className="btn btn-sm"
+          title="click to view carrier profile"> {row.User?.FullName} </a>
         </Link>
       </>,
     ],
@@ -35,11 +32,11 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          to={"/list-shipment-info/isReadOnly/" + row.ShipmentId}
-          className="btn btn-sm"
-          title="click to shipment info"
+          href={"/shipment/?isReadOnly=" + row.ShipmentId}
+         
         >
-          {row.Shipment?.Description}
+         <a className="btn btn-sm"
+          title="click to shipment info">{row.Shipment?.Description}</a> 
         </Link>
       </>,
     ],
@@ -262,29 +259,29 @@ export const columns = (params) => [
     cell: (row) => [
       params?.roles !== "carrier" && (
         <Link
-          to={"/list-request-for-shipment/" + row.ShipmentId}
-          className="btn btn-sm"
-          title="Check shipment interests"
+          href={"/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId +"&isReadOnly=isReadOnly"}
+        
         >
-          <i className="first fas fa-check"></i>
+         <a  className="btn btn-sm"
+          title="Check shipment interests"> <i className="first fas fa-check"></i></a>
         </Link>
       ),
       params?.roles !== "shipper" && (
         <Link
-          to={"/place-interest-for-shipment/IsReadOnly/" + row.ShipmentId}
-          className="btn btn-sm"
-          title="Show shipment interests"
+          href={"/shipment/shipment-interest-list/?IsReadOnly=" + row.ShipmentId}
+         
         >
-          <i className="first fas fa-heart"></i>
+         <a  className="btn btn-sm"
+          title="Show shipment interests"> <i className="first fas fa-heart"></i></a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/ShipmentsInterested/" + row.ShipmentInterestId}
-          className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"
+          href={"/delete-data/?tbl=ShipmentsInterested&fld=ShipmentInterestId&val=" + row.ShipmentInterestId}
+         
         >
-          <i className="fas fa-trash-alt"></i>
+         <a className="btn btn-sm"
+          title="Delete/Archive (Redundant/Incorrect data)"> <i className="fas fa-trash-alt"></i></a>
         </Link>
       ),
     ],

@@ -1,5 +1,5 @@
 import {Form} from "react-bootstrap"
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 export const columns = (params) => [
   {
     id: 1,

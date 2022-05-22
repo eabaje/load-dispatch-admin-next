@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 export const columns = (params) => [
   {
     id: 1,
@@ -41,28 +41,28 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          to={"/edit-role/" + row.RoleId}
-          className="btn btn-sm"
-          title="Edit  Subscription"
+          href={"/user/role/?roleId=" + row.RoleId}
+         
         >
-          <Edit size={12} />
+         <a  className="btn btn-sm"
+          title="Edit  User Role"> <Edit size={12} /></a>
         </Link>
       </>,
 
       <Link
-        to={"/add-user-to-role/" + row.RoleId}
-        className="btn btn-sm"
-        title="Add User to Role"
+        href={"/add-user-to-role/" + row.RoleId}
+       
       >
-        <i className="first fas fa-user"></i>
+        <a  className="btn btn-sm"
+        title="Add User to Role"><i className="first fas fa-user"></i></a>
       </Link>,
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/Roles/" + row.RoleId}
-          className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"
+          href={"/delete-data/?tbl=Roles&fld=RoleId&val=" + row.RoleId}
+        
         >
-          <i className="fas fa-trash-alt"></i>
+          <a   className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a>
         </Link>
       ),
     ],

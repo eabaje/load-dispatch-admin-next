@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 import { Edit } from "react-feather";
-import { Link } from "react-router-dom";
+import  Link  from "next/link";
 import { ROLES } from "../../constants/enum";
 import { Country, State } from "country-state-city";
 export const columns = (params) => [
@@ -100,11 +100,11 @@ export const columns = (params) => [
       <>
         {" "}
         <Link
-          to={"/edit-company-info/" + row.CompanyId}
-          className="btn btn-sm"
-          title="Edit  Company"
+          href={"/company/?companyId=" + row.CompanyId}
+        
         >
-          <i className="first fas fa-pen"></i>
+        <a   className="btn btn-sm"
+          title="Edit  Company">  <i className="first fas fa-pen"></i></a>
         </Link>
       </>,
 
@@ -117,11 +117,11 @@ export const columns = (params) => [
       // </Link>,
       params?.roles === "admin" && (
         <Link
-          to={"/delete-data/Companys/" + row.CompanyId}
-          className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"
+          href={"/delete-data/?tbl=Companys&fld=CompanyId&val=" + row.CompanyId}
+         
         >
-          <i className="fas fa-trash-alt"></i>
+         <a  className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
         </Link>
       ),
     ],
