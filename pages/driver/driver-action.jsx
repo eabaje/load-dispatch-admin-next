@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import AddEditDriver from "../../components/form/driver/AddEditDriver";
+import dynamic from 'next/dynamic';
 
 
 const AddDriver=() => {

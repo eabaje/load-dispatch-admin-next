@@ -12,13 +12,14 @@ import {
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import Datatable from "../../components/datatable/datatable-m";
+import dynamic from 'next/dynamic';
 
-function ListCompany({ history, match }) {
+function ListCompany({ query }) {
 
   const router = useRouter()
   const {
-    query:companyId 
-  } = router
+    companyId 
+  } =query
  
 
   const [data2, setData] = useState([]);
@@ -86,5 +87,15 @@ function ListCompany({ history, match }) {
     </>
   );
 }
-Login.layout = "main";
-export default ListCompany;
+
+//export default ListCompany;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(ListCompany), { ssr: false });

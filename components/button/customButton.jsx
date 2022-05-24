@@ -7,6 +7,7 @@ function CustomButton(props) {
         {props.loading ? (
           <>
             {" "}
+           
             <i className="fa fa-spinner fa-spin"></i> Processing
           </>
         ) : props.isAddMode ? (

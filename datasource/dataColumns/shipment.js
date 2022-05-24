@@ -6,7 +6,7 @@ import { Country, State } from "country-state-city";
 export  const columns = (params) => [
   {
     id: 1,
-    name: `Name ${params?.UserId}`,
+    name: `Name`,
     selector: (row) => row.User.FullName,
     sortable: true,
     reorder: true,
@@ -232,8 +232,8 @@ export  const columns = (params) => [
     selector: "null",
     cell: (row) => [
       <></>,
-
-       (params?.roles === "admin"|| params?.roles === "carrier"|| params?.UserId === row?.UserId  ) && (
+//params?.roles === "admin"|| params?.roles === "carrier"|| 
+       (params?.UserId === row?.UserId  ) && (
         <Link
           href={"/shipment-action/?shipmentId=" + row.ShipmentId}
          

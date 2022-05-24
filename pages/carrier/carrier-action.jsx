@@ -6,21 +6,22 @@ import { GlobalContext } from "../../context/Provider";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import { AddEditCarrier } from "../../components/form/carrier/AddEditCarrier";
+import dynamic from 'next/dynamic';
 
-function AddCarrier() {
+function AddCarrier({query}) {
   const {
     authState: { user, isLoggedIn },
   } = useContext(GlobalContext);
 
-  const router = useRouter()
-  const {
-    query
-  } = router
+  // const router = useRouter()
+  // const {
+  //   query
+  // } = router
 
   return (
     <>
     <MainLayout>
-        <AddEditCarrier  match={query} />
+        <AddEditCarrier  query={query} />
     </MainLayout>
     </>
   );
@@ -30,4 +31,15 @@ function AddCarrier() {
 //   return { example }
 // }
 //AddCarrier.layout = "auth";
-export default AddCarrier;
+//export default AddCarrier;
+
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(AddCarrier), { ssr: false });

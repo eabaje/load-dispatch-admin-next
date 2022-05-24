@@ -10,16 +10,15 @@ import user from "../../context/reducers/user.reducer";
 import { fetchData } from "../../helpers/query";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
+import dynamic from 'next/dynamic';
 
 
-function AddTrack({ history, match }) {
-  const { tripId } = match.params;
-  const { shipmentId } = match.params;
-  const { trackId } = match.params;
-  const { isReadOnly } = match.params;
+function AddTrack({ query }) {
+  const { tripId, shipmentId,trackId, isReadOnly} = query;
+ 
   // const { SubscribeId } = match.params;
   const isAddMode = !tripId;
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+ 
   const [country, setCountry] = useState("");
   const [countries, setCountries] = useState([]);
   const [pickUpRegion, setPickUpRegion] = useState([]);
@@ -81,9 +80,7 @@ function AddTrack({ history, match }) {
         setselpickUpRegion(trip["PickUpRegion"]);
         setseldeliveryRegion(trip["DeliveryRegion"]);
       })((err) => {
-        enqueueSnackbar(err.message, {
-          variant: "error",
-        });
+        toast.error(err.message);
       });
     }
   }, []);
@@ -132,9 +129,7 @@ function AddTrack({ history, match }) {
 
     createTrip(formdata)(tripDispatch)((res) => {
       if (res) {
-        enqueueSnackbar("Created new Trip enytry successfully", {
-          variant: "success",
-        });
+        toast.success("Created new Trip enytry successfully");
       }
     })((err) => {
       toast.error(err);
@@ -144,9 +139,7 @@ function AddTrack({ history, match }) {
   function updateTrip(formdata, tripId) {
     editTrip(formdata, tripId)(tripDispatch)((res) => {
       if (res) {
-        enqueueSnackbar("Updated record successfully", {
-          variant: "success",
-        });
+        toast.success("Updated record successfully");
       }
     })((err) => {
       toast.error(err);
@@ -478,4 +471,16 @@ function AddTrack({ history, match }) {
   );
 }
 //AddTrack.layout = "main";
-export default AddTrack;
+//export default AddTrack;
+
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(AddTrack), { ssr: false });
+

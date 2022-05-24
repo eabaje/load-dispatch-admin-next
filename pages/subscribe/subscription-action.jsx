@@ -16,6 +16,7 @@ import WYSIWYGEditor from "../../components/wysiwyg/wysiwyg";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import AddEditSubscription from "../../components/form/subscribe/AddEditSubscription";
+import dynamic from 'next/dynamic';
 
 
 function AddSubscription() {

@@ -1,17 +1,15 @@
-import React, {useState, useContext, useEffect } from "react";s
+import React, {useState, useContext, useEffect } from "react";
 import { columns } from "../../datasource/dataColumns/user";
 import { GlobalContext } from "../../context/Provider";
 import { listUsers } from "../../context/actions/user/user.action";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import Datatable from "../../components/datatable/datatable-m";
+import dynamic from 'next/dynamic';
 
-
-function UserList() {
-  const router = useRouter()
-  const {
-    query:userId 
-  } = router
+function UserList({query}) {
+  // const router = useRouter()
+  const {userId } = query;
 
   const isSingleMode = !userId;
  
@@ -78,4 +76,14 @@ function UserList() {
   );
 }
 //Login.layout = "main";
-export default UserList;
+//export default UserList;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(UserList), { ssr: false });

@@ -32,3 +32,19 @@ export const fetchDataAll = (url) =>(onSucess) =>(onError)=> {
  
 };
 
+
+export const deleteData = (form) =>(onSucess) =>(onError)=> {
+  
+  axios.post(`${API_URL}delete/deleteRecord`, form)
+   .then((res)=>{
+
+   onSucess(res.data.data) ;
+
+  }).catch((err)=>{
+
+   onError(err)
+
+  })
+  
+ 
+};

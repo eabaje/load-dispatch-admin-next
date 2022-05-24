@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import MainLayout from "../../layout/mainLayout";
 import AddEditShipment from "../../components/form/shipment/AddEditShipment";
 import { GlobalContext } from "../../context/Provider";
+import dynamic from 'next/dynamic';
 
-function AddShipment() {
+function AddShipment({query}) {
 
-  const router = useRouter()
-  const {
-    query
-  } = router
+  // const router = useRouter()
+  // const {
+  //   query
+  // } = router
 
   // const { shipmentId } = match.params;
   // const { isReadOnly } = match.params;

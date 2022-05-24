@@ -44,8 +44,16 @@ export const columns = (params) => [
           title="List all Carrier Vehicle "><i className="first fas fa-truck"></i></a>
         </Link>
       
-      )
-      
+      ),
+      params?.roles === "admin" && (
+              <Link
+                href={"/delete-data/?tbl=Carriers&fld=CarrierId&val=" + row.CarrierId}
+               
+                passHref>
+               <a className="btn btn-sm"
+                title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
+              </Link>
+            ),
     ],
   },
   

@@ -15,14 +15,13 @@ import { columns } from "../../datasource/dataColumns/vehicle";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import Datatable from "../../components/datatable/datatable-m";
+import dynamic from 'next/dynamic';
 
+function ListVehicle({query}) {
 
-function ListVehicle() {
-
-  const router = useRouter()
-  const {
-    query:{companyId,vehicleId,carrierId,carrierType }
-  } = router
+  //const router = useRouter()
+  const {companyId,vehicleId,carrierId,carrierType }= query
+   
  
   const isAddMode = !vehicleId;
   
@@ -94,4 +93,14 @@ function ListVehicle() {
   );
 }
 //Login.layout = "main";
-export default ListVehicle;
+//export default ListVehicle;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(ListVehicle), { ssr: false });

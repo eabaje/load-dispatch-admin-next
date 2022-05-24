@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import AddEditUserRole from "../../components/form/user/AddEditUserRole";
 import dynamic from 'next/dynamic';
 
-function AddUserRole() {
+function AddUserRole({query}) {
   
   // const router = useRouter()
   // const {
