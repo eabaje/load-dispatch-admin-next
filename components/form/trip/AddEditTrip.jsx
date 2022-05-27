@@ -15,7 +15,7 @@ import { fetchData } from "../../../helpers/query";
 import { toast } from 'react-toastify';
 
 
-const AddEditTrip = (query) => {
+const AddEditTrip = ({query}) => {
   const { tripId,shipmentId, Istrackable,isReadOnly } = query;
   
   // const { SubscribeId } = match.params;

@@ -106,21 +106,22 @@ export const columns = (params) => [
         <a   className="btn btn-sm"
           title="Edit  Company">  <i className="first fas fa-pen"></i></a>
         </Link>
-      </>,
 
-      // <Link
-      //   to={"/add-vehicle-to-carrier/" + row.CarrierId}
-      //   className="btn btn-sm"
-      //   title="Assign Driver to Vehicle"
-      // >
-      //   <i className="first fas fa-user"></i>
-      // </Link>,
+      
+      </>,
+        params?.roles === "admin" && (
+          <Link
+            href={"/company/?review=true&companyId=" + row.CompanyId}
+           
+          >
+           <a  className="btn btn-sm"
+            title="Review Company Info"> <i className="fas fa-wrench"></i></a>
+          </Link>
+        ),
       params?.roles === "admin" && (
         <Link
-          href={"/delete-data/?tbl=Companys&fld=CompanyId&val=" + row.CompanyId}
-         
-        >
-         <a  className="btn btn-sm"
+          href={"/delete-data/?tbl=Companys&fld=CompanyId&val=" + row.CompanyId} >
+          <a  className="btn btn-sm"
           title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
         </Link>
       ),

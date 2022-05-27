@@ -22,7 +22,7 @@ import { createPayment } from "../../../context/actions/payment/payment.action";
 import { toast } from 'react-toastify';
 
 
-const AddEditUserSubscription = (query) => {
+const AddEditUserSubscription = ({query}) => {
   const { userSubscriptionId,  userId,action} = query
   
   const isAddMode = !userId;

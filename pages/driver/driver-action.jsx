@@ -8,13 +8,13 @@ import AddEditDriver from "../../components/form/driver/AddEditDriver";
 import dynamic from 'next/dynamic';
 
 
-const AddDriver=() => {
+const AddDriver=({query}) => {
   
   // const onSubmit = (data) => console.log(data);
-  const router = useRouter()
-  const {
-    query
-  } = router
+  // const router = useRouter()
+  // const {
+  //   query
+  // } = router
 
 
   const {
@@ -69,4 +69,14 @@ const AddDriver=() => {
   );
 }
 //Login.layout = "main";
-export default AddDriver;
+//export default AddDriver;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(AddDriver), { ssr: false });

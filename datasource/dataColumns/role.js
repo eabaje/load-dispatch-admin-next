@@ -1,39 +1,6 @@
 import  Link  from "next/link";
 export const columns = (params) => [
   {
-    id: 1,
-    name: "RoleId",
-    selector: (row) => row.RoleId,
-    sortable: true,
-    reorder: true,
-  },
-  {
-    id: 2,
-    name: "Name",
-    selector: (row) => row.Name,
-    sortable: true,
-    reorder: true,
-  },
-
-  {
-    id: 12,
-    name: "Created Date",
-    selector: (row) => row.createdAt,
-    sortable: true,
-    right: true,
-    reorder: true,
-  },
-
-  {
-    id: 13,
-    name: "Updated Date",
-    selector: (row) => row.updatedAt,
-    sortable: true,
-    right: true,
-    reorder: true,
-  },
-
-  {
     name: "Action",
     sortable: false,
     selector: "null",
@@ -67,4 +34,38 @@ export const columns = (params) => [
       ),
     ],
   },
+  {
+    id: 1,
+    name: "RoleId",
+    selector: (row) => row.RoleId,
+    sortable: true,
+    reorder: true,
+  },
+  {
+    id: 2,
+    name: "Name",
+    selector: (row) => row.Name,
+    sortable: true,
+    reorder: true,
+  },
+
+  {
+    id: 12,
+    name: "Created Date",
+    selector: (row) => row.createdAt,
+    sortable: true,
+    right: true,
+    reorder: true,
+  },
+
+  {
+    id: 13,
+    name: "Updated Date",
+    selector: (row) => row.updatedAt,
+    sortable: true,
+    right: true,
+    reorder: true,
+  },
+
+ 
 ];

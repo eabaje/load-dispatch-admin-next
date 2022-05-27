@@ -11,7 +11,7 @@ import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 
 
-const AddEditTrack = (query) => {
+const AddEditTrack = ({query}) => {
 
   const { tripId,shipmentId,trackId,isReadOnly } = query;
  

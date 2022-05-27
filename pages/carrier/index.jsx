@@ -3,7 +3,7 @@ import React, {useState, useContext, useEffect } from "react";
 
 
 import { useRouter } from "next/router";
-import "react-data-table-component-extensions/dist/index.css";
+
 import { columns } from "../../datasource/dataColumns/carrier";
 import { GlobalContext } from "../../context/Provider";
 import {
@@ -16,8 +16,9 @@ import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify'
 import  Link  from "next/link";
 import Datatable from "../../components/datatable/datatable-m";
-
-
+// import "react-data-table-component-extensions/dist/index.css";
+// import DataTable from "react-data-table-component";
+// import DataTableExtensions from "react-data-table-component-extensions";
 
 function ListCarrier({query}) {
   const { companyId } = query;
@@ -67,7 +68,7 @@ function ListCarrier({query}) {
     <MainLayout>
     <div className="col-sm-12">
       <div className="card">
-        <div className="card-header alert alert-info">
+        <div className="card-header alert alert-dark">
           <h4>View List of carriers</h4>
           <hr />
           <ul>
@@ -76,9 +77,9 @@ function ListCarrier({query}) {
           </ul>
           <h1 className='my-5'>
 
-       <Link href='/carrier/carrier-action' passHref>
-                            <a className="mt-0 btn text-white float-right btn-danger">Create Carrier Info</a>
-                        </Link>
+       <Link href='/carrier/carrier-action/' >
+        <a className="mt-0 btn text-white float-right btn-info">Create Carrier Info</a>
+       </Link>
 
           </h1>
          

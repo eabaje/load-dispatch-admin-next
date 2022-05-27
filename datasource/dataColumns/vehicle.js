@@ -3,6 +3,41 @@ import  Link  from "next/link";
 import { LOAD_TYPE } from "../../constants/enum";
 export const columns = (params) => [
   {
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      (params?.roles === "carrier" ) && (
+        <Link
+          href={"/vehicle/vehicle-action/?vehicleId=" + row.VehicleId}
+          
+        >
+            <a className="btn btn-sm"
+          title="Edit  Vehcile">
+          <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+      params?.roles === "carrier" && (
+        <Link
+          href={"/vehicle/vehicle-action/?companyId="+ row.CompanyId+ "&vehicleId=" + row.VehicleId + "&driverId=driver"}
+         
+        >
+         <a  className="btn btn-sm"
+          title="Assign Driver to Vehicle"> <i className="first fas fa-user"></i></a>
+        </Link>
+      ),
+      params?.roles === "admin" && (
+        <Link
+          href={"/delete-data/?tbl=Vehicles&fld=VehcleId&val=" + row.VehicleId}
+        
+        >
+          <a   className="btn btn-sm"
+          title="Delete/Archive (Redundant/Incorrect data)"><i className="fas fa-trash-alt"></i></a>
+        </Link>
+      ),
+    ],
+  },
+  {
     id: 1,
     name: "Carrier Name",
     selector: (row) => row.Carrier.CarrierType,
@@ -113,39 +148,5 @@ export const columns = (params) => [
     reorder: true,
   }),
 
-  {
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      (params?.roles === "carrier" ) && (
-        <Link
-          href={"/vehicle/vehicle-action/?vehicleId=" + row.VehicleId}
-          
-        >
-            <a className="btn btn-sm"
-          title="Edit  Vehcile">
-          <i className="first fas fa-pen"></i></a>
-        </Link>
-      ),
-      params?.roles === "carrier" && (
-        <Link
-          href={"/vehicle/vehicle-action/?companyId="+ row.CompanyId+ "&vehicleId=" + row.VehicleId + "&driverId=driver"}
-         
-        >
-         <a  className="btn btn-sm"
-          title="Assign Driver to Vehicle"> <i className="first fas fa-user"></i></a>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          href={"/delete-data/?tbl=Vehicles&fld=VehcleId&val=" + row.VehicleId}
-        
-        >
-          <a   className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"><i className="fas fa-trash-alt"></i></a>
-        </Link>
-      ),
-    ],
-  },
+  
 ];

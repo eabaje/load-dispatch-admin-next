@@ -4,6 +4,41 @@ import { Country, State } from "country-state-city";
 
 export const columns = (params) => [
   {
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      params?.roles !== "carrier" && (
+        <Link
+          href={"/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId +"&isReadOnly=isReadOnly"}
+        
+        >
+         <a  className="btn btn-sm"
+          title="Check shipment interests"> <i className="first fas fa-check"></i></a>
+        </Link>
+      ),
+      params?.roles !== "shipper" && (
+        <Link
+          href={"/shipment/shipment-interest-list/?IsReadOnly=" + row.ShipmentId}
+         
+        >
+         <a  className="btn btn-sm"
+          title="Show shipment interests"> <i className="first fas fa-heart"></i></a>
+        </Link>
+      ),
+      params?.roles === "admin" && (
+        <Link
+          href={"/delete-data/?tbl=ShipmentsInterested&fld=ShipmentInterestId&val=" + row.ShipmentInterestId}
+         
+        >
+         <a className="btn btn-sm"
+          title="Delete/Archive (Redundant/Incorrect data)"> <i className="fas fa-trash-alt"></i></a>
+        </Link>
+      ),
+    ],
+  },
+ 
+  {
     id: 1,
     name: "Interested Carrier",
     selector: (row) => row.User?.FullName,
@@ -252,40 +287,7 @@ export const columns = (params) => [
 
   //   ),
 
-  {
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      params?.roles !== "carrier" && (
-        <Link
-          href={"/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId +"&isReadOnly=isReadOnly"}
-        
-        >
-         <a  className="btn btn-sm"
-          title="Check shipment interests"> <i className="first fas fa-check"></i></a>
-        </Link>
-      ),
-      params?.roles !== "shipper" && (
-        <Link
-          href={"/shipment/shipment-interest-list/?IsReadOnly=" + row.ShipmentId}
-         
-        >
-         <a  className="btn btn-sm"
-          title="Show shipment interests"> <i className="first fas fa-heart"></i></a>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          href={"/delete-data/?tbl=ShipmentsInterested&fld=ShipmentInterestId&val=" + row.ShipmentInterestId}
-         
-        >
-         <a className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"> <i className="fas fa-trash-alt"></i></a>
-        </Link>
-      ),
-    ],
-  },
+  
 ];
 
 // function ShowInterest(ShipmentId, userId) {

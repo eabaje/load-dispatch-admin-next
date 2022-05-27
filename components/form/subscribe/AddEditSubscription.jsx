@@ -16,7 +16,7 @@ import WYSIWYGEditor from "../../../components/wysiwyg/wysiwyg";
 import { toast } from 'react-toastify';
 
 
-const AddEditSubscription = (query) => {
+const AddEditSubscription = ({query}) => {
   const { subscribeId } =query;
   const isAddMode = !subscribeId;
  

@@ -3,12 +3,13 @@ import { useRouter } from "next/router"
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 import DetailDriver from "../../components/form/carrier/DetailDriver";
+import dynamic from 'next/dynamic'
 
-function DriverDetail() {
-  const router = useRouter()
-  const {
-    query
-  } = router
+function DriverDetail({query}) {
+  // const router = useRouter()
+  // const {
+  //   query
+  // } = router
  
 
  
@@ -22,4 +23,14 @@ function DriverDetail() {
 }
 
 //Login.layout = "main";
-export default DriverDetail;
+//export default DriverDetail;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(DriverDetail), { ssr: false });

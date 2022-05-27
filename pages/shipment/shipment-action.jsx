@@ -47,4 +47,14 @@ function AddShipment({query}) {
   );
 }
 //Login.layout = "main";
-export default AddShipment;
+//export default AddShipment;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(AddShipment), { ssr: false });

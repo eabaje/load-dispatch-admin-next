@@ -22,7 +22,7 @@ import UpdateFileUpload from "../../components/upload/edit-file-upload";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
 
-const AddEditDriver = (query) => {
+const AddEditDriver = ({query}) => {
     const { driverId } = query;
     const isAddMode = !driverId;
     let imgPath = "";

@@ -22,7 +22,7 @@ import UploadImages from "../../../components/upload/image-upload";
 import { toast } from 'react-toastify';
 import { GlobalContext } from "../../../context/Provider";
 
-const AddEditShipment = (query) => {
+const AddEditShipment = ({query}) => {
   const { shipmentId,  isReadOnly} = query;
   
   // const { SubscribeId } = match.params;

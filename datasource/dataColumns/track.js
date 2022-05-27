@@ -1,6 +1,39 @@
 import  Link  from "next/link";
 export const columns = (params) => [
   {
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      <>
+        {" "}
+        <Link
+          href={"/trip/track-info/?trackId=" + row.TrackId}
+         
+        >
+         <a className="btn btn-sm"
+          title="Update Track Info"> <i className="first fas fa-pen"></i></a>
+        </Link>
+      </>,
+
+      //   <Link
+      //     to={"/add-vehicle-to-carrier/" + row.CarrierId}
+      //     className="btn btn-sm"
+      //     title="Assign Driver to Vehicle"
+      //   >
+      //     <i className="first fas fa-user"></i>
+      //   </Link>,
+
+      //   <Link
+      //     to={"/delete-data/" + row.CarrierId}
+      //     className="btn btn-sm"
+      //     title="Delete/Archive Redundant/Incorrect data"
+      //   >
+      //     <i className="fas fa-trash-alt"></i>
+      //   </Link>,
+    ],
+  },
+  {
     id: 1,
     name: "Status",
     selector: (row) => row.Status,
@@ -55,37 +88,5 @@ export const columns = (params) => [
     reorder: true,
   },
 
-  {
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      <>
-        {" "}
-        <Link
-          href={"/trip/track-info/?trackId=" + row.TrackId}
-         
-        >
-         <a className="btn btn-sm"
-          title="Update Track Info"> <i className="first fas fa-pen"></i></a>
-        </Link>
-      </>,
-
-      //   <Link
-      //     to={"/add-vehicle-to-carrier/" + row.CarrierId}
-      //     className="btn btn-sm"
-      //     title="Assign Driver to Vehicle"
-      //   >
-      //     <i className="first fas fa-user"></i>
-      //   </Link>,
-
-      //   <Link
-      //     to={"/delete-data/" + row.CarrierId}
-      //     className="btn btn-sm"
-      //     title="Delete/Archive Redundant/Incorrect data"
-      //   >
-      //     <i className="fas fa-trash-alt"></i>
-      //   </Link>,
-    ],
-  },
+ 
 ];

@@ -17,7 +17,7 @@ import UploadImages from "../../../components/upload/image-upload";
 import { toast } from 'react-toastify';
 
 
-const AddEditVehicle = (query) =>  {
+const AddEditVehicle = ({query}) =>  {
 
 
   const { vehicleId,companyId,carrierId,carrierType,driverId } = query;

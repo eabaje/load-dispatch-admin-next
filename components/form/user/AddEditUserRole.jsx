@@ -3,27 +3,25 @@ import { Controller, useForm, useController } from "react-hook-form";
 
 import { GlobalContext } from "../../../context/Provider";
 import {
-  LOAD_TYPE,
-  LOAD_CAPACITY,
-  LOAD_UNIT,
+  
   ROLES,
-} from "../../constants/enum";
+} from "../../../constants/enum";
 import { fetchData, fetchDataAll } from "../../../helpers/query";
-import { Editor } from "draft-js";
+// import { Editor } from "draft-js";
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import WYSIWYGEditor from "../../../components/wysiwyg/wysiwyg";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
+// import WYSIWYGEditor from "../../../components/wysiwyg/wysiwyg";
 import {
   subcribeUser,
   updateUserRole,
   updateUserSubscription,
-} from "../../context/actions/user/user.action";
-import MainLayout from "../../layout/mainLayout";
+} from "../../../context/actions/user/user.action";
+
 import { toast } from 'react-toastify';
 
 
-const AddEditUserRole = (query) => {
+const AddEditUserRole = ({query}) => {
   const { userSubscriptionId,userId,action } = query;
  
   const isAddMode = !userId;

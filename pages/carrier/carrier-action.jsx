@@ -5,13 +5,13 @@ import { GlobalContext } from "../../context/Provider";
 
 import MainLayout from "../../layout/mainLayout";
 import { toast } from 'react-toastify';
-import { AddEditCarrier } from "../../components/form/carrier/AddEditCarrier";
+import  {AddEditCarrier}  from "../../components/form/carrier/AddEditCarrier";
 import dynamic from 'next/dynamic';
 
 function AddCarrier({query}) {
-  const {
-    authState: { user, isLoggedIn },
-  } = useContext(GlobalContext);
+  // const {
+  //   authState: { user, isLoggedIn },
+  // } = useContext(GlobalContext);
 
   // const router = useRouter()
   // const {
@@ -19,11 +19,11 @@ function AddCarrier({query}) {
   // } = router
 
   return (
-    <>
+   
     <MainLayout>
         <AddEditCarrier  query={query} />
     </MainLayout>
-    </>
+   
   );
 }
 

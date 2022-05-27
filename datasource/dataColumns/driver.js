@@ -4,6 +4,41 @@ import { Country, State } from "country-state-city";
 
 export const columns = (params) => [
   {
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      <>
+        {" "}
+        <Link
+          href={"/driver/driver-action/?driverId=" + row.DriverId}
+         
+        >
+         <a className="btn btn-sm"
+          title="Edit  Driver Info"> <i className="first fas fa-pen"></i></a>
+        </Link>
+      </>,
+
+      <Link
+        href={"/vehicle/?companyId=" + row.CompanyId }
+      
+      >
+       <a  className="btn btn-sm"
+        title="Assign driver to vehicle"> <i className="first fas fa-car"></i></a>
+      </Link>,
+      params?.roles === "admin" && (
+        <Link
+          href={"/delete-data/?tbl=Drivers&fld=DriverId&val=" + row.DriverId}
+         
+        >
+         <a className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a> 
+        </Link>
+      ),
+    ],
+  },
+  
+  {
     id: 1,
     name: "Company",
     selector: (row) => row.Company?.CompanyName,
@@ -127,38 +162,5 @@ export const columns = (params) => [
     reorder: true,
   },
 
-  {
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      <>
-        {" "}
-        <Link
-          href={"/driver/driver-action/?driverId=" + row.DriverId}
-         
-        >
-         <a className="btn btn-sm"
-          title="Edit  Driver Info"> <i className="first fas fa-pen"></i></a>
-        </Link>
-      </>,
 
-      <Link
-        href={"/vehicle/?companyId=" + row.CompanyId }
-      
-      >
-       <a  className="btn btn-sm"
-        title="Assign driver to vehicle"> <i className="first fas fa-car"></i></a>
-      </Link>,
-      params?.roles === "admin" && (
-        <Link
-          href={"/delete-data/?tbl=Drivers&fld=DriverId&val=" + row.DriverId}
-         
-        >
-         <a className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a> 
-        </Link>
-      ),
-    ],
-  },
 ];

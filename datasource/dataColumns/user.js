@@ -3,6 +3,54 @@ import { Country, State } from "country-state-city";
 import  Link  from "next/link";
 export const columns = (params) => [
   {
+    id: 14,
+    key:14,
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      params?.roles === "admin" && (
+        <Link
+          href={"/user/?userId=" + row["UserId"]}
+        
+        >
+         <a   className="btn btn-sm"
+          title="Edit  User Info"> <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+      params?.roles === "admin" && (
+        <Link
+          href={"/company/review-company-action?companyId=" + row["Company"].CompanyId}
+         
+        >
+          <a className="btn btn-sm"
+          title="Reveiw Company Info"><i className="first fas fa-cog"></i></a>
+        </Link>
+      ),
+      params?.roles === "admin" && (
+        <Link
+          href={"/user/user-role-action/?userId=" + row["UserId"]}
+       
+        >
+          <a    className="btn btn-sm"
+          title="Update User Role"><i className="first fas fa-user"></i></a>
+        </Link>
+      ),
+      params?.roles === "admin" && (
+        <Link
+          href={"/delete-data/?tbl=Users&fld=UserId&val=" + row["UserId"]}>
+          <a  className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a>
+         </Link>
+         
+       
+      )
+
+
+    ],
+  },
+{},
+  {
     id: 1,
     key:1,
     name: "FullName",
@@ -136,49 +184,5 @@ export const columns = (params) => [
     reorder: true,
   },
 
-  {
-    id: 14,
-    key:14,
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      params?.roles === "admin" && (
-        <Link
-          href={"/user/?userId=" + row["UserId"]}
-        
-        >
-         <a   className="btn btn-sm"
-          title="Edit  User Info"> <i className="first fas fa-pen"></i></a>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          href={"/company/?companyId=" + row["Company"].CompanyId}
-         
-        >
-          <a className="btn btn-sm"
-          title="List Company Info"><i className="first fas fa-cog"></i></a>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          href={"/user/user-role-action/?userId=" + row["UserId"]}
-       
-        >
-          <a    className="btn btn-sm"
-          title="Update User Role"><i className="first fas fa-person"></i></a>
-        </Link>
-      ),
-      params?.roles === "admin" && (
-        <Link
-          href={"/delete-data/?tbl=Users&fld=UserId&val=" + row["UserId"]}
-         
-        >
-          <a  className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"><i className="fas fa-trash-alt"></i></a>
-        </Link>
-      ),
-    ],
-  },
+ 
 ];

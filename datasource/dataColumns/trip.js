@@ -1,5 +1,39 @@
 import  Link  from "next/link";
 export const columns = (params) => [
+  
+  {
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      (params?.roles === "driver" || params?.roles === "admin") && (
+        <Link
+          href={"/trip/trip-action/?tripId=" + row.TripId}
+         
+        >
+         <a  className="btn btn-sm"
+          title="Edit Trip Info"> <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+
+      <Link
+        href={"/trip/?tripId=" + row.TripId}
+       
+      >
+       <a  className="btn btn-sm"
+        title="Track Trip"> <i className="first fas fa-truck-moving"></i></a>
+      </Link>,
+      params?.roles === "admin" && (
+        <Link
+          href={"/delete-data/?tbl=Vehicles&fld=VehicleId&val=" + row.VehicleId}
+         
+        >
+         <a className="btn btn-sm"
+          title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
+        </Link>
+      ),
+    ],
+  },
   {
     id: 1,
     name: "Driver Name",
@@ -128,37 +162,4 @@ export const columns = (params) => [
     reorder: true,
   },
 
-  {
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      (params?.roles === "driver" || params?.roles === "admin") && (
-        <Link
-          href={"/trip/trip-action/?tripId=" + row.TripId}
-         
-        >
-         <a  className="btn btn-sm"
-          title="Edit Trip Info"> <i className="first fas fa-pen"></i></a>
-        </Link>
-      ),
-
-      <Link
-        href={"/trip/?tripId=" + row.TripId}
-       
-      >
-       <a  className="btn btn-sm"
-        title="Track Trip"> <i className="first fas fa-truck-moving"></i></a>
-      </Link>,
-      params?.roles === "admin" && (
-        <Link
-          href={"/delete-data/?tbl=Vehicles&fld=VehicleId&val=" + row.VehicleId}
-         
-        >
-         <a className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
-        </Link>
-      ),
-    ],
-  },
 ];

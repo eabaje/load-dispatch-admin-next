@@ -2,6 +2,44 @@ import {Form} from "react-bootstrap"
 import  Link  from "next/link";
 export const columns = (params) => [
   {
+    name: "Action",
+    sortable: false,
+    selector: "null",
+    cell: (row) => [
+      params?.roles === "carrier"  && (
+        <Link
+          href={
+            "/user/user-subscription-action/?userSubscriptionId=" +
+            row.UserSubscriptionId +
+            "&userId=" +
+            row.UserId
+          }
+         
+        >
+         <a  className="btn btn-sm"
+          title="Edit User Subscription"> <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+      (params?.roles.toString() === "admin") && (
+        <Link
+           href={"/user/list-user-subscription/?subscribeId=" + row.UserSubscriptionId}
+        
+         
+        >
+        <a  className="btn btn-sm"  title="Edit User Subscription">   <i className="first fas fa-pen"></i></a>
+        </Link>
+      ),
+     ( params?.roles.toString() === "admin") && (
+        <Link
+           href={"/delete-data/?tbl=UserSubscriptions&fld=UserSubscriptionId&val=" + row.UserSubscriptionId}
+          
+        >
+        <a  className="btn btn-sm"  title="Delete User Subscription">  <i className="fas fa-trash-alt"></i></a> 
+        </Link>
+      ),
+    ],
+  },
+  {
     id: 1,
     name: "Subscription Name",
     selector: (row) => row.SubscriptionName,
@@ -48,42 +86,5 @@ export const columns = (params) => [
     reorder: true,
   },
 
-  {
-    name: "Action",
-    sortable: false,
-    selector: "null",
-    cell: (row) => [
-      params?.roles === "carrier"  && (
-        <Link
-          href={
-            "/user/user-subscription-action/?userSubscriptionId=" +
-            row.UserSubscriptionId +
-            "&userId=" +
-            row.UserId
-          }
-         
-        >
-         <a  className="btn btn-sm"
-          title="Edit User Subscription"> <i className="first fas fa-pen"></i></a>
-        </Link>
-      ),
-      (params?.roles.toString() === "admin") && (
-        <Link
-           href={"/user/list-user-subscription/?subscribeId=" + row.UserSubscriptionId}
-        
-         
-        >
-        <a  className="btn btn-sm"  title="Edit User Subscription">   <i className="first fas fa-pen"></i></a>
-        </Link>
-      ),
-     ( params?.roles.toString() === "admin") && (
-        <Link
-           href={"/delete-data/?tbl=UserSubscriptions&fld=UserSubscriptionId&val=" + row.UserSubscriptionId}
-          
-        >
-        <a  className="btn btn-sm"  title="Delete User Subscription">  <i className="fas fa-trash-alt"></i></a> 
-        </Link>
-      ),
-    ],
-  },
+ 
 ];

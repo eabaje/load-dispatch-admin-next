@@ -19,14 +19,14 @@ import AddEditSubscription from "../../components/form/subscribe/AddEditSubscrip
 import dynamic from 'next/dynamic';
 
 
-function AddSubscription() {
+function AddSubscription({query}) {
 
-  const router = useRouter()
-  const {
-    query
-  } = router
+  // const router = useRouter()
+  // const {
+  //   query
+  // } = router
  
-  const { subscribeId } = match.params;
+  const { subscribeId } = query;
   const isAddMode = !subscribeId;
  
 
@@ -46,4 +46,14 @@ function AddSubscription() {
   );
 }
 //AddSubscription.layout = "main";
-export default AddSubscription;
+//export default AddSubscription;
+export async function getServerSideProps({ query }) {
+  
+  return {
+    props: { query },
+  };
+
+ 
+}
+
+export default dynamic(() => Promise.resolve(AddSubscription), { ssr: false });

@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { createContext, useContext } from "react";
+
 import GlobalProvider from "../context/Provider";
 import Slide from "@material-ui/core/Slide";
 // function MyApp({ Component, pageProps }) {

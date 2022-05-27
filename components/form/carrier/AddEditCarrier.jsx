@@ -19,9 +19,9 @@ import { fetchData } from "../../../helpers/query";
 import Rating from "../../../components/rating/Rating";
 import MainLayout from "../../../layout/mainLayout";
 import { toast } from 'react-toastify';
-
-export const AddEditCarrier = ({ query }) =>  {
-  const { carrierId } = query;
+import dynamic from 'next/dynamic';
+export  const AddEditCarrier = ({ query }) =>  {
+ const { carrierId } = query;
 
   const isAddMode = !carrierId;
  
@@ -107,7 +107,7 @@ export const AddEditCarrier = ({ query }) =>  {
 
 
   return (
-   <>
+  
      <div className="col-md-12">
         <div className="card">
           <div className="card-header alert alert-info">
@@ -295,7 +295,8 @@ export const AddEditCarrier = ({ query }) =>  {
           </div>
         </div>
       </div>
-   </>
+  
   )
 }
 
+//export default dynamic(() => Promise.resolve(AddEditCarrier), { ssr: false });

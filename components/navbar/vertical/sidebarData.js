@@ -5,7 +5,7 @@
 const menuItemsPublic = (user) => [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/",
     icon: "first fas fa-home",
   },
   {
@@ -20,7 +20,7 @@ const menuItemsPublic = (user) => [
 const menuItemsAudit = (user) => [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/",
     icon: "first fas fa-home",
   },
   {
@@ -36,7 +36,7 @@ const menuItemsAudit = (user) => [
 const menuItemsDriver = (user) => [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/",
     icon: "first fas fa-home",
   },
   {
@@ -69,7 +69,7 @@ const menuItemsDriver = (user) => [
 const menuItemsShipper = (user) => [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/",
     icon: "first fas fa-home",
   },
   {
@@ -97,7 +97,7 @@ const menuItemsShipper = (user) => [
 const menuItemsCarrier = (user) => [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/",
     icon: "first fas fa-home",
   },
   
@@ -173,7 +173,7 @@ const menuItemsCarrier = (user) => [
 const menuItemsAdmin = (user) => [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/",
     icon: "first fas fa-home",
   },
   {

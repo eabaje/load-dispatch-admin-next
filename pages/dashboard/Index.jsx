@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import { GlobalContext } from "../../context/Provider";
-
 import {
   listShipments,
   listShipmentsInterest,
@@ -9,7 +7,6 @@ import {
 import NewsFlash from "../../components/home/newsFlash";
 //import TickerFeed from "../../components/home/tickerFeed";
 import SideLink from "../../components/home/sideLink";
-import isAuthenticated from "../../utils/isAuthenticated";
 import MainLayout from "../../layout/mainLayout";
 import dynamic from 'next/dynamic';
 

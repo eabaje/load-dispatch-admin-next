@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DetailDriver = (query) => {
+const DetailDriver = ({query}) => {
     const { driverId ,vehicleId} = query;
     const [profile, setProfile] = useState({});
     const [refId, setRefId] = useState();
