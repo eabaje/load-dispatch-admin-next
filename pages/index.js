@@ -6,10 +6,10 @@ import React from "react";
 
 import { useContext, useState } from "react";
 import { GlobalContext } from "../context/Provider";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 import { signin2 } from "../context/actions/auth/auth.action";
 import AuthLayout from "../layout/authLayout";
 
@@ -44,75 +44,75 @@ function Login() {
     //  console.log("state:", formdata);
 
     signin2(formdata)(authDispatch)((res) => {
+      res.user.isConfirmed === true
+        ? res.user.isActivated === true
+          ? router.push(`/dashboard/`)
+          : res.user.roles === "carrier"
+          ? (window.location.href = `/carrier/`)
+          : res.user.roles === "shipper"
+          ? (window.location.href = `/shipment/`)
+          : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}`)
+        : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}`);
 
-      res.user.isActivated===true ?
-       router.push(`/dashboard`)
-       : res.user.roles==='carrier'? window.location.href =`/carrier/`
-       : res.user.roles==='shipper'? window.location.href =`/shipment/`
-       : window.location.href =`/user/user-profile/?userId=${res.user.UserId}`;
-
-    //  window.location.href = '/dashboard/'
-     // history.push("/dashboard");
+      //  window.location.href = '/dashboard/'
+      // history.push("/dashboard");
     })((err) => {
       console.log(`err`, err);
       toast.error(err);
-   
     });
   };
 
   return (
     <AuthLayout>
-      
-        <form onSubmit={handleSubmit(SubmitForm)}>
-          <div className="form-group mb-3">
-            {/* <label className="floating-label">Email address</label> */}
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Email address"
-              name="Email"
-              {...register("Email", {
-                required: true,
-              })}
-              required
-            />
-          </div>
-          <div className="form-group mb-4">
-            {/* <label className="floating-label">Password</label> */}
-            <input
-              type="password"
-              className="form-control"
-               placeholder="Password"
-              name="Password"
-              {...register("Password")}
-              required
-            />
-          </div>
-          <div className="custom-control custom-checkbox text-left mb-4 mt-2">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label">Save credentials.</label>
-          </div>
-          <button className="btn btn-block btn-primary mb-4">
-            {loading && <i classNameName="fa fa-spinner fa-spin"></i>} Signin
-          </button>
-          <p className="mb-2 text-muted">
-            Forgot password?{" "}
-            <a href="auth-reset-password.html" className="f-w-400">
-              Reset
-            </a>
-          </p>
-          <p className="mb-0 text-muted">
-            Don’t have an account?{" "}
-            <a href="   `" className="f-w-400">
-              Signup
-            </a>
-          </p>
-        </form>
-     
+      <form onSubmit={handleSubmit(SubmitForm)}>
+        <div className="form-group mb-3">
+          {/* <label className="floating-label">Email address</label> */}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Email address"
+            name="Email"
+            {...register("Email", {
+              required: true,
+            })}
+            required
+          />
+        </div>
+        <div className="form-group mb-4">
+          {/* <label className="floating-label">Password</label> */}
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Password"
+            name="Password"
+            {...register("Password")}
+            required
+          />
+        </div>
+        <div className="custom-control custom-checkbox text-left mb-4 mt-2">
+          <input
+            type="checkbox"
+            className="custom-control-input"
+            id="customCheck1"
+          />
+          <label className="custom-control-label">Save credentials.</label>
+        </div>
+        <button className="btn btn-block btn-primary mb-4">
+          {loading && <i classNameName="fa fa-spinner fa-spin"></i>} Signin
+        </button>
+        <p className="mb-2 text-muted">
+          Forgot password?{" "}
+          <a href="auth-reset-password.html" className="f-w-400">
+            Reset
+          </a>
+        </p>
+        <p className="mb-0 text-muted">
+          Don’t have an account?{" "}
+          <a href="   `" className="f-w-400">
+            Signup
+          </a>
+        </p>
+      </form>
     </AuthLayout>
   );
 }

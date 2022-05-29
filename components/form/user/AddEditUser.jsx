@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { IMG_URL } from "../../../constants";
 import { useForm, Controller } from "react-hook-form";
 
@@ -11,7 +11,6 @@ import {
   editUser,
   resetPassword,
   updateCompany,
- 
 } from "../../../context/actions/user/user.action";
 
 import ImageUpload from "../../../components/upload/uploadImage";
@@ -21,17 +20,15 @@ import CustomButton from "../../../components/button/customButton";
 import { SPECIALIZATION_TYPE } from "../../../constants/enum";
 import CustomPopup from "../../../components/popup/popup.component";
 import UpdateUserFileUpload from "../../../components/upload/edit-user-file-upload";
-import { toast } from 'react-toastify';
-import dynamic from 'next/dynamic';
+import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
 
-
-const AddEditUser = ({query}) => {
+const AddEditUser = ({ query }) => {
   const { userId } = query;
 
   const isSingleMode = !userId;
 
- 
-   const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState({});
   const [companyInfo, setCompanyInfo] = useState({});
 
   const isAddMode = !userId;
@@ -67,7 +64,7 @@ const AddEditUser = ({query}) => {
   // Error Component
   const errorMessage = (error) => {
     return (
-      <p class="invalid-feedback" style={{ color: "red" }}>
+      <p className="invalid-feedback" style={{ color: "red" }}>
         {error}
       </p>
     );
@@ -125,7 +122,7 @@ const AddEditUser = ({query}) => {
   } = useContext(GlobalContext);
   const {
     authState: { user },
-  } = useContext(GlobalContext)
+  } = useContext(GlobalContext);
   const getCompany = (companyId) => {
     fetchData(
       "user/findCompany",
@@ -182,8 +179,6 @@ const AddEditUser = ({query}) => {
     })((err) => {
       toast.error(err);
     });
-
-    
   }, []);
 
   function onSubmit(formdata) {
@@ -191,12 +186,10 @@ const AddEditUser = ({query}) => {
     return isAddMode ? null : UpdateDriver(userId, formdata);
   }
 
-
   const UpdateDriver = (data) => {
     editUser(data)(userDispatch)((res) => {
-    //  console.log(`data`, data);
-        toast.success(`Updated  Driver-${res.data.DriverName} successfully`)
-    
+      //  console.log(`data`, data);
+      toast.success(`Updated  Driver-${res.data.DriverName} successfully`);
     })((err) => {
       toast.error(err);
     });
@@ -204,11 +197,9 @@ const AddEditUser = ({query}) => {
 
   function onChangePassword(formdata) {
     formdata.Email = profile?.Email;
-   // console.log("fromPasword", formdata);
+    // console.log("fromPasword", formdata);
     resetPassword(formdata)(userDispatch)((res) => {
-    
-    toast.success(`Updated  Password successfully`)
-     
+      toast.success(`Updated  Password successfully`);
     })((err) => {
       toast.error(err);
     });
@@ -216,9 +207,7 @@ const AddEditUser = ({query}) => {
 
   function onChangeCompany(formdata) {
     updateCompany(formdata, formdata.CompanyId)(userDispatch)((res) => {
-
-        toast.success(`Updated  Company Profile successfully`);  
-    
+      toast.success(`Updated  Company Profile successfully`);
     })((err) => {
       toast.error(err);
     });
@@ -226,19 +215,19 @@ const AddEditUser = ({query}) => {
 
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
     return (
-      <div class="input-group mb-3">
+      <div className="input-group mb-3">
         <input
           ref={ref}
           type="text"
-          class="form-control datepicker"
+          className="form-control datepicker"
           value={value}
           onClick={onClick}
           placeholder="Click to enter date"
           required
         />
-        <div class="input-group-append">
-          <span class="input-group-text">
-            <i class="fa fa-calendar"></i>
+        <div className="input-group-append">
+          <span className="input-group-text">
+            <i className="fa fa-calendar"></i>
           </span>
         </div>
       </div>
@@ -246,623 +235,342 @@ const AddEditUser = ({query}) => {
   });
   console.log("userId", userId);
   return (
-  
-   
-      <div class="col-xl-12">
-        <div class="card">
-          <div class="card-header alert alert-info">
-            <h3>User Profile</h3>
-            <hr />
-            <ul>
-              <li>View and Edit User Profile</li>
-              <li>Change User Password</li>
-            </ul>
-          </div>
-          <div class="card-body table-border-style">
-            <div class="container">
-              <div class="row">
-                {/* <!-- [ accordion-collapse ] start --> */}
-                <div class="col-sm-12">
-                  <div class="accordion" id="accordionExample">
-                    <div class="card mb-0">
-                      <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                          <a
-                            href="#!"
-                            data-toggle="collapse"
-                            data-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne"
-                          >
-                            Profile
-                          </a>
-                        </h5>
-                      </div>
-                      <div
-                        id="collapseOne"
-                        class="collapse show"
-                        aria-labelledby="headingOne"
-                        data-parent="#accordionExample"
-                      >
-                        <div class="card user-card">
-                          <div class="card-block">
-                            <div class="user-image">
-                              <img
-                                src={
-                                  profile?.UserPicUrl
-                                    ? IMG_URL+profile?.UserPicUrl
-                                    : "https://bootdey.com/img/Content/avatar/avatar7.png"
-                                }
-                                class="img-radius"
-                                alt="User-Profile-Image"
-                              />
-                            </div>
-                            <h6 class="f-w-600 m-t-25 m-b-10">
-                              {profile?.FullName}
-                            </h6>
-                            <h6 class="f-w-600 m-t-25 m-b-10">
-                              {profile?.Company?.CompanyName}
-                            </h6>
-                            <h7 class="f-w-600 m-t-25 m-b-10">
-                              {profile?.Address}
-                            </h7>
-                            <p class="text-muted">
-                              {profile?.IsActivated && "Active"}
-                              {profile?.DOB && "| Born " + profile?.DOB}
-                            </p>
+    <div className="col-xl-12">
+      <div className="card">
+        <div className="card-header alert alert-info">
+          <h3>User Profile</h3>
+          <hr />
+          <ul>
+            <li>View and Edit User Profile</li>
+            <li>Change User Password</li>
+          </ul>
+        </div>
+        <div className="card-body table-border-style">
+          <div className="container">
+            <div className="row">
+              {/* <!-- [ accordion-collapse ] start --> */}
+              <div className="col-sm-12">
+                <div className="accordion" id="accordionExample">
+                  <div className="card mb-0">
+                    <div className="card-header" id="headingOne">
+                      <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          data-toggle="collapse"
+                          data-target="#collapseOne"
+                          aria-expanded="true"
+                          aria-controls="collapseOne"
+                        >
+                          Profile
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseOne"
+                      className="collapse show"
+                      aria-labelledby="headingOne"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card user-card">
+                        <div className="card-block">
+                          <div className="user-image">
+                            <img
+                              src={
+                                profile?.UserPicUrl
+                                  ? IMG_URL + profile?.UserPicUrl
+                                  : "https://bootdey.com/img/Content/avatar/avatar7.png"
+                              }
+                              className="img-radius"
+                              alt="User-Profile-Image"
+                            />
                           </div>
+                          <h6 className="f-w-600 m-t-25 m-b-10">
+                            {profile?.FullName}
+                          </h6>
+                          <h6 className="f-w-600 m-t-25 m-b-10">
+                            {profile?.Company?.CompanyName}
+                          </h6>
+                          <h7 className="f-w-600 m-t-25 m-b-10">
+                            {profile?.Address}
+                          </h7>
+                          <p className="text-muted">
+                            {profile?.IsActivated && "Active"}
+                            {profile?.DOB && "| Born " + profile?.DOB}
+                          </p>
                         </div>
                       </div>
                     </div>
-                    <div class="card mb-0">
-                      <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
-                          <a
-                            href="#!"
-                            class="collapsed"
-                            data-toggle="collapse"
-                            data-target="#collapseTwo"
-                            aria-expanded="false"
-                            aria-controls="collapseTwo"
-                          >
-                            Update {profile?.FullName} Profile
-                          </a>
-                        </h5>
-                      </div>
-                      <div
-                        id="collapseTwo"
-                        class="collapse"
-                        aria-labelledby="headingTwo"
-                        data-parent="#accordionExample"
-                      >
-                        <div class="card-body">
-                          <div class="col-md-12 ">
-                            <form
-                              enctype="multipart/form-data"
-                              onSubmit={handleSubmit(onSubmit)}
-                            >
-                              <input
-                                type="hidden"
-                                name="UserId"
-                                value={profile?.UserId}
-                                class="form-control"
-                              />
-                              <input
-                                type="hidden"
-                                name="CompanyId"
-                                value={profile?.CompanyId}
-                                class="form-control"
-                                {...register("CompanyId")}
-                              />
-                              <input
-                                type="hidden"
-                                name="PicUrl"
-                                class="form-control"
-                                {...register("PicUrl")}
-                              />
-
-                              <div class="form-group row">
-                                <div class="col-md-12 ">
-                                  <ImageUpload
-                                    refId={userId}
-                                    show={userId ? false : true}
-                                    url="/user/findOne/"
-                                    fieldName="UserPicUrl"
-                                    onChangePicHandler={onChangePicHandler}
-                                  />
-                                  <a
-                                    href="#"
-                                    onClick={(e) =>
-                                      setVisibilityImage(!visibilityImage)
-                                    }
-                                  >
-                                    <i className="first fas fa-pen"></i>
-                                  </a>
-
-                                  {visibilityImage && (
-                                    <CustomPopup
-                                      onClose={popupCloseHandlerImage}
-                                      show={visibilityImage}
-                                      title="Upload File"
-                                    >
-                                      <UpdateUserFileUpload
-                                        refId={userId}
-                                        fileType="image"
-                                        email={email}
-                                        companyId={companyId}
-                                        popupCloseHandlerImage={
-                                          popupCloseHandlerImage
-                                        }
-                                      />
-                                    </CustomPopup>
-                                  )}
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <div class="col-md-12">
-                                  <h5 class="alert alert-info"> </h5>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                  Company Name
-                                </label>
-
-                                <div class="col-sm-4">
-                                  <input
-                                    name="CompanyName"
-                                    class="form-control"
-                                    readOnly="readonly"
-                                    value={profile?.Company?.CompanyName}
-                                    placeholder="Company Name"
-                                    {...register("CompanyName")}
-                                  />
-                                </div>
-                                <label class="col-sm-2 col-form-label">
-                                  Name
-                                </label>
-
-                                <div class="col-sm-4">
-                                  <input
-                                    name="FullName"
-                                    class="form-control"
-                                    value={profile?.FullName}
-                                    placeholder="Driver Name"
-                                    {...register("FullName", {
-                                      required: true,
-                                    })}
-                                    required
-                                  />
-                                </div>
-                              </div>
-
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                  Email
-                                </label>
-                                <div class="col-sm-4">
-                                  <input
-                                    name="Email"
-                                    class="form-control"
-                                    placeholder="Email"
-                                    value={profile?.Email}
-                                    {...register("Email", {
-                                      required: true,
-                                    })}
-                                    required
-                                  />
-                                </div>
-
-                                <label class="col-sm-2 col-form-label">
-                                  Phone
-                                </label>
-                                <div class="col-sm-4">
-                                  <input
-                                    name="Phone"
-                                    class="form-control"
-                                    value={profile?.Phone}
-                                    placeholder="Phone"
-                                    {...register("Phone", {
-                                      required: true,
-                                    })}
-                                  />
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                  DOB
-                                </label>
-                                <div class="col-sm-4">
-                                  <Controller
-                                    name={"DOB"}
-                                    control={control}
-                                    // defaultValue={new Date()}
-                                    render={({
-                                      field: { onChange, value },
-                                    }) => {
-                                      return (
-                                        <DatePicker
-                                          wrapperClassName="datePicker"
-                                          className="form-control datepicker"
-                                          onChange={onChange}
-                                          selected={value}
-                                          yearDropdownItemNumber={100}
-                                          // dateFormat="dd-MM-yyyy"
-                                          scrollableYearDropdown={true}
-                                          showYearDropdown
-                                          showMonthDropdown
-                                          placeholderText="Enter date"
-                                          customInput={<CustomInput />}
-                                        />
-                                      );
-                                    }}
-                                  />
-                                </div>
-
-                                <label class="col-sm-2 col-form-label">
-                                  City
-                                </label>
-                                <div class="col-sm-4">
-                                  <input
-                                    name="City"
-                                    value={profile?.City}
-                                    class="form-control"
-                                    placeholder="City"
-                                    {...register("City")}
-                                  />
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-form-label col-md-2">
-                                  Country
-                                </label>
-                                <div class="col-md-4">
-                                  <select
-                                    name="Country"
-                                    class="form-control"
-                                    {...register("Country")}
-                                    onChange={selectPickUpCountry}
-                                  >
-                                    <option value="">Select Country</option>
-                                    {countries.map((item) => (
-                                      <option
-                                        key={item.isoCode}
-                                        value={item.isoCode}
-                                      >
-                                        {item.name}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-
-                                <label class="col-form-label col-md-2">
-                                  Region/State
-                                </label>
-                                <div class="col-md-4">
-                                  <select
-                                    name="Region"
-                                    class="form-control"
-                                    id="Region"
-                                    {...register("Region", {
-                                      required: true,
-                                    })}
-                                  >
-                                    <option value="">
-                                      {" "}
-                                      Select Region/State{" "}
-                                    </option>
-                                    {pickUpRegion.map((item) => (
-                                      <option value={item.isoCode}>
-                                        {item.name}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-
-                              <div class="form-group row">
-                                <label class="col-form-label col-md-2">
-                                  Address
-                                </label>
-                                <div class="col-md-10">
-                                  <input
-                                    name="Address"
-                                    class="form-control"
-                                    placeholder="Address"
-                                    {...register("Address", {
-                                      required: true,
-                                    })}
-                                  />
-                                </div>
-                              </div>
-
-                              <div class="form-group row">
-                                <div class="col-md-12">
-                                  <h5 class="alert alert-info"> </h5>
-                                </div>
-                              </div>
-                              <div class="form-group"></div>
-
-                              <div class="form-row">
-                                <div class="col-sm-10 "></div>
-                                <div class="right" style={{ float: "right" }}>
-                                  <CustomButton
-                                    loading={loading}
-                                    isAddMode={isAddMode}
-                                  />
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
+                  </div>
+                  <div className="card mb-0">
+                    <div className="card-header" id="headingTwo">
+                      <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseTwo"
+                          aria-expanded="false"
+                          aria-controls="collapseTwo"
+                        >
+                          Update {profile?.FullName} Profile
+                        </a>
+                      </h5>
                     </div>
-                    <div class="card">
-                      <div class="card-header" id="headingThree">
-                        <h5 class="mb-0">
-                          <a
-                            href="#!"
-                            class="collapsed"
-                            data-toggle="collapse"
-                            data-target="#collapseThree"
-                            aria-expanded="false"
-                            aria-controls="collapseThree"
+                    <div
+                      id="collapseTwo"
+                      className="collapse"
+                      aria-labelledby="headingTwo"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        <div className="col-md-12 ">
+                          <form
+                            encType="multipart/form-data"
+                            onSubmit={handleSubmit(onSubmit)}
                           >
-                            Update Company Info
-                          </a>
-                        </h5>
-                      </div>
-                      <div
-                        id="collapseThree"
-                        class="collapse"
-                        aria-labelledby="headingThree"
-                        data-parent="#accordionExample"
-                      >
-                        <div class="card-body">
-                          <form onSubmit={handleCompany(onChangeCompany)}>
+                            <input
+                              type="hidden"
+                              name="UserId"
+                              value={profile?.UserId}
+                              className="form-control"
+                            />
                             <input
                               type="hidden"
                               name="CompanyId"
-                              class="form-control"
-                              {...registerCompany("CompanyId")}
+                              value={profile?.CompanyId}
+                              className="form-control"
+                              {...register("CompanyId")}
                             />
                             <input
                               type="hidden"
-                              name="Email"
-                              value={profile?.Email}
-                              class="form-control"
-                              {...registerCompany("Email")}
+                              name="PicUrl"
+                              className="form-control"
+                              {...register("PicUrl")}
                             />
-                            <div className="form-group col-sm-10">
-                              <select
-                                name="RoleType"
-                                class="form-control"
-                                id="RoleType"
-                                {...registerCompany("RoleType", {
-                                  required: "* Please describe your business",
-                                })}
-                                onChange={onChange}
-                              >
-                                <option value="">
-                                  {" "}
-                                  Please describe your business{" "}
-                                </option>
 
-                                {SPECIALIZATION_TYPE.map((item) => (
-                                  <option
-                                    key={item.value}
-                                    selected={
-                                      companyInfo?.CompanyType === item.value
-                                    }
-                                    value={item.value}
+                            <div className="form-group row">
+                              <div className="col-md-12 ">
+                                <ImageUpload
+                                  refId={userId}
+                                  show={userId ? false : true}
+                                  url="/user/findOne/"
+                                  fieldName="UserPicUrl"
+                                  onChangePicHandler={onChangePicHandler}
+                                />
+                                <a
+                                  href="#"
+                                  onClick={(e) =>
+                                    setVisibilityImage(!visibilityImage)
+                                  }
+                                >
+                                  <i classNameName="first fas fa-pen"></i>
+                                </a>
+
+                                {visibilityImage && (
+                                  <CustomPopup
+                                    onClose={popupCloseHandlerImage}
+                                    show={visibilityImage}
+                                    title="Upload File"
                                   >
-                                    {item.text}
-                                  </option>
-                                ))}
-                              </select>
-
-                              {errors.RoleType &&
-                                errors.RoleType.type === "required" &&
-                                errorMessage(required)}
-                              <input
-                                id="Role"
-                                name="Role"
-                                type="hidden"
-                                value={value}
-                                // ref={rolesRef}
-                                {...registerCompany("Role")}
-                              />
-                            </div>
-                            <div className="form-group col-sm-10">
-                              <input
-                                className="form-control"
-                                type="text"
-                                placeholder="* Company Name"
-                                name="CompanyName"
-                                {...registerCompany("CompanyName", {
-                                  required: true,
-                                  maxLength: 50,
-                                })}
-                              />
-                              {errors.CompanyName &&
-                                errors.CompanyName.type === "required" &&
-                                errorMessage(required)}
-                              {errors.CompanyName &&
-                                errors.CompanyName.type === "maxLength" &&
-                                errorMessage(maxLength)}
-                            </div>
-
-                            <div className="form-group col-sm-10">
-                              <input
-                                className="form-control"
-                                type="text"
-                                placeholder="Company Address"
-                                name="Address"
-                                {...registerCompany("Address", {
-                                  required: true,
-                                })}
-                              />
-                              {errors.CompanyAddress &&
-                                errors.CompanyAddress.type === "required" &&
-                                errorMessage(required)}
-                            </div>
-                            <div className="form-group col-sm-10">
-                              <input
-                                className="form-control"
-                                type="text"
-                                placeholder="* Company Email"
-                                name="ContactEmail"
-                                {...registerCompany("ContactEmail", {
-                                  required: true,
-                                  pattern: /^\S+@\S+$/i,
-                                })}
-                              />
-                              {errors.ContactEmail &&
-                                errors.ContactEmail.type === "required" &&
-                                errorMessage(required)}
-                            </div>
-                            <div className="form-group col-sm-10">
-                              <input
-                                className="form-control"
-                                type="text"
-                                placeholder="* Contact Phone"
-                                name="ContactPhone"
-                                {...registerCompany("ContactPhone", {
-                                  required: true,
-                                })}
-                              />
-                              {errors.ContactPhone &&
-                                errors.ContactPhone.type === "required" &&
-                                errorMessage(required)}
-                            </div>
-                            <div className="form-group col-sm-10">
-                              <select
-                                name="Country"
-                                class="form-control"
-                                {...registerCompany("Country", {
-                                  required: "Select Country",
-                                })}
-                                onChange={selectCountry}
-                              >
-                                <option value="">Select Country</option>
-                                {countries.map((item) => (
-                                  <option
-                                    key={item.isoCode}
-                                    value={item.isoCode}
-                                  >
-                                    {item.name}
-                                  </option>
-                                ))}
-                              </select>
-
-                              {errors.Country &&
-                                errors.Country.type === "required" &&
-                                errorMessage(required)}
-                            </div>
-
-                            <div className="form-group col-sm-10">
-                              <select
-                                name="Region"
-                                class="form-control"
-                                id="Region"
-                                {...registerCompany("Region")}
-                              >
-                                <option value=""> Select Region/State </option>
-                                {region.map((item) => (
-                                  <option value={item.isoCode}>
-                                    {item.name}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-
-                            <div className="form-group col-sm-10">
-                              <input
-                                className="form-control"
-                                type="url"
-                                placeholder="Website"
-                                name="Website"
-                                {...registerCompany("Website")}
-                              />
-                            </div>
-
-                            <div class="form-group row">
-                              <div class="col-md-12">
-                                <h5 class="alert alert-info"> </h5>
+                                    <UpdateUserFileUpload
+                                      refId={userId}
+                                      fileType="image"
+                                      email={email}
+                                      companyId={companyId}
+                                      popupCloseHandlerImage={
+                                        popupCloseHandlerImage
+                                      }
+                                    />
+                                  </CustomPopup>
+                                )}
                               </div>
                             </div>
-                            <div class="form-group"></div>
+                            <div className="form-group row">
+                              <div className="col-md-12">
+                                <h5 className="alert alert-info"> </h5>
+                              </div>
+                            </div>
+                            <div className="form-group row">
+                              <label className="col-sm-2 col-form-label">
+                                Company Name
+                              </label>
 
-                            <div class="form-row">
-                              <div class="col-sm-10 "></div>
-                              <div class="right" style={{ float: "right" }}>
-                                <CustomButton
-                                  loading={loading}
-                                  isAddMode={isAddMode}
+                              <div className="col-sm-4">
+                                <input
+                                  name="CompanyName"
+                                  className="form-control"
+                                  readOnly="readonly"
+                                  value={profile?.Company?.CompanyName}
+                                  placeholder="Company Name"
+                                  {...register("CompanyName")}
+                                />
+                              </div>
+                              <label className="col-sm-2 col-form-label">
+                                Name
+                              </label>
+
+                              <div className="col-sm-4">
+                                <input
+                                  name="FullName"
+                                  className="form-control"
+                                  value={profile?.FullName}
+                                  placeholder="Driver Name"
+                                  {...register("FullName", {
+                                    required: true,
+                                  })}
+                                  required
                                 />
                               </div>
                             </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
 
-                    <div class="card">
-                      <div class="card-header" id="headingFour">
-                        <h5 class="mb-0">
-                          <a
-                            href="#!"
-                            class="collapsed"
-                            data-toggle="collapse"
-                            data-target="#collapseFour"
-                            aria-expanded="false"
-                            aria-controls="collapseFour"
-                          >
-                            Change Password
-                          </a>
-                        </h5>
-                      </div>
-                      <div
-                        id="collapseFour"
-                        class="collapse"
-                        aria-labelledby="headingFour"
-                        data-parent="#accordionExample"
-                      >
-                        <div class="card-body">
-                          <form onSubmit={handlePassword(onChangePassword)}>
-                            <input
-                              type="hidden"
-                              name="Email"
-                              value={profile?.Email}
-                              class="form-control"
-                              {...registerPassword("Email")}
-                            />
-                            <div class="form-group row">
-                              <label class="col-form-label col-md-2">
-                                Password
+                            <div className="form-group row">
+                              <label className="col-sm-2 col-form-label">
+                                Email
                               </label>
-                              <div class="col-md-10">
+                              <div className="col-sm-4">
                                 <input
-                                  name="Password"
-                                  class="form-control"
-                                  placeholder="Password"
-                                  {...registerPassword("Password", {
+                                  name="Email"
+                                  className="form-control"
+                                  placeholder="Email"
+                                  value={profile?.Email}
+                                  {...register("Email", {
+                                    required: true,
+                                  })}
+                                  required
+                                />
+                              </div>
+
+                              <label className="col-sm-2 col-form-label">
+                                Phone
+                              </label>
+                              <div className="col-sm-4">
+                                <input
+                                  name="Phone"
+                                  className="form-control"
+                                  value={profile?.Phone}
+                                  placeholder="Phone"
+                                  {...register("Phone", {
+                                    required: true,
+                                  })}
+                                />
+                              </div>
+                            </div>
+                            <div className="form-group row">
+                              <label className="col-sm-2 col-form-label">
+                                DOB
+                              </label>
+                              <div className="col-sm-4">
+                                <Controller
+                                  name={"DOB"}
+                                  control={control}
+                                  // defaultValue={new Date()}
+                                  render={({ field: { onChange, value } }) => {
+                                    return (
+                                      <DatePicker
+                                        wrapperclassNameName="datePicker"
+                                        classNameName="form-control datepicker"
+                                        onChange={onChange}
+                                        selected={value}
+                                        yearDropdownItemNumber={100}
+                                        // dateFormat="dd-MM-yyyy"
+                                        scrollableYearDropdown={true}
+                                        showYearDropdown
+                                        showMonthDropdown
+                                        placeholderText="Enter date"
+                                        customInput={<CustomInput />}
+                                      />
+                                    );
+                                  }}
+                                />
+                              </div>
+
+                              <label className="col-sm-2 col-form-label">
+                                City
+                              </label>
+                              <div className="col-sm-4">
+                                <input
+                                  name="City"
+                                  value={profile?.City}
+                                  className="form-control"
+                                  placeholder="City"
+                                  {...register("City")}
+                                />
+                              </div>
+                            </div>
+                            <div className="form-group row">
+                              <label className="col-form-label col-md-2">
+                                Country
+                              </label>
+                              <div className="col-md-4">
+                                <select
+                                  name="Country"
+                                  className="form-control"
+                                  {...register("Country")}
+                                  onChange={selectPickUpCountry}
+                                >
+                                  <option value="">Select Country</option>
+                                  {countries.map((item) => (
+                                    <option
+                                      key={item.isoCode}
+                                      value={item.isoCode}
+                                    >
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+
+                              <label className="col-form-label col-md-2">
+                                Region/State
+                              </label>
+                              <div className="col-md-4">
+                                <select
+                                  name="Region"
+                                  className="form-control"
+                                  id="Region"
+                                  {...register("Region", {
+                                    required: true,
+                                  })}
+                                >
+                                  <option value="">
+                                    {" "}
+                                    Select Region/State{" "}
+                                  </option>
+                                  {pickUpRegion.map((item) => (
+                                    <option value={item.isoCode}>
+                                      {item.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+
+                            <div className="form-group row">
+                              <label className="col-form-label col-md-2">
+                                Address
+                              </label>
+                              <div className="col-md-10">
+                                <input
+                                  name="Address"
+                                  className="form-control"
+                                  placeholder="Address"
+                                  {...register("Address", {
                                     required: true,
                                   })}
                                 />
                               </div>
                             </div>
 
-                            <div class="form-group row">
-                              <div class="col-md-12">
-                                <h5 class="alert alert-info"> </h5>
+                            <div className="form-group row">
+                              <div className="col-md-12">
+                                <h5 className="alert alert-info"> </h5>
                               </div>
                             </div>
-                            <div class="form-group"></div>
+                            <div className="form-group"></div>
 
-                            <div class="form-row">
-                              <div class="col-sm-10 "></div>
-                              <div class="right" style={{ float: "right" }}>
+                            <div className="form-row">
+                              <div className="col-sm-10 "></div>
+                              <div className="right" style={{ float: "right" }}>
                                 <CustomButton
                                   loading={loading}
                                   isAddMode={isAddMode}
@@ -874,18 +582,292 @@ const AddEditUser = ({query}) => {
                       </div>
                     </div>
                   </div>
-                </div>
-                {/* <!-- [ accordion-collapse ] end --> */}
-              </div>
-            </div>
+                  <div className="card">
+                    <div className="card-header" id="headingThree">
+                      <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseThree"
+                          aria-expanded="false"
+                          aria-controls="collapseThree"
+                        >
+                          Update Company Info
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseThree"
+                      className="collapse"
+                      aria-labelledby="headingThree"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        <form onSubmit={handleCompany(onChangeCompany)}>
+                          <input
+                            type="hidden"
+                            name="CompanyId"
+                            className="form-control"
+                            {...registerCompany("CompanyId")}
+                          />
+                          <input
+                            type="hidden"
+                            name="Email"
+                            value={profile?.Email}
+                            className="form-control"
+                            {...registerCompany("Email")}
+                          />
+                          <div classNameName="form-group col-sm-10">
+                            <select
+                              name="RoleType"
+                              className="form-control"
+                              id="RoleType"
+                              {...registerCompany("RoleType", {
+                                required: "* Please describe your business",
+                              })}
+                              onChange={onChange}
+                            >
+                              <option value="">
+                                {" "}
+                                Please describe your business{" "}
+                              </option>
 
-            <div class="table-responsive">
-              {/* <DataTableExtensions {...tableData}> 
+                              {SPECIALIZATION_TYPE.map((item) => (
+                                <option
+                                  key={item.value}
+                                  selected={
+                                    companyInfo?.CompanyType === item.value
+                                  }
+                                  value={item.value}
+                                >
+                                  {item.text}
+                                </option>
+                              ))}
+                            </select>
+
+                            {errors.RoleType &&
+                              errors.RoleType.type === "required" &&
+                              errorMessage(required)}
+                            <input
+                              id="Role"
+                              name="Role"
+                              type="hidden"
+                              value={value}
+                              // ref={rolesRef}
+                              {...registerCompany("Role")}
+                            />
+                          </div>
+                          <div classNameName="form-group col-sm-10">
+                            <input
+                              classNameName="form-control"
+                              type="text"
+                              placeholder="* Company Name"
+                              name="CompanyName"
+                              {...registerCompany("CompanyName", {
+                                required: true,
+                                maxLength: 50,
+                              })}
+                            />
+                            {errors.CompanyName &&
+                              errors.CompanyName.type === "required" &&
+                              errorMessage(required)}
+                            {errors.CompanyName &&
+                              errors.CompanyName.type === "maxLength" &&
+                              errorMessage(maxLength)}
+                          </div>
+
+                          <div classNameName="form-group col-sm-10">
+                            <input
+                              classNameName="form-control"
+                              type="text"
+                              placeholder="Company Address"
+                              name="Address"
+                              {...registerCompany("Address", {
+                                required: true,
+                              })}
+                            />
+                            {errors.CompanyAddress &&
+                              errors.CompanyAddress.type === "required" &&
+                              errorMessage(required)}
+                          </div>
+                          <div classNameName="form-group col-sm-10">
+                            <input
+                              classNameName="form-control"
+                              type="text"
+                              placeholder="* Company Email"
+                              name="ContactEmail"
+                              {...registerCompany("ContactEmail", {
+                                required: true,
+                                pattern: /^\S+@\S+$/i,
+                              })}
+                            />
+                            {errors.ContactEmail &&
+                              errors.ContactEmail.type === "required" &&
+                              errorMessage(required)}
+                          </div>
+                          <div classNameName="form-group col-sm-10">
+                            <input
+                              classNameName="form-control"
+                              type="text"
+                              placeholder="* Contact Phone"
+                              name="ContactPhone"
+                              {...registerCompany("ContactPhone", {
+                                required: true,
+                              })}
+                            />
+                            {errors.ContactPhone &&
+                              errors.ContactPhone.type === "required" &&
+                              errorMessage(required)}
+                          </div>
+                          <div classNameName="form-group col-sm-10">
+                            <select
+                              name="Country"
+                              className="form-control"
+                              {...registerCompany("Country", {
+                                required: "Select Country",
+                              })}
+                              onChange={selectCountry}
+                            >
+                              <option value="">Select Country</option>
+                              {countries.map((item) => (
+                                <option key={item.isoCode} value={item.isoCode}>
+                                  {item.name}
+                                </option>
+                              ))}
+                            </select>
+
+                            {errors.Country &&
+                              errors.Country.type === "required" &&
+                              errorMessage(required)}
+                          </div>
+
+                          <div classNameName="form-group col-sm-10">
+                            <select
+                              name="Region"
+                              className="form-control"
+                              id="Region"
+                              {...registerCompany("Region")}
+                            >
+                              <option value=""> Select Region/State </option>
+                              {region.map((item) => (
+                                <option value={item.isoCode}>
+                                  {item.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div classNameName="form-group col-sm-10">
+                            <input
+                              classNameName="form-control"
+                              type="url"
+                              placeholder="Website"
+                              name="Website"
+                              {...registerCompany("Website")}
+                            />
+                          </div>
+
+                          <div className="form-group row">
+                            <div className="col-md-12">
+                              <h5 className="alert alert-info"> </h5>
+                            </div>
+                          </div>
+                          <div className="form-group"></div>
+
+                          <div className="form-row">
+                            <div className="col-sm-10 "></div>
+                            <div className="right" style={{ float: "right" }}>
+                              <CustomButton
+                                loading={loading}
+                                isAddMode={isAddMode}
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="card">
+                    <div className="card-header" id="headingFour">
+                      <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseFour"
+                          aria-expanded="false"
+                          aria-controls="collapseFour"
+                        >
+                          Change Password
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseFour"
+                      className="collapse"
+                      aria-labelledby="headingFour"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        <form onSubmit={handlePassword(onChangePassword)}>
+                          <input
+                            type="hidden"
+                            name="Email"
+                            value={profile?.Email}
+                            className="form-control"
+                            {...registerPassword("Email")}
+                          />
+                          <div className="form-group row">
+                            <label className="col-form-label col-md-2">
+                              Password
+                            </label>
+                            <div className="col-md-10">
+                              <input
+                                name="Password"
+                                className="form-control"
+                                placeholder="Password"
+                                {...registerPassword("Password", {
+                                  required: true,
+                                })}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="form-group row">
+                            <div className="col-md-12">
+                              <h5 className="alert alert-info"> </h5>
+                            </div>
+                          </div>
+                          <div className="form-group"></div>
+
+                          <div className="form-row">
+                            <div className="col-sm-10 "></div>
+                            <div className="right" style={{ float: "right" }}>
+                              <CustomButton
+                                loading={loading}
+                                isAddMode={isAddMode}
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <!-- [ accordion-collapse ] end --> */}
+            </div>
+          </div>
+
+          <div className="table-responsive">
+            {/* <DataTableExtensions {...tableData}> 
               <DataTableExtensions exportHeaders columns={columns} data={data}>
                 <DataTable
                   columns={columns}
                   data={data}
-                  className="table table-striped table-bordered table-hover table-checkable"
+                  classNameName="table table-striped table-bordered table-hover table-checkable"
                   defaultSortField={1}
                   sortIcon={<ChevronsDown />}
                   defaultSortAsc={true}
@@ -893,15 +875,13 @@ const AddEditUser = ({query}) => {
                   highlightOnHover
                 />
               </DataTableExtensions>*/}
-            </div>
           </div>
         </div>
       </div>
-    
+    </div>
   );
-}
+};
 //Login.layout = "main";
-
 
 //export default AddEditUser
 

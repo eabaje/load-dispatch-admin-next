@@ -2,10 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Controller, useForm, useController } from "react-hook-form";
 
 import { GlobalContext } from "../../../context/Provider";
-import {
-  
-  ROLES,
-} from "../../../constants/enum";
+import { ROLES } from "../../../constants/enum";
 import { fetchData, fetchDataAll } from "../../../helpers/query";
 // import { Editor } from "draft-js";
 
@@ -18,18 +15,13 @@ import {
   updateUserSubscription,
 } from "../../../context/actions/user/user.action";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
+const AddEditUserRole = ({ query }) => {
+  const { userSubscriptionId, userId, action } = query;
 
-const AddEditUserRole = ({query}) => {
-  const { userSubscriptionId,userId,action } = query;
- 
   const isAddMode = !userId;
-  
 
- 
-
-  
   const [subscribeUser, setSubscribeUser] = useState({});
   const [data, setData] = useState([]);
   const [subscriptionType, setsubscriptionType] = useState([]);
@@ -44,7 +36,7 @@ const AddEditUserRole = ({query}) => {
   } = useForm({ mode: "onChange" });
   const {
     authState: { user },
-  } = useContext(GlobalContext)
+  } = useContext(GlobalContext);
   const {
     userDispatch,
     userState: {
@@ -59,14 +51,12 @@ const AddEditUserRole = ({query}) => {
   function UpdateUserRole(formdata) {
     updateUserRole(formdata)(userDispatch)((res) => {
       if (res.message) {
-       toast.success(res.message)
+        toast.success(res.message);
       }
     });
   }
 
   useEffect(() => {
-  
-
     if (!isAddMode) {
       fetchData(
         "user/findOne",
@@ -85,116 +75,109 @@ const AddEditUserRole = ({query}) => {
 
   return (
     <>
-    
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header alert alert-info">
-              <h2>Add User Role Form</h2>
-            </div>
-            <div class="card-body">
-              <div class="col-md-12 ">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <input
-                    type="hidden"
-                    name="UserId"
-                    value={subscribeUser.UserId}
-                    class="form-control"
-                  />
+      <div className="col-md-12">
+        <div className="card">
+          <div className="card-header alert alert-info">
+            <h2>Add User Role Form</h2>
+          </div>
+          <div className="card-body">
+            <div className="col-md-12 ">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <input
+                  type="hidden"
+                  name="UserId"
+                  value={subscribeUser.UserId}
+                  className="form-control"
+                />
 
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Role Type</label>
+                <div className="form-group row">
+                  <label className="col-sm-2 col-form-label">Role Type</label>
 
-                    <div class="col-sm-4">
-                      <select
-                        id="Role"
-                        name="Role"
-                        class="form-control"
-                        {...register("Role", {
-                          required: true,
-                        })}
-                        required
-                      >
-                        <option selected>Select Role Type</option>
+                  <div className="col-sm-4">
+                    <select
+                      id="Role"
+                      name="Role"
+                      className="form-control"
+                      {...register("Role", {
+                        required: true,
+                      })}
+                      required
+                    >
+                      <option selected>Select Role Type</option>
 
-                        {ROLES.map((item) => (
-                          <option
-                            key={item.value}
-                            selected={
-                              subscribeUser.UserRole?.RoleId === item.value
-                            }
-                            value={item.value}
-                          >
-                            {item.text}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Full Name</label>
+                      {ROLES.map((item) => (
+                        <option
+                          key={item.value}
+                          selected={
+                            subscribeUser.UserRole?.RoleId === item.value
+                          }
+                          value={item.value}
+                        >
+                          {item.text}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <label className="col-sm-2 col-form-label">Full Name</label>
 
-                    <div class="col-sm-4">
+                  <div className="col-sm-4">
+                    <input
+                      name="FullName"
+                      className="form-control"
+                      value={subscribeUser?.FullName}
+                      placeholder="User Name"
+                      {...register("FullName", {
+                        required: true,
+                      })}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group"></div>
+
+                <div className="form-row">
+                  <div className="col-sm-10 ">
+                    <div className="form-check">
                       <input
-                        name="FullName"
-                        class="form-control"
-                        value={subscribeUser?.FullName}
-                        placeholder="User Name"
-                        {...register("FullName", {
-                          required: true,
-                        })}
+                        className="form-check-input"
+                        type="checkbox"
+                        name="IsValid"
+                        value=""
+                        id="invalidCheck"
                         required
                       />
-                    </div>
-                  </div>
-
-                  <div class="form-group"></div>
-
-                  <div class="form-row">
-                    <div class="col-sm-10 ">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="IsValid"
-                          value=""
-                          id="invalidCheck"
-                          required
-                        />
-                        <label class="form-check-label" for="invalidCheck">
-                          I confirm all information entered are accurate
-                        </label>
-                        <div class="invalid-feedback">
-                          You must agree before submitting.
-                        </div>
+                      <label className="form-check-label">
+                        I confirm all information entered are accurate
+                      </label>
+                      <div className="invalid-feedback">
+                        You must agree before submitting.
                       </div>
                     </div>
-                    <div class="right" style={{ float: "right" }}>
-                      <button
-                        type="submit"
-                        class="btn  btn-primary"
-                        style={{ float: "right" }}
-                      >
-                        {loading ? (
-                          <i className="fa fa-spinner fa-spin"></i>
-                        ) : (
-                          <i class="feather mr-2 icon-check-circle"></i>
-                        )}{" "}
-                        {isAddMode ? "Submit" : "Update"}
-                      </button>
-                    </div>
                   </div>
-                </form>
-              </div>
+                  <div className="right" style={{ float: "right" }}>
+                    <button
+                      type="submit"
+                      className="btn  btn-primary"
+                      style={{ float: "right" }}
+                    >
+                      {loading ? (
+                        <i classNameName="fa fa-spinner fa-spin"></i>
+                      ) : (
+                        <i className="feather mr-2 icon-check-circle"></i>
+                      )}{" "}
+                      {isAddMode ? "Submit" : "Update"}
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      
+      </div>
     </>
   );
-}
+};
 //Login.layout = "main";
 
-
-
-
-
-
-export default AddEditUserRole
+export default AddEditUserRole;

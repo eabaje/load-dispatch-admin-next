@@ -1,26 +1,26 @@
-import React from 'react'
-
 import React, { useState, useEffect, useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import { Country, State } from "country-state-city";
 import { GlobalContext } from "../../../context/Provider";
 import { LOAD_TYPE, LOAD_CAPACITY, LOAD_UNIT } from "../../constants/enum";
-import { createTrip, editTrip } from "../../../context/actions/trip/trip.action";
+import {
+  createTrip,
+  editTrip,
+} from "../../../context/actions/trip/trip.action";
 import "bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { fetchData } from "../../../helpers/query";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
+const AddEditTrip = ({ query }) => {
+  const { tripId, shipmentId, Istrackable, isReadOnly } = query;
 
-const AddEditTrip = ({query}) => {
-  const { tripId,shipmentId, Istrackable,isReadOnly } = query;
-  
   // const { SubscribeId } = match.params;
   const isAddMode = !tripId;
- 
+
   const [country, setCountry] = useState("");
   const [countries, setCountries] = useState([]);
   const [pickUpRegion, setPickUpRegion] = useState([]);
@@ -28,17 +28,16 @@ const AddEditTrip = ({query}) => {
 
   const [selpickUpRegion, setselpickUpRegion] = useState("");
   const [seldeliveryRegion, setseldeliveryRegion] = useState("");
- 
+
   const [readOnly, setReadOnly] = useState(false);
   // const onSubmit = (data) => console.log(data);
   const {
     authState: { user },
-  } = useContext(GlobalContext)
+  } = useContext(GlobalContext);
   useEffect(() => {
     if (isReadOnly) setReadOnly(!readOnly);
     setCountries((countries) => (countries = Country.getAllCountries()));
 
-  
     // console.log(`user`, user.CompanyId);
     if (!isAddMode) {
       fetchData(
@@ -148,19 +147,19 @@ const AddEditTrip = ({query}) => {
 
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
     return (
-      <div class="input-group mb-3">
+      <div className="input-group mb-3">
         <input
           ref={ref}
           type="text"
-          class="form-control datepicker"
+          className="form-control datepicker"
           value={value}
           onClick={onClick}
           placeholder="Click to enter date"
           required
         />
-        <div class="input-group-append">
-          <span class="input-group-text">
-            <i class="fa fa-calendar"></i>
+        <div className="input-group-append">
+          <span className="input-group-text">
+            <i className="fa fa-calendar"></i>
           </span>
         </div>
       </div>
@@ -168,59 +167,70 @@ const AddEditTrip = ({query}) => {
   });
   return (
     <>
-  
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header alert alert-info">
+      <div className="row">
+        <div className="col-md-12">
+          <div className="card">
+            <div className="card-header alert alert-info">
               <h2> Trip Entry Information</h2>
             </div>
-            <div class="card-body">
-              <div class="col-md-12 ">
+            <div className="card-body">
+              <div className="col-md-12 ">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <input
                     type="hidden"
                     value={user.UserId}
-                    class="form-control"
+                    className="form-control"
                   />
-                  <input type="hidden" value="DriverId" class="form-control" />
+                  <input
+                    type="hidden"
+                    value="DriverId"
+                    className="form-control"
+                  />
                   <input
                     type="hidden"
                     value={user.CompanyId}
-                    class="form-control"
+                    className="form-control"
                   />
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <h5 class="alert alert-info"> Trip Basic Info </h5>
+                  <div className="form-group row">
+                    <div className="col-md-12">
+                      <h5 className="alert alert-info"> Trip Basic Info </h5>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">Driver Name</label>
-                    <div class="col-md-10">
-                      <input name="DriverName" class="form-control" readOnly />
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">
+                      Driver Name
+                    </label>
+                    <div className="col-md-10">
+                      <input
+                        name="DriverName"
+                        className="form-control"
+                        readOnly
+                      />
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
                       Shipment Reference Id
                     </label>
 
-                    <div class="col-sm-4">
+                    <div className="col-sm-4">
                       <input
                         name="ShipmentId"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Shipment Reference Number"
                         {...tripform("ShipmentId")}
                         required
                       />
                     </div>
 
-                    <label class="col-sm-2 col-form-label">Vehicle Id</label>
+                    <label className="col-sm-2 col-form-label">
+                      Vehicle Id
+                    </label>
 
-                    <div class="col-sm-4">
+                    <div className="col-sm-4">
                       <input
                         name="VehicleId"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Vehicle Id"
                         {...tripform("VehicleId")}
                         required
@@ -228,12 +238,14 @@ const AddEditTrip = ({query}) => {
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">Driver Note</label>
-                    <div class="col-md-10">
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">
+                      Driver Note
+                    </label>
+                    <div className="col-md-10">
                       <input
                         name="DriverNote"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Driver Note"
                         {...tripform("DriverNote", {
                           required: true,
@@ -242,17 +254,20 @@ const AddEditTrip = ({query}) => {
                       />
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <h5 class="alert alert-info"> Pick Up Information </h5>
+                  <div className="form-group row">
+                    <div className="col-md-12">
+                      <h5 className="alert alert-info">
+                        {" "}
+                        Pick Up Information{" "}
+                      </h5>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">Country</label>
-                    <div class="col-md-4">
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">Country</label>
+                    <div className="col-md-4">
                       <select
                         name="PickUpCountry"
-                        class="form-control"
+                        className="form-control"
                         {...tripform("PickUpCountry")}
                         onChange={selectPickUpCountry}
                       >
@@ -265,11 +280,13 @@ const AddEditTrip = ({query}) => {
                       </select>
                     </div>
 
-                    <label class="col-form-label col-md-2">Region/State</label>
-                    <div class="col-md-4">
+                    <label className="col-form-label col-md-2">
+                      Region/State
+                    </label>
+                    <div className="col-md-4">
                       <select
                         name="PickUpRegion"
-                        class="form-control"
+                        className="form-control"
                         id="PickUpRegion"
                         {...tripform("PickUpRegion")}
                         required
@@ -281,15 +298,15 @@ const AddEditTrip = ({query}) => {
                       </select>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">
                       PickUp Address
                     </label>
 
-                    <div class="col-md-4">
+                    <div className="col-md-4">
                       <input
                         name="PickUpLocation"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Pick Up Location"
                         {...tripform("PickUpLocation", {
                           required: true,
@@ -297,8 +314,10 @@ const AddEditTrip = ({query}) => {
                         required
                       />
                     </div>
-                    <label class="col-form-label col-md-2">PickUp Date</label>
-                    <div class="col-md-4">
+                    <label className="col-form-label col-md-2">
+                      PickUp Date
+                    </label>
+                    <div className="col-md-4">
                       <Controller
                         name={"ExpectedPickUpDate"}
                         control={control}
@@ -306,8 +325,8 @@ const AddEditTrip = ({query}) => {
                         render={({ field: { onChange, value } }) => {
                           return (
                             <DatePicker
-                              wrapperClassName="datePicker"
-                              className="form-control datepicker"
+                              wrapperclassNameName="datePicker"
+                              classNameName="form-control datepicker"
                               onChange={onChange}
                               selected={value}
                               placeholderText="Enter date"
@@ -318,19 +337,22 @@ const AddEditTrip = ({query}) => {
                       />
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <h5 class="alert alert-info"> Delivery Information </h5>
+                  <div className="form-group row">
+                    <div className="col-md-12">
+                      <h5 className="alert alert-info">
+                        {" "}
+                        Delivery Information{" "}
+                      </h5>
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">Country</label>
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">Country</label>
 
-                    <div class="col-md-4">
+                    <div className="col-md-4">
                       <select
                         name="DeliveryCountry"
-                        class="form-control"
+                        className="form-control"
                         {...tripform("DeliveryCountry")}
                         onChange={selectDeliveryCountry}
                       >
@@ -342,11 +364,13 @@ const AddEditTrip = ({query}) => {
                         ))}
                       </select>
                     </div>
-                    <label class="col-form-label col-md-2">Region/State</label>
-                    <div class="col-md-4">
+                    <label className="col-form-label col-md-2">
+                      Region/State
+                    </label>
+                    <div className="col-md-4">
                       <select
                         name="DeliveryRegion"
-                        class="form-control"
+                        className="form-control"
                         id="DeliveryRegion"
                         {...tripform("DeliveryRegion", {
                           required: true,
@@ -360,15 +384,15 @@ const AddEditTrip = ({query}) => {
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">
                       Location/Address
                     </label>
 
-                    <div class="col-md-10">
+                    <div className="col-md-10">
                       <input
                         name="DeliveryLocation"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Delivery Location"
                         {...tripform("DeliveryLocation")}
                         required
@@ -376,22 +400,26 @@ const AddEditTrip = ({query}) => {
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">Trip Duration</label>
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">
+                      Trip Duration
+                    </label>
 
-                    <div class="col-md-4">
+                    <div className="col-md-4">
                       <input
                         type="number"
                         name="Duration"
-                        class="form-control"
+                        className="form-control"
                         placeholder="Trip Duration"
                         {...tripform("Duration")}
                         required
                       />
                     </div>
 
-                    <label class="col-form-label col-md-2">Delivery Date</label>
-                    <div class="col-md-4">
+                    <label className="col-form-label col-md-2">
+                      Delivery Date
+                    </label>
+                    <div className="col-md-4">
                       <Controller
                         name={"ExpectedDeliveryDate"}
                         control={control}
@@ -399,8 +427,8 @@ const AddEditTrip = ({query}) => {
                         render={({ field: { onChange, value } }) => {
                           return (
                             <DatePicker
-                              wrapperClassName="datePicker"
-                              className="form-control datepicker"
+                              wrapperclassNameName="datePicker"
+                              classNameName="form-control datepicker"
                               onChange={onChange}
                               selected={value}
                               placeholderText="Enter date"
@@ -411,54 +439,55 @@ const AddEditTrip = ({query}) => {
                       />
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <h5 class="alert alert-info"> Driver Note </h5>
+                  <div className="form-group row">
+                    <div className="col-md-12">
+                      <h5 className="alert alert-info"> Driver Note </h5>
                     </div>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-form-label col-md-2">
+                  <div className="form-group row">
+                    <label className="col-form-label col-md-2">
                       Driver Note(s)
                     </label>
 
-                    <div class="col-md-10">
+                    <div className="col-md-10">
                       <input
                         name="DriverNote"
-                        class="form-control"
+                        className="form-control"
                         placeholder=" Driver Note"
                         {...tripform("DriverNote")}
                       />
                     </div>
                   </div>
 
-                  <div class="form-group"></div>
+                  <div className="form-group"></div>
 
-                  <div class="form-row">
-                    <div class="col-sm-10 ">
-                      <div class="form-check">
+                  <div className="form-row">
+                    <div className="col-sm-10 ">
+                      <div className="form-check">
                         <input
-                          class="form-check-input"
+                          className="form-check-input"
                           type="checkbox"
                           value=""
                           id="invalidCheck"
                           required
                         />
-                        <label class="form-check-label" for="invalidCheck">
+                        <label className="form-check-label" for="invalidCheck">
                           I confirm all information entered are accurate
                         </label>
-                        <div class="invalid-feedback">
+                        <div className="invalid-feedback">
                           You must agree before submitting.
                         </div>
                       </div>
                     </div>
-                    <div class="right" style={{ float: "right" }}>
+                    <div className="right" style={{ float: "right" }}>
                       <button
                         type="submit"
-                        class="btn  btn-primary"
+                        className="btn  btn-primary"
                         style={{ float: "right" }}
                       >
-                        <i class="feather mr-2 icon-check-circle"></i> Submit
+                        <i className="feather mr-2 icon-check-circle"></i>{" "}
+                        Submit
                       </button>
                     </div>
                   </div>
@@ -468,12 +497,9 @@ const AddEditTrip = ({query}) => {
           </div>
         </div>
       </div>
-      
-   
     </>
   );
-}
+};
 //Login.layout = "main";
 
-
-export default AddEditTrip
+export default AddEditTrip;

@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { IMG_URL } from "../../../constants";
 import { useForm, Controller } from "react-hook-form";
 
@@ -11,7 +11,6 @@ import {
   editUser,
   resetPassword,
   updateCompany,
- 
 } from "../../../context/actions/user/user.action";
 
 import ImageUpload from "../../../components/upload/uploadImage";
@@ -21,24 +20,22 @@ import CustomButton from "../../../components/button/customButton";
 import { SPECIALIZATION_TYPE } from "../../../constants/enum";
 import CustomPopup from "../../../components/popup/popup.component";
 import UpdateUserFileUpload from "../../../components/upload/edit-user-file-upload";
-import { toast } from 'react-toastify';
-import dynamic from 'next/dynamic';
+import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
 
-
-const ReviewCompany = ({query}) => {
+const ReviewCompany = ({ query }) => {
   const { companyId } = query;
 
   const isSingleMode = !companyId;
 
- 
-   const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState({});
   const [companyInfo, setCompanyInfo] = useState({});
 
   const isAddMode = !companyId;
 
   const [IsEdit, setEdit] = useState(false);
   const [country, setCountry] = useState("");
-   const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [countries, setCountries] = useState([]);
   const [pickUpRegion, setPickUpRegion] = useState([]);
   const [region, setRegion] = useState([]);
@@ -66,7 +63,7 @@ const ReviewCompany = ({query}) => {
   // Error Component
   const errorMessage = (error) => {
     return (
-      <p class="invalid-feedback" style={{ color: "red" }}>
+      <p className="invalid-feedback" style={{ color: "red" }}>
         {error}
       </p>
     );
@@ -124,7 +121,7 @@ const ReviewCompany = ({query}) => {
   } = useContext(GlobalContext);
   const {
     authState: { user },
-  } = useContext(GlobalContext)
+  } = useContext(GlobalContext);
   const getCompany = (companyId) => {
     fetchData(
       "user/findCompany",
@@ -171,7 +168,7 @@ const ReviewCompany = ({query}) => {
       ];
       fields.forEach((field) => setValue(field, user[field]));
       setEmail(user["Email"]);
-     // setcompanyId(user["CompanyId"]);
+      // setcompanyId(user["CompanyId"]);
       setPickUpRegion(
         (pickUpRegion) =>
           // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
@@ -182,8 +179,6 @@ const ReviewCompany = ({query}) => {
     })((err) => {
       toast.error(err);
     });
-
-    
   }, []);
 
   function onSubmit(formdata) {
@@ -191,12 +186,10 @@ const ReviewCompany = ({query}) => {
     return isAddMode ? null : UpdateDriver(userId, formdata);
   }
 
-
   const UpdateDriver = (data) => {
     editUser(data)(userDispatch)((res) => {
-    //  console.log(`data`, data);
-        toast.success(`Updated  Driver-${res.data.DriverName} successfully`)
-    
+      //  console.log(`data`, data);
+      toast.success(`Updated  Driver-${res.data.DriverName} successfully`);
     })((err) => {
       toast.error(err);
     });
@@ -204,11 +197,9 @@ const ReviewCompany = ({query}) => {
 
   function onChangePassword(formdata) {
     formdata.Email = profile?.Email;
-   // console.log("fromPasword", formdata);
+    // console.log("fromPasword", formdata);
     resetPassword(formdata)(userDispatch)((res) => {
-    
-    toast.success(`Updated  Password successfully`)
-     
+      toast.success(`Updated  Password successfully`);
     })((err) => {
       toast.error(err);
     });
@@ -216,218 +207,243 @@ const ReviewCompany = ({query}) => {
 
   function onChangeCompany(formdata) {
     updateCompany(formdata, formdata.CompanyId)(userDispatch)((res) => {
-
-        toast.success(`Updated  Company Profile successfully`);  
-    
+      toast.success(`Updated  Company Profile successfully`);
     })((err) => {
       toast.error(err);
     });
   }
 
-  const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
-    return (
-      <div class="input-group mb-3">
-        <input
-          ref={ref}
-          type="text"
-          class="form-control datepicker"
-          value={value}
-          onClick={onClick}
-          placeholder="Click to enter date"
-          required
-        />
-        <div class="input-group-append">
-          <span class="input-group-text">
-            <i class="fa fa-calendar"></i>
-          </span>
-        </div>
-      </div>
-    );
-  });
- // console.log("userId", userId);
+  // console.log("userId", userId);
   return (
-  
-   
-      <div class="col-xl-12">
-        <div class="card">
-          <div class="card-header alert alert-info">
-            <h3>User Profile</h3>
-            <hr />
-            <ul>
-              <li>Review Registrant Info</li>
-              <li>Approve /Activate User</li>
-            </ul>
-          </div>
-          <div class="card-body table-border-style">
-            <div class="container">
-              <div class="row">
-               
-
-
-
-              <div class="col-sm-12">
-                
-                  <div class="accordion" id="accordionExample">
-                    <div class="card mb-0">
-                      <div class="card-header" id="headingOne">
-                        <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Basic Company Info</a></h5>
-                      </div>
-                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
+    <div className="col-xl-12">
+      <div className="card">
+        <div className="card-header alert alert-info">
+          <h3>User Profile</h3>
+          <hr />
+          <ul>
+            <li>Review Registrant Info</li>
+            <li>Approve /Activate User</li>
+          </ul>
+        </div>
+        <div className="card-body table-border-style">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="accordion" id="accordionExample">
+                  <div className="card mb-0">
+                    <div className="card-header" id="headingOne">
+                      <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          data-toggle="collapse"
+                          data-target="#collapseOne"
+                          aria-expanded="true"
+                          aria-controls="collapseOne"
+                        >
+                          Basic Company Info
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseOne"
+                      className="collapse show"
+                      aria-labelledby="headingOne"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
                         <form onSubmit={handleCompany(onChangeCompany)}>
-                           
-                        <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                  Company Name
-                                </label>
+                          <div className="form-group row">
+                            <label className="col-sm-2 col-form-label">
+                              Company Name
+                            </label>
 
-                                <div class="col-sm-4">
-                                <label class=" col-form-label">
+                            <div className="col-sm-4">
+                              <label className=" col-form-label">
                                 {companyInfo.CompanyName}
-                                </label>  
-                               
-                                </div>
-                                <label class="col-sm-2 col-form-label">
-                                  Specialization
-                                </label>
-                               
-                                <div class="col-sm-4">
-                                <label class=" col-form-label">
-                                  {companyInfo?.Specialization? SPECIALIZATION_TYPE.find((item) => item.value === companyInfo?.Specialization).text
-                                :companyInfo?.Specialization}
-                                 </label>  
-                                </div>
-                              </div>
-                            
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                  Company Email
-                                </label>
+                              </label>
+                            </div>
+                            <label className="col-sm-2 col-form-label">
+                              Specialization
+                            </label>
 
-                                <div class="col-sm-4">
-                                <label class=" col-form-label">{companyInfo.ContactEmail}</label> 
-                                </div>
-                                <label class="col-sm-2 col-form-label">
-                                  Company Phone
-                                </label>
-                               
-                                <div class="col-sm-4">
-                                <label class=" col-form-label">{companyInfo.ContactPhone}</label>
-                               
-                                </div>
-                              </div>
+                            <div className="col-sm-4">
+                              <label className=" col-form-label">
+                                {companyInfo?.Specialization
+                                  ? SPECIALIZATION_TYPE.find(
+                                      (item) =>
+                                        item.value ===
+                                        companyInfo?.Specialization
+                                    ).text
+                                  : companyInfo?.Specialization}
+                              </label>
+                            </div>
+                          </div>
 
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                  Region
-                                </label>
+                          <div className="form-group row">
+                            <label className="col-sm-2 col-form-label">
+                              Company Email
+                            </label>
 
-                                <div class="col-sm-4">
-                                <label class=" col-form-label">{companyInfo?.Region
-                                ? State.getStateByCodeAndCountry(companyInfo?.Region, companyInfo?.Country).name
-                                : companyInfo?.Region
-                                
-                                }</label> 
-                                </div>
-                                <label class="col-sm-2 col-form-label">
-                                  Country
-                                </label>
-                               
-                                <div class="col-sm-4">
-                                <label class=" col-form-label">{
-                               companyInfo.Country ? Country.getCountryByCode(companyInfo.Country).name : companyInfo.Country}
-                                </label>
-                               
-                                </div>
-                              </div>
+                            <div className="col-sm-4">
+                              <label className=" col-form-label">
+                                {companyInfo.ContactEmail}
+                              </label>
+                            </div>
+                            <label className="col-sm-2 col-form-label">
+                              Company Phone
+                            </label>
 
+                            <div className="col-sm-4">
+                              <label className=" col-form-label">
+                                {companyInfo.ContactPhone}
+                              </label>
+                            </div>
+                          </div>
 
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                  Company Address
-                                </label>
+                          <div className="form-group row">
+                            <label className="col-sm-2 col-form-label">
+                              Region
+                            </label>
 
-                                <div class="col-sm-10">
-                                <label class=" col-form-label">{companyInfo.ContactAddress}</label> 
-                                </div>
-                               
-                               
-                                
-                              </div>
+                            <div className="col-sm-4">
+                              <label className=" col-form-label">
+                                {companyInfo?.Region
+                                  ? State.getStateByCodeAndCountry(
+                                      companyInfo?.Region,
+                                      companyInfo?.Country
+                                    ).name
+                                  : companyInfo?.Region}
+                              </label>
+                            </div>
+                            <label className="col-sm-2 col-form-label">
+                              Country
+                            </label>
 
+                            <div className="col-sm-4">
+                              <label className=" col-form-label">
+                                {companyInfo.Country
+                                  ? Country.getCountryByCode(
+                                      companyInfo.Country
+                                    ).name
+                                  : companyInfo.Country}
+                              </label>
+                            </div>
+                          </div>
 
-                             
+                          <div className="form-group row">
+                            <label className="col-sm-2 col-form-label">
+                              Company Address
+                            </label>
 
-    
-                           <div class="form-group row">
-                             <div class="col-md-12">
-                                  
+                            <div className="col-sm-10">
+                              <label className=" col-form-label">
+                                {companyInfo.ContactAddress}
+                              </label>
+                            </div>
+                          </div>
 
+                          <div className="form-group row">
+                            <div className="col-md-12">
+                              <h5 className="alert alert-info"> </h5>
+                            </div>
+                          </div>
+                          <div className="form-group"></div>
 
-
-
-                               <h5 class="alert alert-info"> </h5>
-                             </div>
-                           </div>
-                           <div class="form-group"></div>
-
-                           <div class="form-row">
-                             <div class="col-sm-10 "></div>
-                             <div class="right" style={{ float: "right" }}>
-                               <CustomButton
-                                 loading={loading}
-                                 isAddMode={isAddMode}
-                               />
-                             </div>
-                           </div>
-                         </form>
-                        </div>
+                          <div className="form-row">
+                            <div className="col-sm-10 "></div>
+                            <div className="right" style={{ float: "right" }}>
+                              <CustomButton
+                                loading={loading}
+                                isAddMode={isAddMode}
+                              />
+                            </div>
+                          </div>
+                        </form>
                       </div>
                     </div>
-                    <div class="card mb-0">
-                      <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Company Document</a></h5>
-                      </div>
-                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body">
-                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                          eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-                          sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore
-                          sustainable VHS.
-                        </div>
+                  </div>
+                  <div className="card mb-0">
+                    <div className="card-header" id="headingTwo">
+                      <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseTwo"
+                          aria-expanded="false"
+                          aria-controls="collapseTwo"
+                        >
+                          Company Document
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseTwo"
+                      className="collapse"
+                      aria-labelledby="headingTwo"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high
+                        life accusamus terry richardson ad squid. 3 wolf moon
+                        officia aute, non cupidatat skateboard dolor brunch.
+                        Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+                        wolf moon tempor, sunt aliqua put a bird on it squid
+                        single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes
+                        anderson cred nesciunt sapiente ea proident. Ad vegan
+                        excepteur butcher vice lomo. Leggings occaecat craft
+                        beer farm-to-table, raw denim aesthetic synth nesciunt
+                        heard of them accusamus labore sustainable VHS.
                       </div>
                     </div>
-                    <div class="card">
-                      <div class="card-header" id="headingThree">
-                        <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"></a></h5>
-                      </div>
-                      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                        <div class="card-body">
-                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                          eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-                          sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore
-                          sustainable VHS.
-                        </div>
+                  </div>
+                  <div className="card">
+                    <div className="card-header" id="headingThree">
+                      <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseThree"
+                          aria-expanded="false"
+                          aria-controls="collapseThree"
+                        ></a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseThree"
+                      className="collapse"
+                      aria-labelledby="headingThree"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high
+                        life accusamus terry richardson ad squid. 3 wolf moon
+                        officia aute, non cupidatat skateboard dolor brunch.
+                        Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+                        wolf moon tempor, sunt aliqua put a bird on it squid
+                        single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes
+                        anderson cred nesciunt sapiente ea proident. Ad vegan
+                        excepteur butcher vice lomo. Leggings occaecat craft
+                        beer farm-to-table, raw denim aesthetic synth nesciunt
+                        you probably heard of them accusamus labore sustainable
+                        VHS.
                       </div>
                     </div>
                   </div>
                 </div>
-
-
-
               </div>
             </div>
-
-          
           </div>
         </div>
       </div>
-    
+    </div>
   );
-}
+};
 //Login.layout = "main";
 
-
-export default ReviewCompany
+export default ReviewCompany;
 
 //export default dynamic(() => Promise.resolve(ReviewCompany), { ssr: true });
