@@ -236,7 +236,7 @@ const AddEditShipment = ({query}) => {
     );
   });
 
-
+  CustomInput.displayName = "CustomInput";
 
   return (
     <div className="col-md-12">
@@ -432,7 +432,7 @@ const AddEditShipment = ({query}) => {
                     <option value=""> Select Region/State </option>
                     {pickUpRegion.map((item) => (
                       <option
-                        selected={selpickUpRegion === item.isoCode}
+                       key={item.isoCode} selected={selpickUpRegion === item.isoCode}
                         value={item.isoCode}
                       >
                         {item.name}
@@ -522,7 +522,7 @@ const AddEditShipment = ({query}) => {
                     <option value=""> Select Region/State </option>
                     {deliveryRegion.map((item) => (
                       <option
-                        selected={seldeliveryRegion === item.isoCode}
+                      key={item.isoCode}  selected={seldeliveryRegion === item.isoCode}
                         value={item.isoCode}
                       >
                         {item.name}
@@ -711,7 +711,7 @@ const AddEditShipment = ({query}) => {
                         id="invalidCheck"
                         required
                       />
-                      <label className="form-check-label" for="invalidCheck">
+                      <label className="form-check-label" >
                         Agree to terms and conditions
                       </label>
                       <div className="invalid-feedback">

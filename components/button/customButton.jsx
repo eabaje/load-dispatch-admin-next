@@ -3,7 +3,7 @@ import React from "react";
 function CustomButton(props) {
   return (
     <>
-      <button type="submit" class="btn  btn-primary" style={{ float: "right" }}>
+      <button type="submit" className="btn  btn-primary" style={{ float: "right" }}>
         {props.loading ? (
           <>
             {" "}
@@ -13,7 +13,7 @@ function CustomButton(props) {
         ) : props.isAddMode ? (
           <>
             {" "}
-            <i class="feather mr-2 icon-check-circle"></i> Submit
+            <i className="feather mr-2 icon-check-circle"></i> Submit
           </>
         ) : props.caption ? (
           <>
@@ -24,7 +24,7 @@ function CustomButton(props) {
         ) : (
           <>
             {" "}
-            <i class="feather mr-2 icon-check-circle"></i> Update
+            <i className="feather mr-2 icon-check-circle"></i> Update
           </>
         )}
       </button>

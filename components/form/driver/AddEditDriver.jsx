@@ -188,63 +188,64 @@ const AddEditDriver = ({query}) => {
   
     const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
       return (
-        <div class="input-group mb-3">
+        <div className="input-group mb-3">
           <input
             ref={ref}
             type="text"
-            class="form-control datepicker"
+            className="form-control datepicker"
             value={value}
             onClick={onClick}
             placeholder="Click to enter date"
             required
           />
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-calendar"></i>
+          <div className="input-group-append">
+            <span className="input-group-text">
+              <i className="fa fa-calendar"></i>
             </span>
           </div>
         </div>
       );
     });
+    CustomInput.displayName = "CustomInput";
   return (
-    <div class="col-md-12">
-    <div class="card">
-      <div class="card-header alert alert-info">
+    <div className="col-md-12">
+    <div className="card">
+      <div className="card-header alert alert-info">
         <h2>Driver Information Collection Form</h2>
       </div>
-      <div class="card-body">
-        <div class="col-md-12 ">
+      <div className="card-body">
+        <div className="col-md-12 ">
           <form
-            enctype="multipart/form-data"
+            encType="multipart/form-data"
             onSubmit={handleSubmit(onSubmit)}
           >
             <input
               type="hidden"
               name="UserId"
               value={user.UserId}
-              class="form-control"
+              className="form-control"
             />
             <input
               type="hidden"
               name="CompanyId"
               value={user.CompanyId}
-              class="form-control"
+              className="form-control"
               {...register("CompanyId")}
             />
             <input
               type="hidden"
               name="PicUrl"
-              class="form-control"
+              className="form-control"
               {...register("PicUrl")}
             />
             <input
               type="hidden"
               name="LicenseUrl"
-              class="form-control"
+              className="form-control"
               {...register("LicenseUrl")}
             />
-            <div class="form-group row">
-              <div class="col-md-12 ">
+            <div className="form-group row">
+              <div className="col-md-12 ">
                 <span>
                   {" "}
                   <ImageUpload
@@ -282,34 +283,34 @@ const AddEditDriver = ({query}) => {
                   </CustomPopup>
                 )}
               </div>
-              <div class="col-md-2">
+              <div className="col-md-2">
                 <span> </span>
               </div>
             </div>
-            <div class="form-group row">
-              <div class="col-md-12">
-                <h5 class="alert alert-info"> </h5>
+            <div className="form-group row">
+              <div className="col-md-12">
+                <h5 className="alert alert-info"> </h5>
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Company Name</label>
+            <div className="form-group row">
+              <label className="col-sm-2 col-form-label">Company Name</label>
 
-              <div class="col-sm-4">
+              <div className="col-sm-4">
                 <input
                   name="CompanyName"
-                  class="form-control"
+                  className="form-control"
                   readOnly="readonly"
                   value={user.CompanyName}
                   placeholder="Company Name"
                   {...register("CompanyName")}
                 />
               </div>
-              <label class="col-sm-2 col-form-label">Driver Name</label>
+              <label className="col-sm-2 col-form-label">Driver Name</label>
 
-              <div class="col-sm-4">
+              <div className="col-sm-4">
                 <input
                   name="DriverName"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Driver Name"
                   {...register("DriverName", {
                     required: true,
@@ -319,12 +320,12 @@ const AddEditDriver = ({query}) => {
               </div>
             </div>
 
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-4">
+            <div className="form-group row">
+              <label className="col-sm-2 col-form-label">Email</label>
+              <div className="col-sm-4">
                 <input
                   name="Email"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Email"
                   {...register("Email", {
                     required: true,
@@ -333,11 +334,11 @@ const AddEditDriver = ({query}) => {
                 />
               </div>
 
-              <label class="col-sm-2 col-form-label">Phone</label>
-              <div class="col-sm-4">
+              <label className="col-sm-2 col-form-label">Phone</label>
+              <div className="col-sm-4">
                 <input
                   name="Phone"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Phone"
                   {...register("Phone", {
                     required: true,
@@ -345,9 +346,9 @@ const AddEditDriver = ({query}) => {
                 />
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">DOB</label>
-              <div class="col-sm-4">
+            <div className="form-group row">
+              <label className="col-sm-2 col-form-label">DOB</label>
+              <div className="col-sm-4">
                 <Controller
                   name={"DOB"}
                   control={control}
@@ -355,7 +356,7 @@ const AddEditDriver = ({query}) => {
                   render={({ field: { onChange, value } }) => {
                     return (
                       <DatePicker
-                        wrapperClassName="datePicker"
+                        wrapperclassName="datePicker"
                         className="form-control datepicker"
                         onChange={onChange}
                         selected={Date.parse(value)}
@@ -372,22 +373,22 @@ const AddEditDriver = ({query}) => {
                 />
               </div>
 
-              <label class="col-sm-2 col-form-label">City</label>
-              <div class="col-sm-4">
+              <label className="col-sm-2 col-form-label">City</label>
+              <div className="col-sm-4">
                 <input
                   name="Phone"
-                  class="form-control"
+                  className="form-control"
                   placeholder="City"
                   {...register("City")}
                 />
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-form-label col-md-2">Country</label>
-              <div class="col-md-4">
+            <div className="form-group row">
+              <label className="col-form-label col-md-2">Country</label>
+              <div className="col-md-4">
                 <select
                   name="Country"
-                  class="form-control"
+                  className="form-control"
                   {...register("Country")}
                   onChange={selectPickUpCountry}
                 >
@@ -400,11 +401,11 @@ const AddEditDriver = ({query}) => {
                 </select>
               </div>
 
-              <label class="col-form-label col-md-2">Region/State</label>
-              <div class="col-md-4">
+              <label className="col-form-label col-md-2">Region/State</label>
+              <div className="col-md-4">
                 <select
                   name="Region"
-                  class="form-control"
+                  className="form-control"
                   id="Region"
                   {...register("Region", {
                     required: true,
@@ -413,7 +414,7 @@ const AddEditDriver = ({query}) => {
                   <option value=""> Select Region/State </option>
                   {pickUpRegion.map((item) => (
                     <option
-                      selected={selPickUpRegion === item.isoCode}
+                    key={item.isoCode}  selected={selPickUpRegion === item.isoCode}
                       value={item.isoCode}
                     >
                       {item.name}
@@ -423,12 +424,12 @@ const AddEditDriver = ({query}) => {
               </div>
             </div>
 
-            <div class="form-group row">
-              <label class="col-form-label col-md-2">Address</label>
-              <div class="col-md-10">
+            <div className="form-group row">
+              <label className="col-form-label col-md-2">Address</label>
+              <div className="col-md-10">
                 <input
                   name="Address"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Address"
                   {...register("Address", {
                     required: true,
@@ -437,13 +438,13 @@ const AddEditDriver = ({query}) => {
               </div>
             </div>
 
-            <div class="form-group row">
-              <div class="col-sm-2"> Drivers License?</div>
+            <div className="form-group row">
+              <div className="col-sm-2"> Drivers License?</div>
 
-              <div class="col-md-4">
-                <div class="form-check">
+              <div className="col-md-4">
+                <div className="form-check">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     name="Licensed"
                     type="checkbox"
                     {...register("Licensed", {
@@ -454,7 +455,7 @@ const AddEditDriver = ({query}) => {
                 </div>
               </div>
               {driverId ? (
-                <div class="col-md-6 ">
+                <div className="col-md-6 ">
                   {docUrl && (
                     <a
                       href="#"
@@ -499,10 +500,10 @@ const AddEditDriver = ({query}) => {
               ) : (
                 <>
                   {" "}
-                  <label class="col-form-label col-md-2">
+                  <label className="col-form-label col-md-2">
                     Attach Drivers License
                   </label>
-                  <div class="col-md-4">
+                  <div className="col-md-4">
                     <input
                       className="form-control"
                       type="file"
@@ -516,31 +517,31 @@ const AddEditDriver = ({query}) => {
               )}
             </div>
 
-            <div class="form-group row alert alert-info">
-              <div class="col-md-8 "></div>
-              <div class="col-md-4 "></div>
+            <div className="form-group row alert alert-info">
+              <div className="col-md-8 "></div>
+              <div className="col-md-4 "></div>
             </div>
-            <div class="form-group"></div>
+            <div className="form-group"></div>
 
-            <div class="form-row">
-              <div class="col-sm-10 ">
-                <div class="form-check">
+            <div className="form-row">
+              <div className="col-sm-10 ">
+                <div className="form-check">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="checkbox"
                     value=""
                     id="invalidCheck"
                     required
                   />
-                  <label class="form-check-label" for="invalidCheck">
+                  <label className="form-check-label" htmlFor="invalidCheck">
                     I confirm all information entered are accurate
                   </label>
-                  <div class="invalid-feedback">
+                  <div className="invalid-feedback">
                     You must agree before submitting.
                   </div>
                 </div>
               </div>
-              <div class="right" style={{ float: "right" }}>
+              <div className="right" style={{ float: "right" }}>
                 <CustomButton loading={loading} isAddMode={isAddMode} />
               </div>
             </div>

@@ -34,7 +34,7 @@ const TickerFeed = () => {
             key={items.ShipmentId}
             href={"/list-shipment-info/isReadOnly/" + items.ShipmentId}
             target="_blank"
-            rel="noopener"
+            
           >
             {items.Description}
           </a>

@@ -32,9 +32,10 @@ export default function App() {
       <div>
         <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
         {columns &&
-          columns.map((column) => (
+          columns.map((column,index) => (
             <label>
               <input
+                key={index}
                 type="checkbox"
                 checked={searchColumns.includes(column)}
                 onChange={(e) => {

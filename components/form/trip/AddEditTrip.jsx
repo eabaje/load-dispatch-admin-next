@@ -165,6 +165,7 @@ const AddEditTrip = ({ query }) => {
       </div>
     );
   });
+  CustomInput.displayName='CustomInput';
   return (
     <>
       <div className="row">
@@ -293,7 +294,7 @@ const AddEditTrip = ({ query }) => {
                       >
                         <option value=""> Select Region/State </option>
                         {pickUpRegion.map((item) => (
-                          <option value={item.isoCode}>{item.name}</option>
+                          <option key={item.isoCode} value={item.isoCode}>{item.name}</option>
                         ))}
                       </select>
                     </div>
@@ -378,7 +379,7 @@ const AddEditTrip = ({ query }) => {
                       >
                         <option value=""> Select Region/State </option>
                         {deliveryRegion.map((item) => (
-                          <option value={item.isoCode}>{item.name}</option>
+                          <option key={item.isoCode} value={item.isoCode}>{item.name}</option>
                         ))}
                       </select>
                     </div>
@@ -472,7 +473,7 @@ const AddEditTrip = ({ query }) => {
                           id="invalidCheck"
                           required
                         />
-                        <label className="form-check-label" for="invalidCheck">
+                        <label className="form-check-label" htmlFor="invalidCheck">
                           I confirm all information entered are accurate
                         </label>
                         <div className="invalid-feedback">

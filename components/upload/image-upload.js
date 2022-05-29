@@ -105,7 +105,7 @@ export default function UploadImages(props) {
               <span style={{ display: "inline-block", float: "right" }}>
                 {" "}
                 <i
-                  class="fa fa-arrow-left"
+                  className="fa fa-arrow-left"
                   aria-hidden="true"
                   title="Go back"
                   onClick={SetFormStep}
@@ -207,7 +207,7 @@ export default function UploadImages(props) {
                       />{" "}
                       <a href={img.ImgPath}>{img.FileName}</a>&nbsp;{" "}
                       <i
-                        class="fa fa-pen"
+                        className="fa fa-pen"
                         aria-hidden="true"
                         style={{ cursor: "hand" }}
                         title="Edit Picture"
@@ -217,7 +217,7 @@ export default function UploadImages(props) {
                       ></i>
                       &nbsp;|&nbsp;
                       <i
-                        class="fa fa-trash"
+                        className="fa fa-trash"
                         aria-hidden="true"
                         title="Delete Picture"
                         onClick={SetFormStep}

@@ -151,34 +151,34 @@ const AddEditVehicle = ({query}) =>  {
     <>
      
     
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header alert alert-info">
-              <h2 class="alert alert-info">Vehicle Information</h2>
+        <div className="col-md-12">
+          <div className="card">
+            <div className="card-header alert alert-info">
+              <h2 className="alert alert-info">Vehicle Information</h2>
             </div>
-            <div class="card-body">
-              <div class="col-md-12 ">
+            <div className="card-body">
+              <div className="col-md-12 ">
                 {formStep === 0 && (
                   <form onSubmit={handleSubmit(SubmitForm)}>
                     <input
                       type="hidden"
                       name="UserId"
                       value={user.UserId}
-                      class="form-control"
+                      className="form-control"
                       {...register("UserId")}
                     />
                     <input
                       type="hidden"
                       name="CompanyId"
                       value={companyId}
-                      class="form-control"
+                      className="form-control"
                       {...register("CompanyId")}
                     />
                     <input
                       type="hidden"
                       name="CarrierId"
                       value={carrierId}
-                      class="form-control"
+                      className="form-control"
                       {...register("CarrierId")}
                     />
                     {vehicleId && (
@@ -186,27 +186,27 @@ const AddEditVehicle = ({query}) =>  {
                         type="hidden"
                         name="VehicleId"
                         value={vehicleId}
-                        class="form-control"
+                        className="form-control"
                         {...register("VehicleId")}
                       />
                     )}
                     {driverId && (
                       <>
-                        <div class="form-group row">
-                          <div class="col-md-12">
-                            <h5 class="alert alert-info">
+                        <div className="form-group row">
+                          <div className="col-md-12">
+                            <h5 className="alert alert-info">
                               Assign Vehicle to Driver{" "}
                             </h5>
                           </div>
                         </div>
-                        <div class="form-group row">
-                          <label class="col-sm-2 col-form-label">
+                        <div className="form-group row">
+                          <label className="col-sm-2 col-form-label">
                             Driver To Assign
                           </label>
-                          <div class="col-md-4">
+                          <div className="col-md-4">
                             <select
                               id="DriverId"
-                              class="form-control"
+                              className="form-control"
                               {...register("DriverId", {
                                 required: true,
                               })}
@@ -223,14 +223,14 @@ const AddEditVehicle = ({query}) =>  {
                             </select>
                           </div>
 
-                          <label class="col-sm-2 col-form-label">
+                          <label className="col-sm-2 col-form-label">
                             Vehicle License Number(VIN)
                           </label>
-                          <div class="col-sm-4">
+                          <div className="col-sm-4">
                             <input
                               name="VehicleNumber"
                               id="VehicleNumber"
-                              class="form-control"
+                              className="form-control"
                               placeholder="Vehicle Number"
                               {...register("VehicleNumber", {
                                 required: true,
@@ -241,19 +241,19 @@ const AddEditVehicle = ({query}) =>  {
                       </>
                     )}
 
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <h5 class="alert alert-info"> Vehicle Info </h5>
+                    <div className="form-group row">
+                      <div className="col-md-12">
+                        <h5 className="alert alert-info"> Vehicle Info </h5>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
                         Vehicle Type
                       </label>
-                      <div class="col-md-4">
+                      <div className="col-md-4">
                         <select
                           id="VehicleType"
-                          class="form-control"
+                          className="form-control"
                           {...register("VehicleType", {
                             required: true,
                           })}
@@ -271,13 +271,13 @@ const AddEditVehicle = ({query}) =>  {
                         </select>
                       </div>
 
-                      <label class="col-sm-2 col-form-label">
+                      <label className="col-sm-2 col-form-label">
                         Vehicle License Number(VIN)
                       </label>
-                      <div class="col-sm-4">
+                      <div className="col-sm-4">
                         <input
                           name="VehicleNumber"
-                          class="form-control"
+                          className="form-control"
                           placeholder="Vehicle Number"
                           {...register("VehicleNumber", {
                             required: true,
@@ -286,28 +286,28 @@ const AddEditVehicle = ({query}) =>  {
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
                         Serial Number
                       </label>
 
-                      <div class="col-sm-4">
+                      <div className="col-sm-4">
                         <input
                           name="SerialNumber"
-                          class="form-control"
+                          className="form-control"
                           placeholder="Serial Number"
                           {...register("SerialNumber", {
                             required: true,
                           })}
                         />
                       </div>
-                      <label class="col-sm-2 col-form-label">
+                      <label className="col-sm-2 col-form-label">
                         Vehicle Make
                       </label>
-                      <div class="col-sm-4">
+                      <div className="col-sm-4">
                         <input
                           name="VehicleMake"
-                          class="form-control"
+                          className="form-control"
                           placeholder="Vehicle Make"
                           {...register("VehicleMake", {
                             required: true,
@@ -316,32 +316,32 @@ const AddEditVehicle = ({query}) =>  {
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <label class="col-form-label col-md-2">Description</label>
-                      <div class="col-md-10">
+                    <div className="form-group row">
+                      <label className="col-form-label col-md-2">Description</label>
+                      <div className="col-md-10">
                         <input
                           name="Description"
-                          class="form-control"
+                          className="form-control"
                           placeholder="Description"
                           {...register("Description")}
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <h5 class="alert alert-info"> Vehicle Information </h5>
+                    <div className="form-group row">
+                      <div className="col-md-12">
+                        <h5 className="alert alert-info"> Vehicle Information </h5>
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <label class="col-form-label col-md-2">
+                    <div className="form-group row">
+                      <label className="col-form-label col-md-2">
                         Vehicle Color
                       </label>
 
-                      <div class="col-md-4">
+                      <div className="col-md-4">
                         <input
                           name="VehicleColor"
-                          class="form-control"
+                          className="form-control"
                           placeholder="Vehicle Color"
                           {...register("VehicleColor", {
                             required: true,
@@ -349,13 +349,13 @@ const AddEditVehicle = ({query}) =>  {
                           required
                         />
                       </div>
-                      <label class="col-form-label col-md-2">
+                      <label className="col-form-label col-md-2">
                         Vehicle Model
                       </label>
-                      <div class="col-md-4">
+                      <div className="col-md-4">
                         <input
                           name="VehicleModel"
-                          class="form-control"
+                          className="form-control"
                           placeholder="Vehicle Model"
                           {...register("VehicleModel", {
                             required: true,
@@ -364,15 +364,15 @@ const AddEditVehicle = ({query}) =>  {
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <label class="col-form-label col-md-2">
+                    <div className="form-group row">
+                      <label className="col-form-label col-md-2">
                         Vehicle License Plate
                       </label>
 
-                      <div class="col-md-4">
+                      <div className="col-md-4">
                         <input
                           name="LicensePlate"
-                          class="form-control"
+                          className="form-control"
                           placeholder="License Plate"
                           {...register("LicensePlate", {
                             required: true,
@@ -380,15 +380,15 @@ const AddEditVehicle = ({query}) =>  {
                         />
                       </div>
 
-                      <label class="col-form-label col-md-2">
+                      <label className="col-form-label col-md-2">
                         Vehicle Model Year
                       </label>
 
-                      <div class="col-md-4">
+                      <div className="col-md-4">
                         <input
                           name="VehicleModelYear"
                           placeholder="Vehicle Model Year"
-                          class="form-control"
+                          className="form-control"
                           {...register("VehicleModelYear", {
                             required: true,
                           })}
@@ -396,27 +396,27 @@ const AddEditVehicle = ({query}) =>  {
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <label class="col-form-label col-md-2">
+                    <div className="form-group row">
+                      <label className="col-form-label col-md-2">
                         Purchase Year
                       </label>
 
-                      <div class="col-md-4">
+                      <div className="col-md-4">
                         <input
                           name="PurchaseYear"
-                          class="form-control"
+                          className="form-control"
                           placeholder=" Enter Purchase year"
                           {...register("PurchaseYear")}
                         />
                       </div>
 
-                      <label class="col-sm-2 col-form-label">Insured?</label>
-                      <div class="col-sm-4">
-                        <div class="form-check">
+                      <label className="col-sm-2 col-form-label">Insured?</label>
+                      <div className="col-sm-4">
+                        <div className="form-check">
                           <input
                             type="checkbox"
                             name="Insured"
-                            class="form-check-input-custom-2"
+                            className="form-check-input-custom-2"
                             {...register("Insured", {
                               required: true,
                             })}
@@ -424,43 +424,43 @@ const AddEditVehicle = ({query}) =>  {
                         </div>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <h5 class="alert alert-info"></h5>
+                    <div className="form-group row">
+                      <div className="col-md-12">
+                        <h5 className="alert alert-info"></h5>
                       </div>
                     </div>
-                    <div class="form-row">
-                      <div class="col-sm-10 ">
-                        <div class="form-check">
+                    <div className="form-row">
+                      <div className="col-sm-10 ">
+                        <div className="form-check">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             name="IsValid"
                             value=""
                             id="invalidCheck"
                             required
                           />
-                          <label class="form-check-label" for="invalidCheck">
+                          <label className="form-check-label" >
                             I confirm all information entered are accurate
                           </label>
-                          <div class="invalid-feedback">
+                          <div className="invalid-feedback">
                             You must agree before submitting.
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <div class="col-md-6 "></div>
-                      <div class="col-md-4 ">
+                    <div className="form-group row">
+                      <div className="col-md-6 "></div>
+                      <div className="col-md-4 ">
                         <span>
                           {!isAddMode && formStep === 0 && (
                             <button
                               type="button"
-                              class="btn  btn-primary"
+                              className="btn  btn-primary"
                               onClick={() => setFormStep(1)}
                               style={{ right: "150px" }}
                             >
-                              <i class="feather mr-2 icon-check-circle"></i>{" "}
+                              <i className="feather mr-2 icon-check-circle"></i>{" "}
                               {"Upload Picture "}
                             </button>
                           )}
@@ -468,13 +468,13 @@ const AddEditVehicle = ({query}) =>  {
                         <span>
                           <button
                             type="submit"
-                            class="btn  btn-primary"
+                            className="btn  btn-primary"
                             style={{ float: "right" }}
                           >
                             {loading ? (
-                              <i className="fa fa-spinner fa-spin"></i>
+                              <i classNameName="fa fa-spinner fa-spin"></i>
                             ) : (
-                              <i class="feather mr-2 icon-check-circle"></i>
+                              <i className="feather mr-2 icon-check-circle"></i>
                             )}{" "}
                             {isAddMode
                               ? "Submit"

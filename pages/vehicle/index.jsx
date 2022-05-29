@@ -71,9 +71,9 @@ function ListVehicle({query}) {
   return (
     
     <MainLayout>
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-header alert alert-info">
+      <div className="col-sm-12">
+        <div className="card">
+          <div className="card-header alert alert-info">
             <h3>List of Vehicles</h3>
             <hr />
             <ul>
@@ -82,7 +82,7 @@ function ListVehicle({query}) {
               <li>Add vehicles to Carrier </li>
             </ul>
           </div>
-          <div class="card-body table-border-style">
+          <div className="card-body table-border-style">
           <Datatable loading={loading} col={columns(user)} 
             data={data.data}/>
            

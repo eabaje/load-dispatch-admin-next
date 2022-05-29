@@ -4,11 +4,11 @@ import Link from 'next/link'
 
 import Submenu from "./navbar-vertical-submenu";
 
-const Menu = ({ id, items, user }) => {
+const Menu = ({ key,id, items, user }) => {
   return (
     <li
     id={id}
-      key={id}
+      key={key}
       className={items.submenu ? "nav-item pcoded-hasmenu" : "nav-item"}
     >
       {items.submenu ? (

@@ -1,4 +1,5 @@
 import React from "react";
+import UploadImages from "../../upload/image-upload";
 
 const DetailDriver = ({ query }) => {
   const { driverId, vehicleId } = query;
@@ -203,7 +204,7 @@ const DetailDriver = ({ query }) => {
                                 />
                                 <label
                                   className="form-check-label"
-                                  for="invalidCheck"
+                                  htmlFor="invalidCheck"
                                 >
                                   I am interested in engaging your services
                                 </label>
@@ -219,7 +220,7 @@ const DetailDriver = ({ query }) => {
                                 style={{ float: "right" }}
                               >
                                 {loading ? (
-                                  <i classNameName="fa fa-spinner fa-spin"></i>
+                                  <i className="fa fa-spinner fa-spin"></i>
                                 ) : (
                                   <i className="feather mr-2 icon-check-circle"></i>
                                 )}
@@ -251,7 +252,7 @@ const DetailDriver = ({ query }) => {
             <DataTable
               columns={columns}
               data={data}
-              classNameName="table table-striped table-bordered table-hover table-checkable"
+              className="table table-striped table-bordered table-hover table-checkable"
               defaultSortField={1}
               sortIcon={<ChevronsDown />}
               defaultSortAsc={true}

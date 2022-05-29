@@ -5,13 +5,13 @@ export default function Datatable({ data }) {
   return (
     <table cellPadding={0} cellSpacing={0}>
       <thead>
-        <tr>{data[0] && columns.map((heading) => <th>{heading}</th>)}</tr>
+        <tr>{data[0] && columns.map((heading,index) => <th key={index}>{heading}</th>)}</tr>
       </thead>
       <tbody>
         {data.map((row) => (
           <tr>
-            {columns.map((column) => (
-              <td>{row[column]}</td>
+            {columns.map((column,index) => (
+              <td key={index}>{row[column]}</td>
             ))}
           </tr>
         ))}

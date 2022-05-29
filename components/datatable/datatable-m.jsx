@@ -22,7 +22,7 @@ const Datatable = ({loading,col,data}) => {
                   data={data}
                   
                  
-                  classNameName="table table-striped table-bordered table-hover table-checkable"
+                  className="table table-striped table-bordered table-hover table-checkable"
                   defaultSortField={1}
                   sortIcon={<ChevronsDown />}
                   defaultSortAsc={true}

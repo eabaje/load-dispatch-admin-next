@@ -29,8 +29,8 @@ const DriverCard=(props)=> {
   }
   return (
     <>
-      <div class="card p-3 py-6">
-        <div class="text-center">
+      <div className="card p-3 py-6">
+        <div className="text-center">
           {" "}
           <img
             src={
@@ -39,30 +39,30 @@ const DriverCard=(props)=> {
                 : "https://bootdey.com/img/Content/avatar/avatar7.png"
             }
             width="100"
-            class="rounded-circle"
+            className="rounded-circle"
           />{" "}
         </div>
-        <div class="text-center mt-3">
+        <div className="text-center mt-3">
           {" "}
-          <span class="bg-secondary p-1 px-4 rounded text-white">
+          <span className="bg-secondary p-1 px-4 rounded text-white">
             {driver?.DriverName}
           </span>
-          <h6 class="mt-2 mb-0">{driver.Company?.CompanyName}</h6>{" "}
+          <h6 className="mt-2 mb-0">{driver.Company?.CompanyName}</h6>{" "}
           <span>
-            <i class="fa fa-phone-square" aria-hidden="true"></i>{" "}
+            <i className="fa fa-phone-square" aria-hidden="true"></i>{" "}
             {driver?.Phone}
           </span>
-          <div class="row about-list ">
-            <div class="col-md-12">
-              <div class="media">
+          <div className="row about-list ">
+            <div className="col-md-12">
+              <div className="media">
                 <label>Age(yrs)</label>
                 <p>{getAge(driver?.DOB)}</p>
               </div>
-              <div class="media">
+              <div className="media">
                 <label>City</label>
                 <p>{driver?.City}</p>
               </div>
-              <div class="media">
+              <div className="media">
                 <label>Country</label>
                 <p>
                   {" "}
@@ -74,35 +74,35 @@ const DriverCard=(props)=> {
               <Rating rating={driver?.Rating? driver?.Rating:1} caption=" "></Rating>
             </div>
           </div>
-          <div class="px-4 mt-1">
-            <p class="fonts"> </p>
+          <div className="px-4 mt-1">
+            <p className="fonts"> </p>
           </div>
-          <ul class="social-list">
+          <ul className="social-list">
             <li>
-              <i class="fa fa-facebook"></i>
+              <i className="fa fa-facebook"></i>
             </li>
             <li>
-              <i class="fa fa-dribbble"></i>
+              <i className="fa fa-dribbble"></i>
             </li>
             <li>
-              <i class="fa fa-instagram"></i>
+              <i className="fa fa-instagram"></i>
             </li>
             <li>
-              <i class="fa fa-linkedin"></i>
+              <i className="fa fa-linkedin"></i>
             </li>
             <li>
-              <i class="fa fa-google"></i>
+              <i className="fa fa-google"></i>
             </li>
           </ul>
-          <div class="buttons">
+          <div className="buttons">
             {" "}
           
             <Link
-              className="btn btn-outline-primary px-4"
+              classNameName="btn btn-outline-primary px-4"
               to={`list-driver-detail/${driver.DriverId}/${driver.Vehicles[0]['VehicleId']}`}
               title=" "
             >
-              <i class="feather icon-log-out"></i> Check It Out
+              <i className="feather icon-log-out"></i> Check It Out
             </Link>
           </div>
         </div>

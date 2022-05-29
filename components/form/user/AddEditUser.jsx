@@ -233,6 +233,7 @@ const AddEditUser = ({ query }) => {
       </div>
     );
   });
+  CustomInput.displayName = "CustomInput";
   console.log("userId", userId);
   return (
     <div className="col-xl-12">
@@ -363,7 +364,7 @@ const AddEditUser = ({ query }) => {
                                     setVisibilityImage(!visibilityImage)
                                   }
                                 >
-                                  <i classNameName="first fas fa-pen"></i>
+                                  <i className="first fas fa-pen"></i>
                                 </a>
 
                                 {visibilityImage && (
@@ -467,8 +468,8 @@ const AddEditUser = ({ query }) => {
                                   render={({ field: { onChange, value } }) => {
                                     return (
                                       <DatePicker
-                                        wrapperclassNameName="datePicker"
-                                        classNameName="form-control datepicker"
+                                        wrapperclassName="datePicker"
+                                        className="form-control datepicker"
                                         onChange={onChange}
                                         selected={value}
                                         yearDropdownItemNumber={100}
@@ -537,7 +538,7 @@ const AddEditUser = ({ query }) => {
                                     Select Region/State{" "}
                                   </option>
                                   {pickUpRegion.map((item) => (
-                                    <option value={item.isoCode}>
+                                    <option key={item.isoCode} value={item.isoCode}>
                                       {item.name}
                                     </option>
                                   ))}
@@ -618,7 +619,7 @@ const AddEditUser = ({ query }) => {
                             className="form-control"
                             {...registerCompany("Email")}
                           />
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <select
                               name="RoleType"
                               className="form-control"
@@ -658,9 +659,9 @@ const AddEditUser = ({ query }) => {
                               {...registerCompany("Role")}
                             />
                           </div>
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <input
-                              classNameName="form-control"
+                              className="form-control"
                               type="text"
                               placeholder="* Company Name"
                               name="CompanyName"
@@ -677,9 +678,9 @@ const AddEditUser = ({ query }) => {
                               errorMessage(maxLength)}
                           </div>
 
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <input
-                              classNameName="form-control"
+                              className="form-control"
                               type="text"
                               placeholder="Company Address"
                               name="Address"
@@ -691,9 +692,9 @@ const AddEditUser = ({ query }) => {
                               errors.CompanyAddress.type === "required" &&
                               errorMessage(required)}
                           </div>
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <input
-                              classNameName="form-control"
+                              className="form-control"
                               type="text"
                               placeholder="* Company Email"
                               name="ContactEmail"
@@ -706,9 +707,9 @@ const AddEditUser = ({ query }) => {
                               errors.ContactEmail.type === "required" &&
                               errorMessage(required)}
                           </div>
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <input
-                              classNameName="form-control"
+                              className="form-control"
                               type="text"
                               placeholder="* Contact Phone"
                               name="ContactPhone"
@@ -720,7 +721,7 @@ const AddEditUser = ({ query }) => {
                               errors.ContactPhone.type === "required" &&
                               errorMessage(required)}
                           </div>
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <select
                               name="Country"
                               className="form-control"
@@ -742,7 +743,7 @@ const AddEditUser = ({ query }) => {
                               errorMessage(required)}
                           </div>
 
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <select
                               name="Region"
                               className="form-control"
@@ -751,16 +752,16 @@ const AddEditUser = ({ query }) => {
                             >
                               <option value=""> Select Region/State </option>
                               {region.map((item) => (
-                                <option value={item.isoCode}>
+                                <option key={item.isoCode} value={item.isoCode}>
                                   {item.name}
                                 </option>
                               ))}
                             </select>
                           </div>
 
-                          <div classNameName="form-group col-sm-10">
+                          <div className="form-group col-sm-10">
                             <input
-                              classNameName="form-control"
+                              className="form-control"
                               type="url"
                               placeholder="Website"
                               name="Website"
@@ -867,7 +868,7 @@ const AddEditUser = ({ query }) => {
                 <DataTable
                   columns={columns}
                   data={data}
-                  classNameName="table table-striped table-bordered table-hover table-checkable"
+                  className="table table-striped table-bordered table-hover table-checkable"
                   defaultSortField={1}
                   sortIcon={<ChevronsDown />}
                   defaultSortAsc={true}
@@ -883,6 +884,6 @@ const AddEditUser = ({ query }) => {
 };
 //Login.layout = "main";
 
-//export default AddEditUser
+export default AddEditUser
 
-export default dynamic(() => Promise.resolve(AddEditUser), { ssr: false });
+//export default dynamic(() => Promise.resolve(AddEditUser), { ssr: false });

@@ -189,32 +189,32 @@ const NavBar = (history) => {
 
               {user.isActivated === false &&
                 menuItemsPublic(user).map((menu, index) => {
-                  return <Menu id={index} items={menu} user={user} />;
+                  return <Menu key={index} id={index} items={menu} user={user} />;
                 })}
 
               {user.isExpired === true &&
                 menuItemsPublic(user).map((menu, index) => {
-                  return <Menu id={index} items={menu} user={user} />;
+                  return <Menu key={index} id={index} items={menu} user={user} />;
                 })}
 
               {user.roles === "carrier" &&
                 menuItemsCarrier(user).map((menu, index) => {
-                  return <Menu id={index} items={menu} user={user} />;
+                  return <Menu key={index} id={index} items={menu} user={user} />;
                 })}
 
               {user.roles === "driver" &&
                 menuItemsDriver(user).map((menu, index) => {
-                  return <Menu id={index} items={menu} user={user} />;
+                  return <Menu key={index} id={index} items={menu} user={user} />;
                 })}
 
               {user.roles === "shipper" &&
                 menuItemsShipper(user).map((menu, index) => {
-                  return <Menu id={index} items={menu} user={user} />;
+                  return <Menu key={index} id={index} items={menu} user={user} />;
                 })}
 
               {user.roles === "admin" &&
                 menuItemsAdmin(user).map((menu, index) => {
-                  return <Menu id={index} items={menu} user={user} />;
+                  return <Menu key={index} id={index} items={menu} user={user} />;
                 })}
             </ul>
           </div>

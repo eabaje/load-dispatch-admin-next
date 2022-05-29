@@ -3,17 +3,17 @@ import React from "react";
 function Offer() {
   return (
     <div>
-      <section id="offer" class="space">
-        <div class="container">
-          <div class="col-sm-12 no-padding main-heading text-center">
-            <h2 class="title">what we offer</h2>
+      <section id="offer" className="space">
+        <div className="container">
+          <div className="col-sm-12 no-padding main-heading text-center">
+            <h2 className="title">what we offer</h2>
           </div>
-          <div class="row">
-            <div class="col-sm-4 offer-block">
-              <div class="offer-icon">
-                <i class="ti-truck"></i>
+          <div className="row">
+            <div className="col-sm-4 offer-block">
+              <div className="offer-icon">
+                <i className="ti-truck"></i>
               </div>
-              <div class="offer-text">
+              <div className="offer-text">
                 <h4>cargo management</h4>
                 <p>
                   We help lift the burden of truck owners and investors managing
@@ -21,11 +21,11 @@ function Offer() {
                 </p>
               </div>
             </div>
-            <div class="col-sm-4 offer-block">
-              <div class="offer-icon">
-                <i class="ti-hand-open"></i>
+            <div className="col-sm-4 offer-block">
+              <div className="offer-icon">
+                <i className="ti-hand-open"></i>
               </div>
-              <div class="offer-text">
+              <div className="offer-text">
                 <h4>Safe Shipments</h4>
                 <p>
                   we help organize shipments for individuals or corporations to
@@ -33,11 +33,11 @@ function Offer() {
                 </p>
               </div>
             </div>
-            <div class="col-sm-4 offer-block">
-              <div class="offer-icon">
-                <i class="icon-social-dropbox"></i>
+            <div className="col-sm-4 offer-block">
+              <div className="offer-icon">
+                <i className="icon-social-dropbox"></i>
               </div>
-              <div class="offer-text">
+              <div className="offer-text">
                 <h4>product packaging</h4>
                 <p>
                   Integer adipiscing erat eget risus sollici pellentesque et non
@@ -45,11 +45,11 @@ function Offer() {
                 </p>
               </div>
             </div>
-            <div class="col-sm-4 offer-block">
-              <div class="offer-icon">
-                <i class="icon-grid"></i>
+            <div className="col-sm-4 offer-block">
+              <div className="offer-icon">
+                <i className="icon-grid"></i>
               </div>
-              <div class="offer-text">
+              <div className="offer-text">
                 <h4>warehousing service</h4>
                 <p>
                   Consumers want fast, low-cost delivery and the full
@@ -57,11 +57,11 @@ function Offer() {
                 </p>
               </div>
             </div>
-            <div class="col-sm-4 offer-block">
-              <div class="offer-icon">
-                <i class="icon-calculator"></i>
+            <div className="col-sm-4 offer-block">
+              <div className="offer-icon">
+                <i className="icon-calculator"></i>
               </div>
-              <div class="offer-text">
+              <div className="offer-text">
                 <h4>lowest pricing</h4>
                 <p>
                   we offer reasonable and competitive price regimes for our
@@ -69,11 +69,11 @@ function Offer() {
                 </p>
               </div>
             </div>
-            <div class="col-sm-4 offer-block">
-              <div class="offer-icon">
-                <i class="icon-globe"></i>
+            <div className="col-sm-4 offer-block">
+              <div className="offer-icon">
+                <i className="icon-globe"></i>
               </div>
-              <div class="offer-text">
+              <div className="offer-text">
                 <h4>supply chain management </h4>
                 <p>
                   Our integrated end to end supply chain system is all you need

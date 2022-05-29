@@ -5,11 +5,11 @@ function Banner() {
   return (
     <div>
       <section id="banner">
-        <div class="container-fluid">
-          <div class="row">
+        <div className="container-fluid">
+          <div className="row">
             <div
               id="rev_slider_1_1_wrapper"
-              class="rev_slider_wrapper fullwidthbanner-container"
+              className="rev_slider_wrapper fullwidthbanner-container"
               style={{
                 margin: "0px auto",
                 "background-color": "#E9E9E9",
@@ -21,7 +21,7 @@ function Banner() {
             >
               <div
                 id="rev_slider_1_1"
-                class="rev_slider fullwidthabanner"
+                className="rev_slider fullwidthabanner"
                 style={{
                   display: "none",
                   "max-height": "550px",
@@ -46,7 +46,7 @@ function Banner() {
                     />
 
                     <div
-                      class="tp-caption large_bold_black sft tp-resizeme"
+                      className="tp-caption large_bold_black sft tp-resizeme"
                       data-x="88"
                       data-y="100"
                       data-speed="300"
@@ -68,7 +68,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption smalltext sfr tp-resizeme"
+                      className="tp-caption smalltext sfr tp-resizeme"
                       data-x="88"
                       data-y="170"
                       data-speed="300"
@@ -90,7 +90,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfr tp-resizeme"
+                      className="tp-caption medium_text sfr tp-resizeme"
                       data-x="88"
                       data-y="280"
                       data-speed="300"
@@ -113,7 +113,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfb tp-resizeme"
+                      className="tp-caption medium_text sfb tp-resizeme"
                       data-x="88"
                       data-y="380"
                       data-speed="300"
@@ -133,14 +133,14 @@ function Banner() {
                     >
                       <a
                         href={SIGN_UP}
-                        class="sppb-btn sppb-btn-default sppb-btn-"
+                        className="sppb-btn sppb-btn-default sppb-btn-"
                       >
                         Sign Up
                       </a>
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfb tp-resizeme"
+                      className="tp-caption medium_text sfb tp-resizeme"
                       data-x="244"
                       data-y="380"
                       data-speed="300"
@@ -160,7 +160,7 @@ function Banner() {
                     >
                       <a
                         href={LOG_IN}
-                        class="sppb-btn sppb-btn-primary sppb-btn-"
+                        className="sppb-btn sppb-btn-primary sppb-btn-"
                       >
                         Read more
                       </a>
@@ -184,7 +184,7 @@ function Banner() {
                     />
 
                     <div
-                      class="tp-caption large_bold_black sft tp-resizeme"
+                      className="tp-caption large_bold_black sft tp-resizeme"
                       data-x="88"
                       data-y="100"
                       data-speed="300"
@@ -206,7 +206,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption smalltext sfr tp-resizeme"
+                      className="tp-caption smalltext sfr tp-resizeme"
                       data-x="88"
                       data-y="160"
                       data-speed="300"
@@ -228,7 +228,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfr tp-resizeme"
+                      className="tp-caption medium_text sfr tp-resizeme"
                       data-x="88"
                       data-y="280"
                       data-speed="300"
@@ -250,7 +250,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfb tp-resizeme"
+                      className="tp-caption medium_text sfb tp-resizeme"
                       data-x="88"
                       data-y="380"
                       data-speed="300"
@@ -270,14 +270,14 @@ function Banner() {
                     >
                       <a
                         href={SIGN_UP}
-                        class="sppb-btn sppb-btn-default sppb-btn-"
+                        className="sppb-btn sppb-btn-default sppb-btn-"
                       >
                         Sign Up
                       </a>
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfb tp-resizeme"
+                      className="tp-caption medium_text sfb tp-resizeme"
                       data-x="244"
                       data-y="380"
                       data-speed="300"
@@ -295,7 +295,7 @@ function Banner() {
                         "white-space": "nowrap",
                       }}
                     >
-                      <a href="#" class="sppb-btn sppb-btn-primary sppb-btn-">
+                      <a href="#" className="sppb-btn sppb-btn-primary sppb-btn-">
                         Read more
                       </a>
                     </div>
@@ -318,7 +318,7 @@ function Banner() {
                     />
 
                     <div
-                      class="tp-caption large_bold_black sft tp-resizeme"
+                      className="tp-caption large_bold_black sft tp-resizeme"
                       data-x="88"
                       data-y="100"
                       data-speed="300"
@@ -340,7 +340,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption smalltext sfr tp-resizeme"
+                      className="tp-caption smalltext sfr tp-resizeme"
                       data-x="88"
                       data-y="160"
                       data-speed="300"
@@ -362,7 +362,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfr tp-resizeme"
+                      className="tp-caption medium_text sfr tp-resizeme"
                       data-x="88"
                       data-y="280"
                       data-speed="300"
@@ -384,7 +384,7 @@ function Banner() {
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfb tp-resizeme"
+                      className="tp-caption medium_text sfb tp-resizeme"
                       data-x="88"
                       data-y="380"
                       data-speed="300"
@@ -404,14 +404,14 @@ function Banner() {
                     >
                       <a
                         href={SIGN_UP}
-                        class="sppb-btn sppb-btn-default sppb-btn-"
+                        className="sppb-btn sppb-btn-default sppb-btn-"
                       >
                         Sign Up
                       </a>
                     </div>
 
                     <div
-                      class="tp-caption medium_text sfb tp-resizeme"
+                      className="tp-caption medium_text sfb tp-resizeme"
                       data-x="244"
                       data-y="380"
                       data-speed="300"
@@ -429,13 +429,13 @@ function Banner() {
                         "white-space": "nowrap",
                       }}
                     >
-                      <a href="#" class="sppb-btn sppb-btn-primary sppb-btn-">
+                      <a href="#" className="sppb-btn sppb-btn-primary sppb-btn-">
                         Read more
                       </a>
                     </div>
                   </li>
                 </ul>
-                <div class="tp-bannertimer"></div>
+                <div className="tp-bannertimer"></div>
               </div>
             </div>
           </div>

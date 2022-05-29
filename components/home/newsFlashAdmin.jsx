@@ -3,24 +3,24 @@ import React from "react";
 function NewsFlashAdmin() {
   return (
     <>
-      <div class="grey-bg container-fluid">
+      <div className="grey-bg container-fluid">
         <section id="minimal-statistics">
-          <div class="row">
-            <div class="col-12 mt-3 mb-1">
-              <h4 class="text-uppercase">Minimal Statistics Cards</h4>
+          <div className="row">
+            <div className="col-12 mt-3 mb-1">
+              <h4 className="text-uppercase">Minimal Statistics Cards</h4>
               <p>Statistics on minimal cards.</p>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="align-self-center">
-                        <i class="icon-pencil primary font-large-2 float-left"></i>
+          <div className="row">
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="align-self-center">
+                        <i className="icon-pencil primary font-large-2 float-left"></i>
                       </div>
-                      <div class="media-body text-right">
+                      <div className="media-body text-right">
                         <h3>278</h3>
                         <span>New Posts</span>
                       </div>
@@ -29,15 +29,15 @@ function NewsFlashAdmin() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="align-self-center">
-                        <i class="icon-speech warning font-large-2 float-left"></i>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="align-self-center">
+                        <i className="icon-speech warning font-large-2 float-left"></i>
                       </div>
-                      <div class="media-body text-right">
+                      <div className="media-body text-right">
                         <h3>156</h3>
                         <span>New Comments</span>
                       </div>
@@ -46,15 +46,15 @@ function NewsFlashAdmin() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="align-self-center">
-                        <i class="icon-graph success font-large-2 float-left"></i>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="align-self-center">
+                        <i className="icon-graph success font-large-2 float-left"></i>
                       </div>
-                      <div class="media-body text-right">
+                      <div className="media-body text-right">
                         <h3>64.89 %</h3>
                         <span>Bounce Rate</span>
                       </div>
@@ -63,15 +63,15 @@ function NewsFlashAdmin() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="align-self-center">
-                        <i class="icon-pointer danger font-large-2 float-left"></i>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="align-self-center">
+                        <i className="icon-pointer danger font-large-2 float-left"></i>
                       </div>
-                      <div class="media-body text-right">
+                      <div className="media-body text-right">
                         <h3>423</h3>
                         <span>Total Visits</span>
                       </div>
@@ -82,35 +82,35 @@ function NewsFlashAdmin() {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="danger">278</h3>
+          <div className="row">
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="danger">278</h3>
                         <span>New Projects</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-rocket danger font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-rocket danger font-large-2 float-right"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="success">156</h3>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="success">156</h3>
                         <span>New Clients</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-user success font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-user success font-large-2 float-right"></i>
                       </div>
                     </div>
                   </div>
@@ -118,34 +118,34 @@ function NewsFlashAdmin() {
               </div>
             </div>
 
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="warning">64.89 %</h3>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="warning">64.89 %</h3>
                         <span>Conversion Rate</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-pie-chart warning font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-pie-chart warning font-large-2 float-right"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="primary">423</h3>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="primary">423</h3>
                         <span>Support Tickets</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-support primary font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-support primary font-large-2 float-right"></i>
                       </div>
                     </div>
                   </div>
@@ -154,23 +154,23 @@ function NewsFlashAdmin() {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="primary">278</h3>
+          <div className="row">
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="primary">278</h3>
                         <span>New Posts</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-book-open primary font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-book-open primary font-large-2 float-right"></i>
                       </div>
                     </div>
-                    <div class="progress mt-1 mb-0" style={{ height: "7px;" }}>
+                    <div className="progress mt-1 mb-0" style={{ height: "7px;" }}>
                       <div
-                        class="progress-bar bg-primary"
+                        className="progress-bar bg-primary"
                         role="progressbar"
                         style={{ width: "80%" }}
                         aria-valuenow="80"
@@ -182,22 +182,22 @@ function NewsFlashAdmin() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="warning">156</h3>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="warning">156</h3>
                         <span>New Comments</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-bubbles warning font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-bubbles warning font-large-2 float-right"></i>
                       </div>
                     </div>
-                    <div class="progress mt-1 mb-0" style={{ height: " 7px;" }}>
+                    <div className="progress mt-1 mb-0" style={{ height: " 7px;" }}>
                       <div
-                        class="progress-bar bg-warning"
+                        className="progress-bar bg-warning"
                         role="progressbar"
                         style={{ width: "35%" }}
                         aria-valuenow="35"
@@ -210,22 +210,22 @@ function NewsFlashAdmin() {
               </div>
             </div>
 
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="success">64.89 %</h3>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="success">64.89 %</h3>
                         <span>Bounce Rate</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-cup success font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-cup success font-large-2 float-right"></i>
                       </div>
                     </div>
-                    <div class="progress mt-1 mb-0" style={{ height: "7px;" }}>
+                    <div className="progress mt-1 mb-0" style={{ height: "7px;" }}>
                       <div
-                        class="progress-bar bg-success"
+                        className="progress-bar bg-success"
                         role="progressbar"
                         style={{ width: "60%" }}
                         aria-valuenow="60"
@@ -237,22 +237,22 @@ function NewsFlashAdmin() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <div class="media d-flex">
-                      <div class="media-body text-left">
-                        <h3 class="danger">423</h3>
+            <div className="col-xl-3 col-sm-6 col-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body">
+                    <div className="media d-flex">
+                      <div className="media-body text-left">
+                        <h3 className="danger">423</h3>
                         <span>Total Visits</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-direction danger font-large-2 float-right"></i>
+                      <div className="align-self-center">
+                        <i className="icon-direction danger font-large-2 float-right"></i>
                       </div>
                     </div>
-                    <div class="progress mt-1 mb-0" style={{ height: " 7px;" }}>
+                    <div className="progress mt-1 mb-0" style={{ height: " 7px;" }}>
                       <div
-                        class="progress-bar bg-danger"
+                        className="progress-bar bg-danger"
                         role="progressbar"
                         style={{ width: "40%" }}
                         aria-valuenow="40"
@@ -268,27 +268,27 @@ function NewsFlashAdmin() {
         </section>
 
         <section id="stats-subtitle">
-          <div class="row">
-            <div class="col-12 mt-3 mb-1">
-              <h4 class="text-uppercase">Statistics With Subtitle</h4>
+          <div className="row">
+            <div className="col-12 mt-3 mb-1">
+              <h4 className="text-uppercase">Statistics With Subtitle</h4>
               <p>Statistics on minimal cards with Title &amp; Sub Title.</p>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-xl-6 col-md-12">
-              <div class="card overflow-hidden">
-                <div class="card-content">
-                  <div class="card-body cleartfix">
-                    <div class="media align-items-stretch">
-                      <div class="align-self-center">
-                        <i class="icon-pencil primary font-large-2 mr-2"></i>
+          <div className="row">
+            <div className="col-xl-6 col-md-12">
+              <div className="card overflow-hidden">
+                <div className="card-content">
+                  <div className="card-body cleartfix">
+                    <div className="media align-items-stretch">
+                      <div className="align-self-center">
+                        <i className="icon-pencil primary font-large-2 mr-2"></i>
                       </div>
-                      <div class="media-body">
+                      <div className="media-body">
                         <h4>Total Posts</h4>
                         <span>Monthly blog posts</span>
                       </div>
-                      <div class="align-self-center">
+                      <div className="align-self-center">
                         <h1>18,000</h1>
                       </div>
                     </div>
@@ -297,19 +297,19 @@ function NewsFlashAdmin() {
               </div>
             </div>
 
-            <div class="col-xl-6 col-md-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body cleartfix">
-                    <div class="media align-items-stretch">
-                      <div class="align-self-center">
-                        <i class="icon-speech warning font-large-2 mr-2"></i>
+            <div className="col-xl-6 col-md-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body cleartfix">
+                    <div className="media align-items-stretch">
+                      <div className="align-self-center">
+                        <i className="icon-speech warning font-large-2 mr-2"></i>
                       </div>
-                      <div class="media-body">
+                      <div className="media-body">
                         <h4>Total Comments</h4>
                         <span>Monthly blog comments</span>
                       </div>
-                      <div class="align-self-center">
+                      <div className="align-self-center">
                         <h1>84,695</h1>
                       </div>
                     </div>
@@ -319,21 +319,21 @@ function NewsFlashAdmin() {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-xl-6 col-md-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body cleartfix">
-                    <div class="media align-items-stretch">
-                      <div class="align-self-center">
-                        <h1 class="mr-2">$76,456.00</h1>
+          <div className="row">
+            <div className="col-xl-6 col-md-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body cleartfix">
+                    <div className="media align-items-stretch">
+                      <div className="align-self-center">
+                        <h1 className="mr-2">$76,456.00</h1>
                       </div>
-                      <div class="media-body">
+                      <div className="media-body">
                         <h4>Total Sales</h4>
                         <span>Monthly Sales Amount</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-heart danger font-large-2"></i>
+                      <div className="align-self-center">
+                        <i className="icon-heart danger font-large-2"></i>
                       </div>
                     </div>
                   </div>
@@ -341,20 +341,20 @@ function NewsFlashAdmin() {
               </div>
             </div>
 
-            <div class="col-xl-6 col-md-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body cleartfix">
-                    <div class="media align-items-stretch">
-                      <div class="align-self-center">
-                        <h1 class="mr-2">$36,000.00</h1>
+            <div className="col-xl-6 col-md-12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="card-body cleartfix">
+                    <div className="media align-items-stretch">
+                      <div className="align-self-center">
+                        <h1 className="mr-2">$36,000.00</h1>
                       </div>
-                      <div class="media-body">
+                      <div className="media-body">
                         <h4>Total Cost</h4>
                         <span>Monthly Cost</span>
                       </div>
-                      <div class="align-self-center">
-                        <i class="icon-wallet success font-large-2"></i>
+                      <div className="align-self-center">
+                        <i className="icon-wallet success font-large-2"></i>
                       </div>
                     </div>
                   </div>

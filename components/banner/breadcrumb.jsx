@@ -7,19 +7,19 @@ function BreadCrumb(props) {
 
   return (
     <div>
-      <section id="breadcrumb" class="space">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6 breadcrumb-block">
+      <section id="breadcrumb" className="space">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-6 breadcrumb-block">
               <h2>{newStr}</h2>
             </div>
-            <div class="col-sm-6 breadcrumb-block text-right">
-              <ol class="breadcrumb">
+            <div className="col-sm-6 breadcrumb-block text-right">
+              <ol className="breadcrumb">
                 <li>
                   <span>You are here:</span>
                   <a href="/">Home</a>
                 </li>
-                <li class="active">{props.name}</li>
+                <li className="active">{props.name}</li>
               </ol>
             </div>
           </div>

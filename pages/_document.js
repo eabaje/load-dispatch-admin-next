@@ -67,17 +67,17 @@ export default class MyDocument extends Document {
             <Main />
             <NextScript />
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <script src="/assets/js/vendor-all.min.js"></script>
-            <script src="/assets/js/plugins/bootstrap.min.js"></script>
+            <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script async src="/assets/js/vendor-all.min.js"></script>
+            <script async src="/assets/js/plugins/bootstrap.min.js"></script>
 
-            <script src="/assets/js/pcoded.js"></script>
-            <script src="/assets/js/ripple.js"></script>
+            <script async src="/assets/js/pcoded.js"></script>
+            <script async src="/assets/js/ripple.js"></script>
 
-            <script src="/assets/js/plugins/prism.js"></script>
+            <script async src="/assets/js/plugins/prism.js"></script>
 
-            <script src="/assets/js/page.js"></script>
+            <script async src="/assets/js/page.js"></script>
           </body>
         </Html>
       </>

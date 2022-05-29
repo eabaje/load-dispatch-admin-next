@@ -5,18 +5,18 @@ function Footer() {
     <>
       <FooterUpper />
       <footer id="sp-footer">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12 col-sm-6 small">
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12 col-sm-6 small">
               &copy; 2021 Load Dispatch Ltd. All Rights Reserved
             </div>
 
-            <nav id="page-footer-legal-links" class="col-xs-12 col-sm-6">
-              <ul class="list-inline small ">
+            <nav id="page-footer-legal-links" className="col-xs-12 col-sm-6">
+              <ul className="list-inline small ">
                 <li>
                   <a
                     href="/images/pdf/privacyPolicy.pdf?v=1.0"
-                    class="color-gray"
+                    className="color-gray"
                     target="_blank"
                   >
                     Privacy Policy
@@ -24,13 +24,13 @@ function Footer() {
                 </li>
                 <li>|</li>
                 <li>
-                  <a href="/term" class="color-gray">
+                  <a href="/term" className="color-gray">
                     Terms of Use
                   </a>
                 </li>
                 <li>|</li>
                 <li>
-                  <a href="/contact" class="color-gray">
+                  <a href="/contact" className="color-gray">
                     Contact Us
                   </a>
                 </li>
