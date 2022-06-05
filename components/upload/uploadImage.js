@@ -42,7 +42,7 @@ export default function ImageUpload(props) {
         setImageInfo(files.data.data);
 
         //  alert(imageGallery);
-        console.log("imageInfos", imageInfo);
+        // console.log("imageInfos", imageInfo);
       });
     }
   }, []);

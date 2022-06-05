@@ -8,7 +8,7 @@ import NewsFlash from "../../components/home/newsFlash";
 //import TickerFeed from "../../components/home/tickerFeed";
 import SideLink from "../../components/home/sideLink";
 import MainLayout from "../../layout/mainLayout";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 function Index() {
   const [dataLength, setDataLength] = useState(0);
@@ -35,9 +35,8 @@ function Index() {
   };
 
   useEffect(() => {
-    let controller = new AbortController();
     loadData();
-    return () => controller?.abort();
+
     // setDataLength(dataShipment.data?.length);
     // setDataLengthInterest(dataInterest.data?.length);
   }, []);
@@ -50,9 +49,9 @@ function Index() {
             <div className="card-body">
               <div className="alert alert-info " role="alert">
                 <NewsFlash
-                dataShipment={dataShipment}
-                dataInterest={dataInterest}
-              />
+                  dataShipment={dataShipment}
+                  dataInterest={dataInterest}
+                />
               </div>
 
               {/* <h3 className="text-uppercase">Latest News</h3>
@@ -65,7 +64,10 @@ function Index() {
             </div>
           </div>
         </div>
-        <div className="col-md-4"> <SideLink /></div> 
+        <div className="col-md-4">
+          {" "}
+          <SideLink />
+        </div>
 
         <div className="row">
           <div className="col-sm-12">

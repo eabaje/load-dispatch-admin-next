@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Camera, Trash, Truck, List, Edit, ChevronsDown } from "react-feather";
 import { API_URL } from "../../constants";
 import $ from "jquery";
@@ -12,11 +12,10 @@ import {
 import LoadingBox from "../../components/notification/loadingbox";
 import { Button, Modal } from "react-bootstrap";
 import MainLayout from "../../layout/mainLayout";
-import { toast } from 'react-toastify';
-
+import { toast } from "react-toastify";
+import Datatable from "../../components/datatable/datatable-m";
 
 function ListInterest() {
- 
   const [data2, setData] = useState([]);
 
   const [show, setShow] = useState(false);
@@ -24,7 +23,7 @@ function ListInterest() {
   const [shipmentId, setshipmentId] = useState("");
   const {
     authState: { user },
-  } = useContext(GlobalContext)
+  } = useContext(GlobalContext);
   const {
     shipmentDispatch,
     shipmentState: {
@@ -55,29 +54,23 @@ function ListInterest() {
         toast.error(err);
       });
     }
-
- 
   }, []);
 
   return (
-      <MainLayout>
-      <div class="col-xl-12">
-        <div class="card">
-          <div class="card-header alert alert-info">
+    <MainLayout>
+      <div className="col-xl-12">
+        <div className="card">
+          <div className="card-header alert alert-info">
             <h3>List of Interest in Shipments</h3>
             <hr />
             <ul>
-             
               <li>Make Request for onboarding services</li>
               <li>View interest for your shipment</li>
             </ul>
           </div>
-          <div class="card-body table-border-style">
+          <div className="card-body table-border-style">
+            <Datatable loading={loading} col={columns(user)} data={data.data} />
 
-          <Datatable loading={loading} col={columns(user)} 
-            data={ data.data}
-              />
-           
             {/* <Modal show={show} onHide={() => handleModal()}>
               <Modal.Header closeButton>Check your interest</Modal.Header>
               <Modal.Body>{show}</Modal.Body>
@@ -89,8 +82,7 @@ function ListInterest() {
           </div>
         </div>
       </div>
-      </MainLayout>
-   
+    </MainLayout>
   );
 }
 //ListInterest.layout = "main";

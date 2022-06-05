@@ -1,9 +1,21 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
-import { updateMedia, uploadMedia } from "../../helpers/uploadImage";
+import {
+  updateDocuments,
+  updateMedia,
+  uploadDocuments,
+  uploadMedia,
+} from "../../helpers/uploadImage";
 
-export default function UploadWidget(props) {
-  const { refId, popupCloseHandlerImage, upload, uploadType, mediaId, title } =
-    props;
+export default function UploadFileWidget(props) {
+  const {
+    refId,
+    popupCloseHandlerImage,
+    upload,
+    uploadType,
+    mediaId,
+    title,
+    isAdd,
+  } = props;
   const [width, setWidth] = useState(-1);
   const [currentFileWidget, setCurrentFileWidget] = useState("");
   const [previewImageWidget, setPreviewImageWidget] = useState("");
@@ -19,30 +31,63 @@ export default function UploadWidget(props) {
     setMessageWidget("");
   };
 
-  function uploadImage() {
+  function uploadFile(isAdd = true) {
     setProgressWidget(0);
+    isAdd
+      ? uploadDocuments(
+          uploadType,
+          currentFileWidget,
+          mediaId,
+          refId,
+          (event) => {
+            setMessageWidget(Math.round((100 * event.loaded) / event.total));
+          }
+        )
+          .then((response) => {
+            setMessageWidget(response.data.message);
 
-    updateMedia(uploadType, currentFileWidget, mediaId, refId, (event) => {
-      setMessageWidget(Math.round((100 * event.loaded) / event.total));
-    })
-      .then((response) => {
-        setMessageWidget(response.data.message);
+            //  return getFiles(props.refId);
+          })
+          .then((files) => {
+            setMessageWidget("Image Uploaded!");
+            // setImageInfos(files.data.data);
+            // return getFiles(refId);
 
-        //  return getFiles(props.refId);
-      })
-      .then((files) => {
-        setMessageWidget("Image Uploaded!");
-        // setImageInfos(files.data.data);
-        // return getFiles(refId);
+            //  console.log("imageInfos", this.state.imageInfos);
+          })
+          .catch((err) => {
+            setProgressWidget(0);
+            setMessageWidget("Could not upload the image!");
+            setCurrentFileWidget(undefined);
+            console.log("err", err);
+          })
+      : updateDocuments(
+          uploadType,
+          currentFileWidget,
+          mediaId,
+          refId,
+          (event) => {
+            setMessageWidget(Math.round((100 * event.loaded) / event.total));
+          }
+        )
+          .then((response) => {
+            setMessageWidget(response.data.message);
 
-        //  console.log("imageInfos", this.state.imageInfos);
-      })
-      .catch((err) => {
-        setProgressWidget(0);
-        setMessageWidget("Could not upload the image!");
-        setCurrentFileWidget(undefined);
-        console.log("err", err);
-      });
+            //  return getFiles(props.refId);
+          })
+          .then((files) => {
+            setMessageWidget("Image Uploaded!");
+            // setImageInfos(files.data.data);
+            // return getFiles(refId);
+
+            //  console.log("imageInfos", this.state.imageInfos);
+          })
+          .catch((err) => {
+            setProgressWidget(0);
+            setMessageWidget("Could not upload the image!");
+            setCurrentFileWidget(undefined);
+            console.log("err", err);
+          });
   }
 
   return (
@@ -82,7 +127,7 @@ export default function UploadWidget(props) {
                 type="button"
                 className="btn btn-success btn-sm "
                 disabled={!currentFileWidget}
-                onClick={uploadImage}
+                onClick={uploadFile}
               >
                 Upload
               </button>
@@ -102,12 +147,6 @@ export default function UploadWidget(props) {
             >
               {progressWidget}%
             </div>
-          </div>
-        )}
-
-        {previewImageWidget && (
-          <div>
-            <img className="preview" src={previewImageWidget} alt="" />
           </div>
         )}
 

@@ -1,63 +1,53 @@
-import React, {useState, useEffect,useContext } from "react";
-import { useRouter } from "next/router"
+import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import { GlobalContext } from "../../context/Provider";
 import "react-data-table-component-extensions/dist/index.css";
 import { columns } from "../../datasource/dataColumns/driver";
 import MainLayout from "../../layout/mainLayout";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
+import dynamic from "next/dynamic";
 
+function ListDriver({ query }) {
+  const router = useRouter();
+  const { companyId } = query;
 
-function ListDriver() {
-
-  const router = useRouter()
-  const {
-    query:companyId 
-  } = router
-
-
-
-  
- 
   const [data, setData] = useState([]);
- 
+
   const {
-    authState: { user,loading },
-  } = useContext(GlobalContext)
+    authState: { user, loading },
+  } = useContext(GlobalContext);
   // GET request function to your Mock API
   const fetchData = async () => {
-   
     try {
-     
-      const lnk= companyId ? `${API_URL}driver/findAllDriversByCompany/${companyId}`: `${API_URL}driver/findAll`;
-      
-      const res =  await axios.get(lnk);
+      const lnk = companyId
+        ? `${API_URL}driver/findAllDriversByCompany/${companyId}`
+        : `${API_URL}driver/findAll`;
 
-     
+      const res = await axios.get(lnk);
+
       if (res) {
         setData(res.data.data);
       }
     } catch (err) {
-     toast.error(err);
+      toast.error(err);
     }
   };
 
   // Calling the function on component mount
   useEffect(() => {
     fetchData();
-  //  console.log(`data`, data);
-  
+    //  console.log(`data`, data);
   }, []);
 
- 
   return (
     <>
       <MainLayout>
-        <div class="col-sm-12">
-          <div class="card">
-            <div class="card-header alert alert-info">
+        <div className="col-sm-12">
+          <div className="card">
+            <div className="card-header alert alert-info">
               <h4>View List of Drivers</h4>
               <hr />
               <ul>
@@ -68,16 +58,25 @@ function ListDriver() {
                 <li>Assign Jobs to Personnel</li>
               </ul>
             </div>
-            <div class="card-body table-border-style">
-            <Datatable loading={loading} col={columns(user)} 
-            data={data.data}/>
-              
+            <div className="card-body table-border-style">
+              <Datatable
+                loading={loading}
+                col={columns(user)}
+                data={data.data}
+              />
             </div>
           </div>
         </div>
-        </MainLayout>
+      </MainLayout>
     </>
   );
 }
 // Login.layout = "main";
-export default ListDriver;
+//export default ListDriver;
+export async function getServerSideProps({ query }) {
+  return {
+    props: { query },
+  };
+}
+
+export default dynamic(() => Promise.resolve(ListDriver), { ssr: false });

@@ -1,5 +1,6 @@
 import React from "react";
 import { ConstantsList } from "../../constants";
+import Link from "next/link";
 
 function BreadCrumb(props) {
   const str = props.name;
@@ -17,7 +18,9 @@ function BreadCrumb(props) {
               <ol className="breadcrumb">
                 <li>
                   <span>You are here:</span>
-                  <a href="/">Home</a>
+                  <Link href="/">
+                    <a>Home</a>
+                  </Link>
                 </li>
                 <li className="active">{props.name}</li>
               </ol>

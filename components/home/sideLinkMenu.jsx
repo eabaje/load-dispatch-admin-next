@@ -1,11 +1,7 @@
 import React from "react";
-import { Link } from "next/link";
+import Link from "next/link";
 
-const SideLinkMenu=({ menudata }) => {
-
-
- 
-
+const SideLinkMenu = ({ menudata }) => {
   return (
     <>
       <div className="card">
@@ -40,7 +36,7 @@ const SideLinkMenu=({ menudata }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default SideLinkMenu;

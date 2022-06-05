@@ -1,17 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Controller, useForm, useController } from "react-hook-form";
-import { GlobalContext } from "..actions/../../context/Provider";
+import { useForm } from "react-hook-form";
+import { GlobalContext } from "../../../context/Provider";
 import {
   createSubscription,
   editSubscription,
   listSubscriptionsBySubscriptionId,
 } from "../../../context/actions/subscribe/subscribe.action";
 import { fetchData } from "../../../helpers/query";
-import { Editor } from "draft-js";
-
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import WYSIWYGEditor from "../../../components/wysiwyg/wysiwyg";
 
 import { toast } from "react-toastify";
 
@@ -54,9 +49,7 @@ const AddEditSubscription = ({ query }) => {
   function CreateSubscription(formdata) {
     createSubscription(formdata)(subscribeDispatch)((res) => {
       if (res) {
-        enqueueSnackbar(res.message, {
-          variant: "success",
-        });
+        toast.success(res.message);
       }
     })((err) => {
       toast.error(err);
@@ -66,9 +59,7 @@ const AddEditSubscription = ({ query }) => {
   function updateSubscription(id, formdata) {
     editSubscription(id, formdata)(subscribeDispatch)((res) => {
       if (res) {
-        enqueueSnackbar(res.message, {
-          variant: "success",
-        });
+        toast.success(res.message);
       }
     })((err) => {
       toast.error(err);
@@ -92,9 +83,7 @@ const AddEditSubscription = ({ query }) => {
         ];
         fields.forEach((field) => setValue(field, subscription[field]));
       })((err) => {
-        enqueueSnackbar(err.message, {
-          variant: "error",
-        });
+        toast.success(err.message);
       });
     }
   }, []);

@@ -10,7 +10,6 @@ import "bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { fetchData } from "../../../helpers/query";
-import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 
 const AddEditTrack = ({ query }) => {
@@ -166,7 +165,7 @@ const AddEditTrack = ({ query }) => {
       </div>
     );
   });
-  CustomInput.displayName='CustomInput';
+  CustomInput.displayName = "CustomInput";
   return (
     <>
       <div className="col-md-12">
@@ -285,7 +284,9 @@ const AddEditTrack = ({ query }) => {
                     >
                       <option value=""> Select Region/State </option>
                       {pickUpRegion.map((item) => (
-                        <option key={item.isoCode} value={item.isoCode}>{item.name}</option>
+                        <option key={item.isoCode} value={item.isoCode}>
+                          {item.name}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -365,7 +366,9 @@ const AddEditTrack = ({ query }) => {
                     >
                       <option value=""> Select Region/State </option>
                       {deliveryRegion.map((item) => (
-                        <option key={item.isoCode} value={item.isoCode}>{item.name}</option>
+                        <option key={item.isoCode} value={item.isoCode}>
+                          {item.name}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -459,7 +462,10 @@ const AddEditTrack = ({ query }) => {
                         id="invalidCheck"
                         required
                       />
-                      <label className="form-check-label" htmlFor="invalidCheck">
+                      <label
+                        className="form-check-label"
+                        htmlFor="invalidCheck"
+                      >
                         I confirm all information entered are accurate
                       </label>
                       <div className="invalid-feedback">

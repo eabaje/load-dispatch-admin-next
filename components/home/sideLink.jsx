@@ -1,28 +1,24 @@
-import React, { useEffect, useContext} from "react";
+import React, { useEffect, useContext } from "react";
 import { GlobalContext } from "../../context/Provider";
 import SideLinkMenu from "./sideLinkMenu";
-import  {menuData}  from "./sideLinkData";
+import { menuData } from "./sideLinkData";
 
-
-const SideLink=()=> {
-
+const SideLink = () => {
   const {
     authDispatch,
-    authState: { user},
+    authState: { user },
   } = useContext(GlobalContext);
 
- 
+  // useEffect(() => {
+  //   let controller = new AbortController();
+  //   return () => controller?.abort();
 
-  useEffect(() => {
-    let controller = new AbortController();
-    return () => controller?.abort();
- 
-  }, []);
-  console.log('menuData', menuData)
+  // }, []);
+  // console.log('menuData', menuData)
   return (
     <>
- 
-  {/*  <SideLinkMenu menudata={menuData(user)} />
+      <SideLinkMenu menudata={menuData(user)} />{" "}
+      {/* 
        {(user.roles === "carrier" && <SideLinkCarrier />) ||
         (user.roles === "shipper" && <SideLinkShipper />) ||
         (user.roles === "broker" && <SideLinkShipper />) ||
@@ -30,6 +26,6 @@ const SideLink=()=> {
         (user.roles === "admin" && <SideLinkAdmin />) || <SideLinkAdmin />} */}
     </>
   );
-}
+};
 
 export default SideLink;

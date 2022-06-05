@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Controller, useForm, useController } from "react-hook-form";
 import { GlobalContext } from "../../../context/Provider";
-import {
-  LOAD_TYPE,
-  LOAD_CAPACITY,
-  LOAD_UNIT,
-  ORDER_STATUS,
-} from "../../../../constants/enum";
+import { ORDER_STATUS } from "../../../constants/enum";
 
 import { fetchData, fetchDataAll } from "../../../helpers/query";
 import {

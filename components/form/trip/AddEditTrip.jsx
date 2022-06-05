@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 
 import { Country, State } from "country-state-city";
 import { GlobalContext } from "../../../context/Provider";
-import { LOAD_TYPE, LOAD_CAPACITY, LOAD_UNIT } from "../../constants/enum";
+
 import {
   createTrip,
   editTrip,
@@ -165,7 +165,7 @@ const AddEditTrip = ({ query }) => {
       </div>
     );
   });
-  CustomInput.displayName='CustomInput';
+  CustomInput.displayName = "CustomInput";
   return (
     <>
       <div className="row">
@@ -294,7 +294,9 @@ const AddEditTrip = ({ query }) => {
                       >
                         <option value=""> Select Region/State </option>
                         {pickUpRegion.map((item) => (
-                          <option key={item.isoCode} value={item.isoCode}>{item.name}</option>
+                          <option key={item.isoCode} value={item.isoCode}>
+                            {item.name}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -379,7 +381,9 @@ const AddEditTrip = ({ query }) => {
                       >
                         <option value=""> Select Region/State </option>
                         {deliveryRegion.map((item) => (
-                          <option key={item.isoCode} value={item.isoCode}>{item.name}</option>
+                          <option key={item.isoCode} value={item.isoCode}>
+                            {item.name}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -473,7 +477,10 @@ const AddEditTrip = ({ query }) => {
                           id="invalidCheck"
                           required
                         />
-                        <label className="form-check-label" htmlFor="invalidCheck">
+                        <label
+                          className="form-check-label"
+                          htmlFor="invalidCheck"
+                        >
                           I confirm all information entered are accurate
                         </label>
                         <div className="invalid-feedback">

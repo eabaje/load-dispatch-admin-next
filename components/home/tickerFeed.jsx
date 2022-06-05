@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "React";
 import Ticker from "react-ticker";
+import Link from "next/link";
 
 import { listShipments } from "../../context/actions/shipment/shipment.action";
 import { GlobalContext } from "../../context/Provider";
@@ -29,15 +30,13 @@ const TickerFeed = () => {
 
     return data ? (
       <p className="ticker__field__text">
-        {data.map((items) => (
-          <a
-            key={items.ShipmentId}
-            href={"/list-shipment-info/isReadOnly/" + items.ShipmentId}
-            target="_blank"
-            
+        {data.map((items, index) => (
+          <Link
+            key={index}
+            href={"/shipment-action/?isReadOnly=" + items.ShipmentId}
           >
-            {items.Description}
-          </a>
+            <a target={_blank}>{items.Description}</a>
+          </Link>
         ))}
       </p>
     ) : (

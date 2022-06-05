@@ -44,8 +44,6 @@ export default function UpdateFileUpload(props) {
   //   setMessage("");
   // };
 
-  
-
   function upload() {
     setProgress(0);
     UploadDriverFile(
@@ -113,8 +111,12 @@ export default function UpdateFileUpload(props) {
 
   return (
     <>
-     
-      <UploadWidget refId={ props.refId} upload={upload} popupCloseHandlerImage={popupCloseHandlerImage} />
+      <UploadWidget
+        title={props.title}
+        refId={props.refId}
+        upload={upload}
+        popupCloseHandlerImage={popupCloseHandlerImage}
+      />
     </>
   );
 }

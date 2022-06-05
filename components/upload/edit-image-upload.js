@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, Component } from "react";
-import { getDriverImg, getFiles, uploadMedia } from "../../helpers/uploadImage";
+import { getImg, getFiles, uploadMedia } from "../../helpers/uploadImage";
 import { IMG_URL } from "../../constants";
 
 export default function UpdateImageUpload(props) {
@@ -30,7 +30,7 @@ export default function UpdateImageUpload(props) {
   useEffect(() => {
     //  alert(props.refId);
     if (refId !== undefined) {
-      getDriverImg(refId).then((files) => {
+      getImg(refId).then((files) => {
         const photos = files.data.data;
 
         //  alert(newMarkers);

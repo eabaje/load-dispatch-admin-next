@@ -2,16 +2,14 @@ import NavBar from "../navbar/navbar";
 import TopHeaderBar from "./top-header-bar";
 
 import React from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 function Header() {
-
- 
   return (
     <>
-     <NavBar />
-      <TopHeaderBar   />
-     
+      <NavBar />
+      <TopHeaderBar />
+
       {/*   <div class="page-header">
         <div class="page-block">
           <div class="row align-items-center">

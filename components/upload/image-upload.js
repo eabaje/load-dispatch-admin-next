@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect, Component } from "react";
-import { getFiles, uploadMedia } from "../../helpers/uploadImage";
+import { deleteMedia, getFiles, uploadMedia } from "../../helpers/uploadImage";
 import Gallery from "react-grid-gallery";
 import { IMG_URL, PIC_URL } from "../../constants";
 import CustomPopup from "../popup/popup.component";
 import UpdateFileUpload from "./edit-file-upload";
 import UploadWidget from "./upload-widget";
+import { toast } from "react-toastify";
 
 export default function UploadImages(props) {
   const { refId, title, backArrow, role, SetFormStep, uploadType } = props;
@@ -24,6 +25,7 @@ export default function UploadImages(props) {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [visibilityImage, setVisibilityImage] = useState(false);
+  const [mediaId, setMediaId] = useState();
 
   const popupCloseHandlerImage = (e) => {
     setVisibilityImage(e);
@@ -49,21 +51,38 @@ export default function UploadImages(props) {
     setViewerIsOpen(false);
   };
 
+  const deleteImg = (e) => {
+    var isDelete = confirm("Sure you want to delete file?");
+    if (isDelete) {
+      alert(e.currentTarget.id);
+      deleteMedia(e.currentTarget.id)((files) => {
+        console.log("files", files);
+        // getAllFiles(refId);
+      })((err) => {
+        toast.error(err.message);
+      });
+    }
+  };
+
+  const getAllFiles = (refId) => {
+    getFiles(refId).then((files) => {
+      const photos = files.data.data;
+      let newMarkers = photos.map((el) => ({
+        src: PIC_URL + el.ImgPath,
+        thumbnail: PIC_URL + el.ThumbPath,
+      }));
+      //  alert(newMarkers);
+      setImageInfos(files.data.data);
+      setImageGallery(newMarkers);
+      //  alert(imageGallery);
+      console.log("imageInfos", imageGallery);
+    });
+  };
+
   useEffect(() => {
     // console.log("props.refId",refId );
     if (refId !== undefined) {
-      getFiles(refId).then((files) => {
-        const photos = files.data.data;
-        let newMarkers = photos.map((el) => ({
-          src: PIC_URL + el.ImgPath,
-          thumbnail: PIC_URL + el.ThumbPath,
-        }));
-        //  alert(newMarkers);
-        setImageInfos(files.data.data);
-        setImageGallery(newMarkers);
-        //  alert(imageGallery);
-        console.log("imageInfos", imageGallery);
-      });
+      getAllFiles(refId);
     }
   }, []);
 
@@ -183,7 +202,7 @@ export default function UploadImages(props) {
         )}
 
         <div className="card mt-3">
-          <div style={{ height: 500, overflow: "scroll" }}>
+          <div style={{ height: 250, overflow: "scroll" }}>
             <Gallery
               images={imageGallery}
               enableLightbox={true}
@@ -212,17 +231,20 @@ export default function UploadImages(props) {
                         style={{ cursor: "hand" }}
                         title="Edit Picture"
                         ref={editRef}
-                        defaultValue={img.MediaId}
-                        onClick={(e) => setVisibilityImage(!visibilityImage)}
+                        id={img.MediaId}
+                        onClick={() => {
+                          setVisibilityImage(!visibilityImage);
+                          setMediaId(img.MediaId);
+                        }}
                       ></i>
                       &nbsp;|&nbsp;
                       <i
                         className="fa fa-trash"
                         aria-hidden="true"
                         title="Delete Picture"
-                        onClick={SetFormStep}
                         ref={delRef}
-                        defaultValue={img.MediaId}
+                        id={img.MediaId}
+                        onClick={(e) => deleteImg(e)}
                       ></i>
                     </li>
                   ))}
@@ -237,7 +259,7 @@ export default function UploadImages(props) {
                     refId={props.refId}
                     fileType={"image"}
                     uploadType={uploadType}
-                    mediaId={editRef.current.defaultValue}
+                    mediaId={mediaId}
                     popupCloseHandlerImage={popupCloseHandlerImage}
                   />
                 </CustomPopup>

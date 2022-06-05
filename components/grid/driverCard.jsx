@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IMG_URL } from "../../constants";
 import Rating from "../rating/Rating";
 
-const DriverCard=(props)=> {
+const DriverCard = ({ props }) => {
   const { driver } = props;
   const calculate_age = (dob) => {
     const today = new Date();
@@ -71,7 +71,10 @@ const DriverCard=(props)=> {
                     : driver?.Country}
                 </p>
               </div>
-              <Rating rating={driver?.Rating? driver?.Rating:1} caption=" "></Rating>
+              <Rating
+                rating={driver?.Rating ? driver?.Rating : 1}
+                caption=" "
+              ></Rating>
             </div>
           </div>
           <div className="px-4 mt-1">
@@ -96,19 +99,19 @@ const DriverCard=(props)=> {
           </ul>
           <div className="buttons">
             {" "}
-          
             <Link
-              classNameName="btn btn-outline-primary px-4"
-              to={`list-driver-detail/${driver.DriverId}/${driver.Vehicles[0]['VehicleId']}`}
-              title=" "
+              href={`driver-detail/?driverId=${driver.DriverId}&vehicleId=${driver.Vehicles[0]["VehicleId"]}`}
             >
-              <i className="feather icon-log-out"></i> Check It Out
+              <a className="btn btn-outline-primary px-4">
+                {" "}
+                <i className="feather icon-log-out"></i> Check It Out
+              </a>
             </Link>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default DriverCard;

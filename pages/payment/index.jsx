@@ -12,29 +12,26 @@ import LoadingBox from "../../components/notification/loadingbox";
 import { GlobalContext } from "../../context/Provider";
 import { listPayments } from "../../context/actions/payment/payment.action";
 import MainLayout from "../../layout/mainLayout";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
+import dynamic from "next/dynamic";
 
-
-function ListPayment({ history, match }) {
+function ListPayment({ query }) {
   // const { userId } = match.params;
   // const { fromDate } = match.params;
   // const { toDate } = match.params;
 
-  const router = useRouter()
-  const {
-    query:userId 
-  } = router
- 
+  const router = useRouter();
+  const { userId } = query;
+
   const [data2, setData] = useState([]);
- 
 
   // GET request function to your Mock API
 
   // Calling the function on component mount
   const {
     authState: { user },
-  } = useContext(GlobalContext)
+  } = useContext(GlobalContext);
 
   const {
     paymentDispatch,
@@ -54,36 +51,46 @@ function ListPayment({ history, match }) {
       listPayments()(paymentDispatch)((res) => {
         setData(res.data);
       })((err) => {
-      toast.error(err);
+        toast.error(err);
       });
-
-   
     }
   }, []);
   return (
     <MainLayout>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-header alert alert-info">
-            <h3>List of payment</h3>
-            <hr />
-            <ul>
-              <li>Keep a track of all Succesfull Payment transaction</li>
-              <li>Keep a track of all Status Payment transaction </li>
-            </ul>
-          </div>
-          <div class="card-body table-border-style">
-          <Datatable loading={loading} col={columns(user)} 
-            data={userId
-              ? data.data.filter((item) => item.UserId === userId)
-              : data.data}/>
+      <div className="row">
+        <div className="col-sm-12">
+          <div className="card">
+            <div className="card-header alert alert-info">
+              <h3>List of payment</h3>
+              <hr />
+              <ul>
+                <li>Keep a track of all Succesfull Payment transaction</li>
+                <li>Keep a track of all Status Payment transaction </li>
+              </ul>
+            </div>
+            <div className="card-body table-border-style">
+              <Datatable
+                loading={loading}
+                col={columns(user)}
+                data={
+                  userId
+                    ? data.data.filter((item) => item.UserId === userId)
+                    : data.data
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </MainLayout>
   );
 }
 //Login.layout = "main";
-export default ListPayment;
+//export default ListPayment;
+export async function getServerSideProps({ query }) {
+  return {
+    props: { query },
+  };
+}
+
+export default dynamic(() => Promise.resolve(ListPayment), { ssr: false });

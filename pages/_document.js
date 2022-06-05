@@ -52,10 +52,15 @@ export default class MyDocument extends Document {
               rel="stylesheet"
             />
             {/* -- vendor css --> */}
-            <link rel="stylesheet" href="/assets/css/plugins/prism-coy.css" />
             <link
               rel="stylesheet"
+              type="text/css"
+              href="/assets/css/plugins/prism-coy.css"
+            />
+            <link
+              type="text/css"
               href="/assets/css/fontawesome/font-awesome.min.css"
+              rel="stylesheet"
             />
             <link
               rel="stylesheet"
@@ -67,17 +72,17 @@ export default class MyDocument extends Document {
             <Main />
             <NextScript />
 
-            <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-            <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <script async src="/assets/js/vendor-all.min.js"></script>
-            <script async src="/assets/js/plugins/bootstrap.min.js"></script>
+            {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> */}
+            <script src="/assets/js/vendor-all.min.js"></script>
+            <script src="/assets/js/plugins/bootstrap.min.js"></script>
 
-            <script async src="/assets/js/pcoded.js"></script>
-            <script async src="/assets/js/ripple.js"></script>
+            <script src="/assets/js/pcoded.js"></script>
+            <script src="/assets/js/ripple.js"></script>
 
-            <script async src="/assets/js/plugins/prism.js"></script>
+            <script defer src="/assets/js/plugins/prism.js"></script>
 
-            <script async src="/assets/js/page.js"></script>
+            <script src="/assets/js/page.js"></script>
           </body>
         </Html>
       </>

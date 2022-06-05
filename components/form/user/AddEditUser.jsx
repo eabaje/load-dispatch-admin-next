@@ -22,6 +22,8 @@ import CustomPopup from "../../../components/popup/popup.component";
 import UpdateUserFileUpload from "../../../components/upload/edit-user-file-upload";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
+import UpdateFileUpload from "../../upload/edit-file-upload";
+import DocumentUpload from "../../upload/doc-file-upload";
 
 const AddEditUser = ({ query }) => {
   const { userId } = query;
@@ -252,8 +254,8 @@ const AddEditUser = ({ query }) => {
               {/* <!-- [ accordion-collapse ] start --> */}
               <div className="col-sm-12">
                 <div className="accordion" id="accordionExample">
-                  <div className="card mb-0">
-                    <div className="card-header" id="headingOne">
+                  <div className="card ">
+                    <div className="card-header alert-info" id="headingOne">
                       <h5 className="mb-0">
                         <a
                           href="#!"
@@ -302,8 +304,8 @@ const AddEditUser = ({ query }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="card mb-0">
-                    <div className="card-header" id="headingTwo">
+                  <div className="card">
+                    <div className="card-header alert-info" id="headingTwo">
                       <h5 className="mb-0">
                         <a
                           href="#!"
@@ -538,7 +540,10 @@ const AddEditUser = ({ query }) => {
                                     Select Region/State{" "}
                                   </option>
                                   {pickUpRegion.map((item) => (
-                                    <option key={item.isoCode} value={item.isoCode}>
+                                    <option
+                                      key={item.isoCode}
+                                      value={item.isoCode}
+                                    >
                                       {item.name}
                                     </option>
                                   ))}
@@ -584,7 +589,7 @@ const AddEditUser = ({ query }) => {
                     </div>
                   </div>
                   <div className="card">
-                    <div className="card-header" id="headingThree">
+                    <div className="card-header alert-info" id="headingThree">
                       <h5 className="mb-0">
                         <a
                           href="#!"
@@ -791,8 +796,40 @@ const AddEditUser = ({ query }) => {
                   </div>
 
                   <div className="card">
-                    <div className="card-header" id="headingFour">
+                    <div className="card-header alert-info" id="headingFour">
                       <h5 className="mb-0">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseFour"
+                          aria-expanded="false"
+                          aria-controls="collapseFour"
+                        >
+                          Company Document
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseFour"
+                      className="collapse"
+                      aria-labelledby="headingFour"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        <DocumentUpload
+                          refId={companyId}
+                          title={"Upload Document Files"}
+                          fileType="file"
+                          email={email}
+                          companyId={companyId}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card">
+                    <div className="card-header alert-info" id="headingFour">
+                      <h5 className="mb-0 ">
                         <a
                           href="#!"
                           className="collapsed"
@@ -861,22 +898,6 @@ const AddEditUser = ({ query }) => {
               {/* <!-- [ accordion-collapse ] end --> */}
             </div>
           </div>
-
-          <div className="table-responsive">
-            {/* <DataTableExtensions {...tableData}> 
-              <DataTableExtensions exportHeaders columns={columns} data={data}>
-                <DataTable
-                  columns={columns}
-                  data={data}
-                  className="table table-striped table-bordered table-hover table-checkable"
-                  defaultSortField={1}
-                  sortIcon={<ChevronsDown />}
-                  defaultSortAsc={true}
-                  pagination
-                  highlightOnHover
-                />
-              </DataTableExtensions>*/}
-          </div>
         </div>
       </div>
     </div>
@@ -884,6 +905,6 @@ const AddEditUser = ({ query }) => {
 };
 //Login.layout = "main";
 
-export default AddEditUser
+export default AddEditUser;
 
 //export default dynamic(() => Promise.resolve(AddEditUser), { ssr: false });

@@ -18,26 +18,58 @@ export const uploadImage = (file) => (onSuccess) => (onError) => {
     });
 };
 
-export const uploadDocuments = (file) => (onSuccess) => (onError) => {
-  const data = new FormData();
-  data.append("fileLicenseUrl", file);
-  axios
-    .post("/upload/uploadDocument", data, {
-      // receive two parameter endpoint url ,form data
-    })
-    .then((res) => {
-      // then print response status
-
-      onSuccess(res.data.filename);
-    })
-    .catch((error) => {
-      onError(error.message);
-    });
-};
-
-export const uploadMedia = (uploadType='shipment',file, referenceId, onUploadProgress) => {
+export const uploadDocuments = (
+  uploadType = "shipment",
+  file,
+  mediaId,
+  referenceId,
+  onUploadProgress
+) => {
   let formData = new FormData();
   //alert(referenceId);
+  formData.append("UploadType", uploadType);
+  formData.append("RefId", referenceId);
+  formData.append("MediaId", mediaId);
+  formData.append("doc", file);
+
+  return axios.post("/upload/uploadDocument", formData, {
+    // headers: {
+    //   "Content-Type": "multipart/form-data",
+    // },
+    onUploadProgress,
+  });
+};
+
+export const updateDocuments = (
+  uploadType = "shipment",
+  file,
+  mediaId,
+  referenceId,
+  onUploadProgress
+) => {
+  let formData = new FormData();
+  //alert(referenceId);
+  formData.append("UploadType", uploadType);
+  formData.append("RefId", referenceId);
+  formData.append("MediaId", mediaId);
+  formData.append("doc", file);
+
+  return axios.post("/upload/uploadDocument", formData, {
+    // headers: {
+    //   "Content-Type": "multipart/form-data",
+    // },
+    onUploadProgress,
+  });
+};
+
+export const uploadMedia = (
+  uploadType = "shipment",
+  file,
+  referenceId,
+  onUploadProgress
+) => {
+  let formData = new FormData();
+  alert(referenceId);
   formData.append("UploadType", uploadType);
   formData.append("RefId", referenceId);
   formData.append("file", file);
@@ -50,14 +82,19 @@ export const uploadMedia = (uploadType='shipment',file, referenceId, onUploadPro
   });
 };
 
-export const UpdateMedia = (uploadType='shipment',file,mediaId, referenceId, onUploadProgress) => {
+export const updateMedia = (
+  uploadType = "shipment",
+  file,
+  mediaId,
+  referenceId,
+  onUploadProgress
+) => {
   let formData = new FormData();
   //alert(referenceId);
   formData.append("UploadType", uploadType);
   formData.append("RefId", referenceId);
   formData.append("MediaId", mediaId);
   formData.append("file", file);
- 
 
   return axios.post("/upload/updateImageWithData", formData, {
     // headers: {
@@ -67,7 +104,18 @@ export const UpdateMedia = (uploadType='shipment',file,mediaId, referenceId, onU
   });
 };
 
-export const UpdateDriverFile = (
+export const deleteMedia = (mediaId) => (onSucess) => (onError) => {
+  axios
+    .delete(`/upload/deleteFile/${mediaId}`)
+    .then((res) => {
+      onSucess(res.data.message);
+    })
+    .catch((err) => {
+      onError(err);
+    });
+};
+
+export const updateDriverFile = (
   file,
   referenceId,
   fileType,
@@ -91,10 +139,12 @@ export const UpdateDriverFile = (
   });
 };
 
+export const getFiles = (referenceId, filetype) => {
+  return axios.get(`/upload/getFiles/${referenceId}`);
+};
 export const getFiles = (referenceId) => {
   return axios.get(`/upload/getFiles/${referenceId}`);
 };
-
-export const getImg = (driverId,url) => {
-  return axios.get(`${url}${driverId}`);
+export const getImg = (url, refId) => {
+  return axios.get(`${url}${refId}`);
 };
