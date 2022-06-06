@@ -49,7 +49,7 @@ export default function DocumentUpload(props) {
   useEffect(() => {
     //  alert(props.refId);
     if (refId !== undefined) {
-      const res = getFiles(props.refId);
+      const res = getFiles(props.refId, "application/pdf");
       setImageInfos(res.data);
     }
   }, []);
@@ -65,8 +65,8 @@ export default function DocumentUpload(props) {
       }
     )((res) => {
       setProgress(0);
-      console.log("GetFiles", getFiles(props.refId));
-      setImageInfos(getFiles(props.refId));
+      console.log("GetFiles", getFiles(props.refId, "application/pdf"));
+      setImageInfos(getFiles(props.refId, "application/pdf"));
     })((err) => {
       setProgress(0);
       setMessage(`Could not upload the ${props.fileType}!${err.message}`);

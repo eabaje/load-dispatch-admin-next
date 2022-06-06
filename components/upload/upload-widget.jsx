@@ -31,7 +31,7 @@ export default function UploadWidget(props) {
         //  return getFiles(props.refId);
       })
       .then((files) => {
-        setMessageWidget("Image Uploaded!");
+        setMessageWidget("File Uploaded!");
         // setImageInfos(files.data.data);
         // return getFiles(refId);
 

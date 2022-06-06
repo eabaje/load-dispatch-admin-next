@@ -65,7 +65,7 @@ export default function UploadImages(props) {
   };
 
   const getAllFiles = (refId) => {
-    getFiles(refId).then((files) => {
+    getFiles(refId, "images/jpg").then((files) => {
       const photos = files.data.data;
       let newMarkers = photos.map((el) => ({
         src: PIC_URL + el.ImgPath,
@@ -82,7 +82,7 @@ export default function UploadImages(props) {
   useEffect(() => {
     // console.log("props.refId",refId );
     if (refId !== undefined) {
-      getAllFiles(refId);
+      getFiles(props.refId, "images/jpg");
     }
   }, []);
 
@@ -99,7 +99,7 @@ export default function UploadImages(props) {
       })
       .then((files) => {
         setImageInfos(files.data.data);
-        return getFiles(refId);
+        return getFiles(props.refId, "images/jpg");
 
         //  console.log("imageInfos", this.state.imageInfos);
       })
