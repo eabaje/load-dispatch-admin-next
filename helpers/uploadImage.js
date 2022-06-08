@@ -139,8 +139,8 @@ export const updateDriverFile = (
   });
 };
 
-export const getFiles = (referenceId, filetype) => {
-  return axios.get(`/upload/getFiles/${referenceId}/${filetype}`);
+export const getFiles = (refId, fileType) => {
+  return axios.get(`/upload/getFiles/${refId}/${fileType}`);
 };
 
 export const getImg = (url, refId) => {

@@ -54,7 +54,6 @@ export default function UploadImages(props) {
   const deleteImg = (e) => {
     var isDelete = confirm("Sure you want to delete file?");
     if (isDelete) {
-      alert(e.currentTarget.id);
       deleteMedia(e.currentTarget.id)((files) => {
         console.log("files", files);
         // getAllFiles(refId);
@@ -65,7 +64,7 @@ export default function UploadImages(props) {
   };
 
   const getAllFiles = (refId) => {
-    getFiles(refId, "images/jpg").then((files) => {
+    getFiles(refId, "image").then((files) => {
       const photos = files.data.data;
       let newMarkers = photos.map((el) => ({
         src: PIC_URL + el.ImgPath,
@@ -82,7 +81,7 @@ export default function UploadImages(props) {
   useEffect(() => {
     // console.log("props.refId",refId );
     if (refId !== undefined) {
-      getFiles(props.refId, "images/jpg");
+      getFiles(props.refId, "image");
     }
   }, []);
 
@@ -99,7 +98,7 @@ export default function UploadImages(props) {
       })
       .then((files) => {
         setImageInfos(files.data.data);
-        return getFiles(props.refId, "images/jpg");
+        return getFiles(props.refId, "image");
 
         //  console.log("imageInfos", this.state.imageInfos);
       })
