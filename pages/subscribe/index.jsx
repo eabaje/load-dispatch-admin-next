@@ -9,6 +9,7 @@ import { listSubscriptions } from "../../context/actions/subscribe/subscribe.act
 import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
+import NextLink from "next/link";
 
 function ListSubscription() {
   // const router = useRouter()
@@ -57,6 +58,13 @@ function ListSubscription() {
               <li>Edit and delete Subscription</li>
               <li>Get an overview of all Subscription</li>
             </ul>
+            <h1 className="my-5">
+              <NextLink href="/subscribe/subscription-action/" passHref>
+                <a className="mt-0 btn text-white float-right btn  btn-primary">
+                  Create Subscription Info
+                </a>
+              </NextLink>
+            </h1>
           </div>
           <div className="card-body table-border-style">
             <Datatable loading={loading} col={columns(user)} data={data.data} />

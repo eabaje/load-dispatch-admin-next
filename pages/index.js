@@ -51,8 +51,8 @@ function Login() {
           ? (window.location.href = `/carrier/`)
           : res.user.roles === "shipper"
           ? (window.location.href = `/shipment/`)
-          : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}`)
-        : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}`);
+          : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}&companyId=${res.user.CompanyId}`)
+        : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}&companyId=${res.user.CompanyId}`);
 
       //  window.location.href = '/dashboard/'
       // history.push("/dashboard");

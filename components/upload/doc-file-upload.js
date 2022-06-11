@@ -5,11 +5,12 @@ import {
   uploadMedia,
 } from "../../helpers/uploadImage";
 import { GlobalContext } from "../../context/Provider";
-import { IMG_URL } from "../../constants";
+import { API_URL, DOC_URL, IMG_URL, MEDIA_URL } from "../../constants";
 import UploadWidget from "./upload-widget";
 import CustomPopup from "../popup/popup.component";
 import UpdateFileUpload from "./edit-file-upload";
 import UploadFileWidget from "./upload-file-widget";
+import Pdfviewer from "../pdf/pdfviewer";
 
 export default function DocumentUpload(props) {
   const {
@@ -19,6 +20,7 @@ export default function DocumentUpload(props) {
     role,
     SetFormStep,
     uploadType,
+    fileType,
     popupCloseHandlerImage,
   } = props;
   const [width, setWidth] = useState(-1);
@@ -34,10 +36,9 @@ export default function DocumentUpload(props) {
   ]);
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
+  const [visibility, setVisibility] = useState(false);
   const [visibilityImage, setVisibilityImage] = useState(false);
   const [visibilityFile, setVisibilityFile] = useState(false);
-  const measureRef = React.useRef();
-
   // const selectFile = async (e) => {
   //   setCurrentFile(e.target.files[0]);
   //   if (props.fileType === "image") {
@@ -46,11 +47,22 @@ export default function DocumentUpload(props) {
   //   setProgress(0);
   //   setMessage("");
   // };
+  const popupCloseHandler = (e) => {
+    setVisibility(e);
+  };
+
+  const popupCloseHandlerFile = (e) => {
+    setVisibilityFile(e);
+  };
+
   useEffect(() => {
-    //  alert(props.refId);
     if (refId !== undefined) {
-      const res = getFiles(props.refId, "application/pdf");
-      setImageInfos(res.data);
+      getFiles(refId, "pdf").then((files) => {
+        const doc = files.data.data;
+
+        setImageInfos(doc);
+        console.log("GetFiles", doc);
+      });
     }
   }, []);
   function upload() {
@@ -65,11 +77,11 @@ export default function DocumentUpload(props) {
       }
     )((res) => {
       setProgress(0);
-      console.log("GetFiles", getFiles(props.refId, "application/pdf"));
-      setImageInfos(getFiles(props.refId, "application/pdf"));
+      console.log("GetFiles", getFiles(refId, "pdf"));
+      setImageInfos(getFiles(refId, "pdf"));
     })((err) => {
       setProgress(0);
-      setMessage(`Could not upload the ${props.fileType}!${err.message}`);
+      setMessage(`Could not upload the ${fileType}!${err.message}`);
       setCurrentFile(undefined);
     });
   }
@@ -94,9 +106,9 @@ export default function DocumentUpload(props) {
         </div>
       </div>
       <UploadFileWidget
-        title={props.title}
+        title={title}
         fileType={"document"}
-        refId={props.refId}
+        refId={refId}
         uploadType={uploadType}
         upload={upload}
         popupCloseHandlerImage={popupCloseHandlerImage}
@@ -107,9 +119,15 @@ export default function DocumentUpload(props) {
         {imageInfos &&
           imageInfos.map((img, index) => (
             <li className="list-group-item" key={index}>
-              <a href={img.ImgPath}>
+              {visibility && (
+                <CustomPopup onClose={popupCloseHandler} show={visibility}>
+                  <Pdfviewer pdfLink={MEDIA_URL + img.ImgPath} />
+                </CustomPopup>
+              )}
+              <a href="#" onClick={(e) => setVisibility(!visibility)}>
                 <i
-                  className="fa fa-file"
+                  className="first fas fa-download"
+                  title="View PDF File"
                   aria-hidden="true"
                   style={{ cursor: "hand" }}
                 ></i>

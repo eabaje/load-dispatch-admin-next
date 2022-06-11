@@ -10,6 +10,7 @@ import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
 import dynamic from "next/dynamic";
+import NextLink from "next/link";
 
 function ListShipment({ query }) {
   const router = useRouter();
@@ -72,6 +73,13 @@ function ListShipment({ query }) {
               <li>Make Request for onboarding services</li>
               <li>View interest for your shipment</li>
             </ul>
+            <h1 className="my-5">
+              <NextLink href="/shipment/shipment-action/" passHref>
+                <a className="mt-0 btn text-white float-right btn  btn-primary">
+                  Create Shipment Info
+                </a>
+              </NextLink>
+            </h1>
           </div>
           <div className="card-body table-border-style">
             <Datatable

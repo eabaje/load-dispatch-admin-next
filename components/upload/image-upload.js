@@ -81,7 +81,7 @@ export default function UploadImages(props) {
   useEffect(() => {
     // console.log("props.refId",refId );
     if (refId !== undefined) {
-      getFiles(props.refId, "image");
+      getAllFiles(props.refId, "image");
     }
   }, []);
 
@@ -98,7 +98,7 @@ export default function UploadImages(props) {
       })
       .then((files) => {
         setImageInfos(files.data.data);
-        return getFiles(props.refId, "image");
+        return getAllFiles(props.refId, "image");
 
         //  console.log("imageInfos", this.state.imageInfos);
       })

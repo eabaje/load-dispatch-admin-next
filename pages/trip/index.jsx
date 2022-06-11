@@ -6,6 +6,7 @@ import { listTrips } from "../../context/actions/trip/trip.action";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
+import NextLink from "next/link";
 
 function ListTrip() {
   const {
@@ -49,6 +50,13 @@ function ListTrip() {
               <li>Get an overview of all trips</li>
               <li>Add Rating</li>
             </ul>
+            <h1 className="my-5">
+              <NextLink href="/trip/trip-action/" passHref>
+                <a className="mt-0 btn text-white float-right btn-success">
+                  Create Trip Info
+                </a>
+              </NextLink>
+            </h1>
           </div>
           <div className="card-body table-border-style">
             <Datatable loading={loading} col={columns(user)} data={data.data} />

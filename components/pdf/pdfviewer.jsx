@@ -21,7 +21,7 @@ export default function Pdfviewer(props) {
   function nextPage() {
     changePage(+1);
   }
-
+  console.log("pdfLink", pdfLink);
   return (
     <>
       <Document

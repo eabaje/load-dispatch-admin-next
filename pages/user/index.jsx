@@ -6,6 +6,7 @@ import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
 import dynamic from "next/dynamic";
+import NextLink from "next/link";
 
 function UserList({ query }) {
   // const router = useRouter()

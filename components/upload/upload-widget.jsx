@@ -2,8 +2,16 @@ import React, { useState, useCallback, useEffect, useContext } from "react";
 import { updateMedia, uploadMedia } from "../../helpers/uploadImage";
 
 export default function UploadWidget(props) {
-  const { refId, popupCloseHandlerImage, upload, uploadType, mediaId, title } =
-    props;
+  const {
+    refId,
+    fileType,
+    popupCloseHandlerImage,
+    uploadUrl,
+    defaultTbl,
+    mediaId,
+    title,
+    isAddImage = true,
+  } = props;
   const [width, setWidth] = useState(-1);
   const [currentFileWidget, setCurrentFileWidget] = useState("");
   const [previewImageWidget, setPreviewImageWidget] = useState("");
@@ -12,17 +20,57 @@ export default function UploadWidget(props) {
 
   const _selectFileWidget = async (event) => {
     setCurrentFileWidget(event.target.files[0]);
-    if (props.fileType === "image") {
+    if (fileType === "image") {
       setPreviewImageWidget(URL.createObjectURL(event.target.files[0]));
     }
     setProgressWidget(0);
     setMessageWidget("");
   };
 
-  function uploadImage() {
+  function ImageAction() {
+    alert(defaultTbl);
+    alert(isAddImage);
+    isAddImage === true ? AddImage() : updateImage();
+  }
+
+  function updateImage() {
     setProgressWidget(0);
 
-    updateMedia(uploadType, currentFileWidget, mediaId, refId, (event) => {
+    updateMedia(
+      fileType,
+      uploadUrl,
+      defaultTbl,
+      currentFileWidget,
+      mediaId,
+      refId,
+      (event) => {
+        setMessageWidget(Math.round((100 * event.loaded) / event.total));
+      }
+    )
+      .then((response) => {
+        setMessageWidget(response.data.message);
+
+        //  return getFiles(props.refId);
+      })
+      .then((files) => {
+        setMessageWidget("File Uploaded!");
+        // setImageInfos(files.data.data);
+        // return getFiles(refId);
+
+        //  console.log("imageInfos", this.state.imageInfos);
+      })
+      .catch((err) => {
+        setProgressWidget(0);
+        setMessageWidget("Could not upload the image!");
+        setCurrentFileWidget(undefined);
+        console.log("err", err);
+      });
+  }
+
+  function AddImage() {
+    setProgressWidget(0);
+
+    uploadMedia(uploadUrl, currentFileWidget, refId, (event) => {
       setMessageWidget(Math.round((100 * event.loaded) / event.total));
     })
       .then((response) => {
@@ -82,7 +130,7 @@ export default function UploadWidget(props) {
                 type="button"
                 className="btn btn-success btn-sm "
                 disabled={!currentFileWidget}
-                onClick={uploadImage}
+                onClick={ImageAction}
               >
                 Upload
               </button>

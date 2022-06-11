@@ -35,7 +35,7 @@ export default function ImageUpload(props) {
   useEffect(() => {
     //  alert(props.refId);
     if (refId !== undefined) {
-      getImg(refId, url).then((files) => {
+      getImg(url, refId).then((files) => {
         const photos = files.data.data;
 
         //  alert(newMarkers);

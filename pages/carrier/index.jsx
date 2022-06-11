@@ -70,7 +70,7 @@ function ListCarrier({ query }) {
             </ul>
             <h1 className="my-5">
               <NextLink href="/carrier/carrier-action/" passHref>
-                <a className="mt-0 btn text-white float-right btn-info">
+                <a className="mt-0 btn text-white float-right btn  btn-primary">
                   Create Carrier Info
                 </a>
               </NextLink>

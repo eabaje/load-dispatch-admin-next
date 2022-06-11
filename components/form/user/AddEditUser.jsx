@@ -26,7 +26,7 @@ import UpdateFileUpload from "../../upload/edit-file-upload";
 import DocumentUpload from "../../upload/doc-file-upload";
 
 const AddEditUser = ({ query }) => {
-  const { userId } = query;
+  const { userId, companyId } = query;
 
   const isSingleMode = !userId;
 
@@ -37,7 +37,7 @@ const AddEditUser = ({ query }) => {
 
   const [IsEdit, setEdit] = useState(false);
   const [country, setCountry] = useState("");
-  const [companyId, setcompanyId] = useState("");
+  // const [companyId, setcompanyId] = useState("");
   const [email, setEmail] = useState("");
   const [countries, setCountries] = useState([]);
   const [pickUpRegion, setPickUpRegion] = useState([]);
@@ -75,21 +75,13 @@ const AddEditUser = ({ query }) => {
   const selectCountry = async (e) => {
     setCountry((country) => e.target.value);
 
-    setRegion(
-      (region) =>
-        // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
-        (region = State.getStatesOfCountry(e.target.value))
-    );
+    setRegion((region) => (region = State.getStatesOfCountry(e.target.value)));
   };
 
   const selectPickUpCountry = async (e) => {
     setCountry((country) => e.target.value);
 
-    setPickUpRegion(
-      (pickUpRegion) =>
-        // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
-        (pickUpRegion = State.getStatesOfCountry(e.target.value))
-    );
+    setPickUpRegion((pickUpRegion = State.getStatesOfCountry(e.target.value)));
   };
   const popupCloseHandlerImage = (e) => {
     setVisibilityImage(e);
@@ -125,6 +117,7 @@ const AddEditUser = ({ query }) => {
   const {
     authState: { user },
   } = useContext(GlobalContext);
+
   const getCompany = (companyId) => {
     fetchData(
       "user/findCompany",
@@ -170,10 +163,9 @@ const AddEditUser = ({ query }) => {
       ];
       fields.forEach((field) => setValue(field, user[field]));
       setEmail(user["Email"]);
-      setcompanyId(user["CompanyId"]);
+      // setcompanyId(user["CompanyId"]);
       setPickUpRegion(
         (pickUpRegion) =>
-          // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
           (pickUpRegion = State.getStatesOfCountry(user["Country"]))
       );
 
@@ -236,7 +228,7 @@ const AddEditUser = ({ query }) => {
     );
   });
   CustomInput.displayName = "CustomInput";
-  console.log("userId", userId);
+  console.log("CompanyId", companyId);
   return (
     <div className="col-xl-12">
       <div className="card">
@@ -821,31 +813,30 @@ const AddEditUser = ({ query }) => {
                           refId={companyId}
                           title={"Upload Document Files"}
                           fileType="file"
-                          email={email}
-                          companyId={companyId}
+                          uploadType={"vehicle"}
                         />
                       </div>
                     </div>
                   </div>
                   <div className="card">
-                    <div className="card-header alert-info" id="headingFour">
+                    <div className="card-header alert-info" id="headingFive">
                       <h5 className="mb-0 ">
                         <a
                           href="#!"
                           className="collapsed"
                           data-toggle="collapse"
-                          data-target="#collapseFour"
+                          data-target="#collapseFive"
                           aria-expanded="false"
-                          aria-controls="collapseFour"
+                          aria-controls="collapseFive"
                         >
                           Change Password
                         </a>
                       </h5>
                     </div>
                     <div
-                      id="collapseFour"
+                      id="collapseFive"
                       className="collapse"
-                      aria-labelledby="headingFour"
+                      aria-labelledby="headingFive"
                       data-parent="#accordionExample"
                     >
                       <div className="card-body">

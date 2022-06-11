@@ -62,15 +62,10 @@ export const updateDocuments = (
   });
 };
 
-export const uploadMedia = (
-  uploadType = "shipment",
-  file,
-  referenceId,
-  onUploadProgress
-) => {
+export const uploadMedia = (uploadUrl, file, referenceId, onUploadProgress) => {
   let formData = new FormData();
-  alert(referenceId);
-  formData.append("UploadType", uploadType);
+
+  formData.append("UploadUrl", uploadUrl);
   formData.append("RefId", referenceId);
   formData.append("file", file);
 
@@ -83,25 +78,32 @@ export const uploadMedia = (
 };
 
 export const updateMedia = (
-  uploadType = "shipment",
+  fileType,
+  uploadUrl,
+  defaultTbl = null,
   file,
   mediaId,
   referenceId,
   onUploadProgress
 ) => {
   let formData = new FormData();
-  //alert(referenceId);
-  formData.append("UploadType", uploadType);
+  alert(defaultTbl);
+  formData.append("UploadUrl", uploadUrl);
+  formData.append("FileType", fileType);
   formData.append("RefId", referenceId);
   formData.append("MediaId", mediaId);
   formData.append("file", file);
 
-  return axios.post("/upload/updateImageWithData", formData, {
-    // headers: {
-    //   "Content-Type": "multipart/form-data",
-    // },
-    onUploadProgress,
-  });
+  return axios.post(
+    defaultTbl === null ? "/upload/updateImageWithData" : defaultTbl,
+    formData,
+    {
+      // headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
+      onUploadProgress,
+    }
+  );
 };
 
 export const deleteMedia = (mediaId) => (onSucess) => (onError) => {

@@ -49,7 +49,7 @@ export default function UploadFileWidget(props) {
             //  return getFiles(props.refId);
           })
           .then((files) => {
-            setMessageWidget("Image Uploaded!");
+            setMessageWidget("File Uploaded!");
             // setImageInfos(files.data.data);
             // return getFiles(refId);
 
@@ -76,7 +76,7 @@ export default function UploadFileWidget(props) {
             //  return getFiles(props.refId);
           })
           .then((files) => {
-            setMessageWidget("Image Uploaded!");
+            setMessageWidget("File Uploaded!");
             // setImageInfos(files.data.data);
             // return getFiles(refId);
 
@@ -84,7 +84,7 @@ export default function UploadFileWidget(props) {
           })
           .catch((err) => {
             setProgressWidget(0);
-            setMessageWidget("Could not upload the image!");
+            setMessageWidget("Could not upload the File!");
             setCurrentFileWidget(undefined);
             console.log("err", err);
           });
@@ -95,7 +95,7 @@ export default function UploadFileWidget(props) {
       <div>
         <div className="row">
           <div className="col-8">
-            <h5>{props.title ? props.title : `Upload pictures or images`}</h5>
+            <h5>{props.title ? props.title : `Upload File`}</h5>
             <hr />
             <input
               type="file"

@@ -17,6 +17,7 @@ import CustomPopup from "../../../components/popup/popup.component";
 import Pdfviewer from "../../../components/pdf/pdfviewer";
 import UpdateFileUpload from "../../../components/upload/edit-file-upload";
 import { toast } from "react-toastify";
+import UploadWidget from "../../upload/upload-widget";
 
 const AddEditDriver = ({ query }) => {
   const { driverId } = query;
@@ -261,11 +262,13 @@ const AddEditDriver = ({ query }) => {
                       onClose={popupCloseHandlerImage}
                       show={visibilityImage}
                     >
-                      <UpdateFileUpload
+                      <UploadWidget
                         refId={driverId}
+                        defaultTbl="/driver/updateDriverPic"
+                        title={"Upload Images"}
                         fileType="image"
-                        email={email}
-                        companyId={companyId}
+                        isAddImage={false}
+                        uploadUrl={`${companyId}/${email}`}
                         popupCloseHandlerImage={popupCloseHandlerImage}
                       />
                     </CustomPopup>

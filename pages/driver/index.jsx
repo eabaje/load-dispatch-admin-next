@@ -9,6 +9,7 @@ import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
 import dynamic from "next/dynamic";
+import NextLink from "next/link";
 
 function ListDriver({ query }) {
   const router = useRouter();
@@ -57,13 +58,16 @@ function ListDriver({ query }) {
 
                 <li>Assign Jobs to Personnel</li>
               </ul>
+              <h1 className="my-5">
+                <NextLink href="/driver/driver-action/" passHref>
+                  <a className="mt-0 btn text-white float-right btn  btn-primary">
+                    Create Driver Info
+                  </a>
+                </NextLink>
+              </h1>
             </div>
             <div className="card-body table-border-style">
-              <Datatable
-                loading={loading}
-                col={columns(user)}
-                data={data.data}
-              />
+              <Datatable loading={loading} col={columns(user)} data={data} />
             </div>
           </div>
         </div>
