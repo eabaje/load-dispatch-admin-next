@@ -12,6 +12,7 @@ export default function UploadWidget(props) {
     mediaId,
     title,
     isAddImage = true,
+    popUpCloseHandler,
   } = props;
   const [width, setWidth] = useState(-1);
   const [currentFileWidget, setCurrentFileWidget] = useState("");
@@ -59,7 +60,8 @@ export default function UploadWidget(props) {
       })
       .then((files) => {
         setMessageWidget("File Uploaded!");
-        PopUpClose();
+        popUpCloseHandler;
+        // PopUpClose();
 
         // setImageInfos(files.data.data);
         // return getFiles(refId);
@@ -104,7 +106,7 @@ export default function UploadWidget(props) {
     <>
       <div className="row">
         <div className="col-8">
-          <h5>{props.title ? props.title : `Upload pictures or images`}</h5>
+          <h5>{title ? title : `Upload pictures or images`}</h5>
           <hr />
           {messageWidget && (
             <div className="alert alert-secondary mt-3" role="alert">

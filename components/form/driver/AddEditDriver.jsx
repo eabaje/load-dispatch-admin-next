@@ -278,6 +278,7 @@ const AddEditDriver = ({ query }) => {
                         fileType="image"
                         isAddImage={false}
                         uploadUrl={`${companyId}/${email}`}
+                        popUpCloseHandler={popupCloseHandlerImage}
                         //  closePoPUp={closePoPUp}
                       />
                     </CustomPopup>
