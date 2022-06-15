@@ -24,6 +24,13 @@ const AddEditDriver = ({ query }) => {
   const isAddMode = !driverId;
   let imgPath = "";
 
+  const {
+    authState: { user },
+    userState: {
+      popUpOverLay: { open },
+    },
+  } = useContext(GlobalContext);
+
   const [IsEdit, setEdit] = useState(false);
   const [country, setCountry] = useState("");
   const [companyId, setcompanyId] = useState("");
@@ -37,18 +44,19 @@ const AddEditDriver = ({ query }) => {
   const [url, setUrl] = useState(null);
   const [selPickUpRegion, setselpickUpRegion] = useState("");
   const [visibility, setVisibility] = useState(false);
-  const [visibilityImage, setVisibilityImage] = useState(false);
+  const [visibilityImage, setVisibilityImage] = useState(open);
   const [visibilityFile, setVisibilityFile] = useState(false);
   // const onSubmit = (data) => console.log(data);
-  const {
-    authState: { user },
-  } = useContext(GlobalContext);
 
   const popupCloseHandler = (e) => {
     setVisibility(e);
   };
-  const popupCloseHandlerImage = (e) => {
-    setVisibilityImage(e);
+  const popupCloseHandlerImage = () => {
+    !setVisibilityImage;
+  };
+  const TogglePoPUp = () => {
+    setVisibilityImage(!visibilityImage);
+    !open;
   };
 
   const popupCloseHandlerFile = (e) => {
@@ -125,7 +133,7 @@ const AddEditDriver = ({ query }) => {
       });
     }
     console.log(`docUrl`, docUrl);
-  }, []);
+  }, [open]);
 
   const {
     register,
@@ -168,7 +176,7 @@ const AddEditDriver = ({ query }) => {
     editDriver(data, driverId)(driverDispatch)((res) => {
       console.log(`res`, res);
       if (res) {
-        toast.success(`Updated  Driver-${res.data.DriverName} successfully`);
+        toast.success(`${res.message}`);
       }
     })((error) => {
       toast.error(error.message);
@@ -196,6 +204,7 @@ const AddEditDriver = ({ query }) => {
     );
   });
   CustomInput.displayName = "CustomInput";
+  console.log("visibilityImage", visibilityImage);
   return (
     <div className="col-md-12">
       <div className="card">
@@ -269,7 +278,7 @@ const AddEditDriver = ({ query }) => {
                         fileType="image"
                         isAddImage={false}
                         uploadUrl={`${companyId}/${email}`}
-                        popupCloseHandlerImage={popupCloseHandlerImage}
+                        //  closePoPUp={closePoPUp}
                       />
                     </CustomPopup>
                   )}
@@ -482,11 +491,14 @@ const AddEditDriver = ({ query }) => {
                         onClose={popupCloseHandler}
                         show={visibilityFile}
                       >
-                        <UpdateFileUpload
+                        <UploadWidget
                           refId={driverId}
+                          defaultTbl="/driver/updateFile"
+                          title={"Upload  Document(s)"}
                           fileType="file"
-                          email={email}
-                          companyId={companyId}
+                          isAddImage={false}
+                          uploadUrl={`${companyId}/${email}`}
+                          //  closePoPUp={closePoPUp}
                         />
                       </CustomPopup>
                     )}

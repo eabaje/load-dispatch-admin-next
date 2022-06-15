@@ -87,7 +87,7 @@ export const updateMedia = (
   onUploadProgress
 ) => {
   let formData = new FormData();
-  alert(defaultTbl);
+
   formData.append("UploadUrl", uploadUrl);
   formData.append("FileType", fileType);
   formData.append("RefId", referenceId);

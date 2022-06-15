@@ -41,6 +41,7 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAIL,
+  POP_UP_SHOW,
 } from "../../constants/actionTypes";
 
 const user = (state, { type, payload }) => {
@@ -141,8 +142,6 @@ const user = (state, { type, payload }) => {
         },
       };
     case CREATE_USER_SUBSCRIPTION_SUCCESS:
-   
-
       return {
         ...state,
         createUserSubscription: {
@@ -329,8 +328,6 @@ const user = (state, { type, payload }) => {
         },
       };
     case CREATE_USER_SUCCESS:
-    
-
       return {
         ...state,
         createUser: {
@@ -352,7 +349,6 @@ const user = (state, { type, payload }) => {
       };
 
     case GET_USERS_SUCCESS:
-     
       return {
         ...state,
         Users: {
@@ -454,7 +450,6 @@ const user = (state, { type, payload }) => {
         },
       };
     case CREATE_COMPANY_SUCCESS:
-     
       return {
         ...state,
         createCompany: {
@@ -530,6 +525,23 @@ const user = (state, { type, payload }) => {
           ...state.deleteCompany,
           loading: false,
           error: null,
+        },
+      };
+
+    case POP_UP_SHOW:
+      return {
+        ...state,
+        popUpOverLay: {
+          ...state.close,
+          open: true,
+        },
+      };
+    case POP_UP_CLOSE:
+      return {
+        ...state,
+        popUpOverLay: {
+          ...state.close,
+          open: false,
         },
       };
 

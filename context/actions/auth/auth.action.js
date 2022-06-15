@@ -87,7 +87,7 @@ export const signin2 = (form) => (dispatch) => (onSuccess) => (onError) => {
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
-       console.log(`res`, res);
+      console.log(`res`, res);
       onSuccess(res.data);
     })
     .catch((err) => {
@@ -105,11 +105,12 @@ export const signin2 = (form) => (dispatch) => (onSuccess) => (onError) => {
 };
 
 export const signout = () => (dispatch) => {
-  (typeof window !== 'undefined')||  localStorage.removeItem("user")
-  (typeof window !== 'undefined')||  localStorage.removeItem("token")
+  typeof window !== "undefined" ||
+    localStorage.removeItem("user")(typeof window !== "undefined") ||
+    localStorage.removeItem("token");
   //localStorage.removeItem("user");
   // localStorage.removeItem("token");
-  console.log('user', JSON.parse(localStorage.getItem("user")))
+  // console.log('user', JSON.parse(localStorage.getItem("user")))
   dispatch({ type: CLEAR_AUTH_STATE });
-  window.location.href  = "/";
+  window.location.href = "/";
 };

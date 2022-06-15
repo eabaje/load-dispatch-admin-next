@@ -36,6 +36,7 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAIL,
+  POP_UP_CLOSE,
 } from "../../../constants/actionTypes";
 import { CONNECTION_ERROR } from "../../../constants/api";
 import axios from "../../../helpers/axiosInstance";
@@ -334,7 +335,7 @@ export const listUserSubscriptionByUserId =
         dispatch({ type: GET_USER_SUBSCRIPTIONS_SUCCESS, payload: res.data });
 
         onSuccess(res.data);
-      //  console.log(`res.data`, res.data);
+        //  console.log(`res.data`, res.data);
       })
       .catch((err) => {
         const message = err.response ? err.response.data : CONNECTION_ERROR;
@@ -598,5 +599,9 @@ export const updateCompany =
         onError(message);
       });
   };
+
+export const PopUpClose = () => (dispatch) => {
+  dispatch({ type: POP_UP_CLOSE });
+};
 
 // Create User

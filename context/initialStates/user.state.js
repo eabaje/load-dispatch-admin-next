@@ -61,4 +61,7 @@ export default {
     error: null,
     loading: false,
   },
+  popUpOverLay: {
+    open: false,
+  },
 };

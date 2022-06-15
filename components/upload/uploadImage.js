@@ -5,7 +5,7 @@ import {
   getImg,
   uploadMedia,
 } from "../../helpers/uploadImage";
-import { IMG_URL } from "../../constants";
+import { IMG_URL, PIC_URL } from "../../constants";
 
 export default function ImageUpload(props) {
   const { refId, onChangePicHandler, url, fieldName } = props;
@@ -42,7 +42,7 @@ export default function ImageUpload(props) {
         setImageInfo(files.data.data);
 
         //  alert(imageGallery);
-        // console.log("imageInfos", imageInfo);
+        console.log("imageInfos", imageInfo);
       });
     }
   }, []);
@@ -61,7 +61,7 @@ export default function ImageUpload(props) {
             ) : (
               <img
                 className="preview"
-                src={IMG_URL + imageInfo[fieldName]}
+                src={PIC_URL + imageInfo[fieldName]}
                 alt=""
               />
             )}
