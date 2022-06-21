@@ -387,13 +387,17 @@ const ReviewCompany = ({ query }) => {
                                     {" "}
                                     Fleet Info
                                   </h5>
-                                  <div className="card-body table-border-style">
-                                    <Datatable
-                                      loading={loading}
-                                      col={columns(user)}
-                                      data={data?.data}
-                                    />
-                                  </div>
+                                  {data?.data ? (
+                                    <div className="card-body table-border-style">
+                                      <Datatable
+                                        loading={loading}
+                                        col={columns(user)}
+                                        data={data?.data}
+                                      />
+                                    </div>
+                                  ) : (
+                                    <h6> No Fleet info available </h6>
+                                  )}
                                 </>
                               )}
                             </div>
