@@ -18,14 +18,27 @@ import Pdfviewer from "../../../components/pdf/pdfviewer";
 import UpdateFileUpload from "../../../components/upload/edit-file-upload";
 import { toast } from "react-toastify";
 import UploadWidget from "../../upload/upload-widget";
+import {
+  PopUpClose,
+  PopUpOpen,
+} from "../../../context/actions/user/user.action";
+//import PDFViewer from "../../pdf/pdf-viewer";
+import dynamic from "next/dynamic";
 
 const AddEditDriver = ({ query }) => {
+  const PDFViewer = dynamic(
+    () => import("../../../components/pdf/pdf-viewer"),
+    {
+      ssr: false,
+    }
+  );
   const { driverId } = query;
   const isAddMode = !driverId;
   let imgPath = "";
 
   const {
     authState: { user },
+    userDispatch,
     userState: {
       popUpOverLay: { open },
     },
@@ -45,21 +58,20 @@ const AddEditDriver = ({ query }) => {
   const [selPickUpRegion, setselpickUpRegion] = useState("");
   const [visibility, setVisibility] = useState(false);
   const [visibilityImage, setVisibilityImage] = useState(open);
-  const [visibilityFile, setVisibilityFile] = useState(false);
+  const [visibilityFile, setVisibilityFile] = useState(open);
   // const onSubmit = (data) => console.log(data);
 
   const popupCloseHandler = (e) => {
+    PopUpClose()(userDispatch);
     setVisibility(e);
   };
   const popupCloseHandlerImage = () => {
-    !setVisibilityImage;
-  };
-  const TogglePoPUp = () => {
-    setVisibilityImage(!visibilityImage);
-    !open;
+    PopUpClose()(userDispatch);
+    setVisibilityImage(false);
   };
 
   const popupCloseHandlerFile = (e) => {
+    PopUpClose()(userDispatch);
     setVisibilityFile(e);
   };
 
@@ -84,55 +96,72 @@ const AddEditDriver = ({ query }) => {
 
   console.log(`docFile`, docFile);
 
+  const PopFuncVisibilityImage = () => {
+    PopUpOpen()(userDispatch);
+    // e(open);
+    setVisibilityImage(open);
+  };
+
+  const PopFuncVisibilityFile = () => {
+    PopUpOpen()(userDispatch);
+    setVisibilityFile(open);
+
+    // e(open);
+  };
+
+  const loadData = async (driverId) => {
+    fetchData(
+      "driver/findOne",
+      driverId
+    )((driver) => {
+      console.log(`driver`, IMG_URL + driver["PicUrl"]);
+      setUrl(driver["PicUrl"]);
+      imgPath = driver["PicUrl"];
+      //  alert(imgPath)
+      const fields = [
+        "DriverName",
+        "Email",
+        "DOB",
+        "Address",
+        "City",
+        "Country",
+        "Phone",
+        "PicUrl",
+        "Licensed",
+        "LicenseUrl",
+        "DriverDocs",
+      ];
+      fields.forEach((field) => setValue(field, driver[field]));
+      //  setImgUrl(driver["PicUrl"]);
+      setEmail(driver["Email"]);
+      setcompanyId(driver["CompanyId"]);
+      setdocUrl(IMG_URL + driver.DriverDocs);
+
+      const splitdoc = driver?.DriverDocs ? driver.DriverDocs.split("/") : null;
+      if (splitdoc !== null) {
+        setdoc(splitdoc[2]);
+      }
+      setPickUpRegion(
+        (pickUpRegion) =>
+          // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
+          (pickUpRegion = State.getStatesOfCountry(driver["Country"]))
+      );
+
+      setselpickUpRegion(driver["Region"]);
+    })((err) => {
+      toast.error(err.message);
+    });
+  };
+
   useEffect(() => {
     setCountries((countries) => (countries = Country.getAllCountries()));
+    let interval;
 
     if (!isAddMode) {
-      fetchData(
-        "driver/findOne",
-        driverId
-      )((driver) => {
-        console.log(`driver`, IMG_URL + driver["PicUrl"]);
-        setUrl(driver["PicUrl"]);
-        imgPath = driver["PicUrl"];
-        //  alert(imgPath)
-        const fields = [
-          "DriverName",
-          "Email",
-          "DOB",
-          "Address",
-          "City",
-          "Country",
-          "Phone",
-          "PicUrl",
-          "Licensed",
-          "LicenseUrl",
-          "DriverDocs",
-        ];
-        fields.forEach((field) => setValue(field, driver[field]));
-        //  setImgUrl(driver["PicUrl"]);
-        setEmail(driver["Email"]);
-        setcompanyId(driver["CompanyId"]);
-        setdocUrl(IMG_URL + driver.DriverDocs);
-
-        const splitdoc = driver?.DriverDocs
-          ? driver.DriverDocs.split("/")
-          : null;
-        if (splitdoc !== null) {
-          setdoc(splitdoc[2]);
-        }
-        setPickUpRegion(
-          (pickUpRegion) =>
-            // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
-            (pickUpRegion = State.getStatesOfCountry(driver["Country"]))
-        );
-
-        setselpickUpRegion(driver["Region"]);
-      })((err) => {
-        toast.error(err.message);
-      });
+      alert(open);
+      open === false ? loadData(driverId) : loadData(driverId);
     }
-    console.log(`docUrl`, docUrl);
+    //  console.log(`docUrl`, docUrl);
   }, [open]);
 
   const {
@@ -249,15 +278,13 @@ const AddEditDriver = ({ query }) => {
                     <ImageUpload
                       refId={driverId}
                       show={driverId ? false : true}
+                      reload={!open}
                       url="/driver/findOne/"
                       fieldName="PicUrl"
                       onChangePicHandler={onChangePicHandler}
                     />
                     {driverId && (
-                      <a
-                        href="#"
-                        onClick={(e) => setVisibilityImage(!visibilityImage)}
-                      >
+                      <a href="#" onClick={PopFuncVisibilityImage}>
                         <i
                           className="first fas fa-pen"
                           title="Update your picture"
@@ -267,10 +294,7 @@ const AddEditDriver = ({ query }) => {
                   </span>
 
                   {visibilityImage && (
-                    <CustomPopup
-                      onClose={popupCloseHandlerImage}
-                      show={visibilityImage}
-                    >
+                    <CustomPopup onClose={popupCloseHandlerImage} show={open}>
                       <UploadWidget
                         refId={driverId}
                         defaultTbl="/driver/updateDriverPic"
@@ -278,7 +302,7 @@ const AddEditDriver = ({ query }) => {
                         fileType="image"
                         isAddImage={false}
                         uploadUrl={`${companyId}/${email}`}
-                        popUpCloseHandler={popupCloseHandlerImage}
+
                         //  closePoPUp={closePoPUp}
                       />
                     </CustomPopup>
@@ -473,14 +497,11 @@ const AddEditDriver = ({ query }) => {
                         onClose={popupCloseHandler}
                         show={visibility}
                       >
-                        <Pdfviewer pdfLink={docUrl} />
+                        <PDFViewer pdfLink={docUrl} />
                       </CustomPopup>
                     )}
 
-                    <a
-                      href="#"
-                      onClick={(e) => setVisibilityFile(!visibilityFile)}
-                    >
+                    <a href="#" onClick={PopFuncVisibilityFile}>
                       <i
                         className="first fas fa-pen"
                         title="Upload PDF File"
@@ -488,10 +509,7 @@ const AddEditDriver = ({ query }) => {
                     </a>
 
                     {visibilityFile && (
-                      <CustomPopup
-                        onClose={popupCloseHandler}
-                        show={visibilityFile}
-                      >
+                      <CustomPopup onClose={popupCloseHandler} show={open}>
                         <UploadWidget
                           refId={driverId}
                           defaultTbl="/driver/updateFile"

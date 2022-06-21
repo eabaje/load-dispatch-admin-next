@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
-import AddEditUser from "../../components/form/user/AddEditUser";
 import dynamic from "next/dynamic";
 import ReviewCompany from "../../components/form/company/ReviewCompany";
 
@@ -30,4 +29,4 @@ export async function getServerSideProps({ query }) {
   };
 }
 
-export default dynamic(() => Promise.resolve(UserProfile), { ssr: true });
+export default dynamic(() => Promise.resolve(UserProfile), { ssr: false });

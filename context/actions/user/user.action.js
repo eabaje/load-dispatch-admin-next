@@ -37,6 +37,7 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAIL,
   POP_UP_CLOSE,
+  POP_UP_SHOW,
 } from "../../../constants/actionTypes";
 import { CONNECTION_ERROR } from "../../../constants/api";
 import axios from "../../../helpers/axiosInstance";
@@ -602,6 +603,10 @@ export const updateCompany =
 
 export const PopUpClose = () => (dispatch) => {
   dispatch({ type: POP_UP_CLOSE });
+};
+
+export const PopUpOpen = () => (dispatch) => {
+  dispatch({ type: POP_UP_SHOW });
 };
 
 // Create User

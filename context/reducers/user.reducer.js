@@ -42,6 +42,7 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAIL,
   POP_UP_SHOW,
+  POP_UP_CLOSE,
 } from "../../constants/actionTypes";
 
 const user = (state, { type, payload }) => {
@@ -532,7 +533,6 @@ const user = (state, { type, payload }) => {
       return {
         ...state,
         popUpOverLay: {
-          ...state.close,
           open: true,
         },
       };
@@ -540,7 +540,7 @@ const user = (state, { type, payload }) => {
       return {
         ...state,
         popUpOverLay: {
-          ...state.close,
+          ...state.popUpOverLay,
           open: false,
         },
       };

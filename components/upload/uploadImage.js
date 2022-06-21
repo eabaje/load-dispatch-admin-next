@@ -8,7 +8,7 @@ import {
 import { IMG_URL, PIC_URL } from "../../constants";
 
 export default function ImageUpload(props) {
-  const { refId, onChangePicHandler, url, fieldName } = props;
+  const { refId, onChangePicHandler, url, fieldName, reload } = props;
   const [width, setWidth] = useState(-1);
   const [currentFile, setCurrentFile] = useState("");
   const [previewImage, setPreviewImage] = useState("");
@@ -45,7 +45,7 @@ export default function ImageUpload(props) {
         console.log("imageInfos", imageInfo);
       });
     }
-  }, []);
+  }, [reload]);
 
   return (
     <>

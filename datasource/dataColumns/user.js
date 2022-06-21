@@ -142,9 +142,9 @@ export const columns = (params) => [
     key: 9,
     name: "Region",
     selector: (row) =>
-      row["Region"]
-        ? State.getStateByCodeAndCountry(row["Region"], row["Country"]).name
-        : row["Region"],
+      row?.Region
+        ? State.getStateByCodeAndCountry(row?.Region, row?.Country)?.name
+        : row?.Region,
 
     sortable: true,
     reorder: true,

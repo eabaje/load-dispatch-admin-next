@@ -12,15 +12,15 @@ export default function UploadWidget(props) {
     mediaId,
     title,
     isAddImage = true,
-    popUpCloseHandler,
+    visibilityImage,
   } = props;
   const [width, setWidth] = useState(-1);
   const [currentFileWidget, setCurrentFileWidget] = useState("");
   const [previewImageWidget, setPreviewImageWidget] = useState("");
   const [progressWidget, setProgressWidget] = useState(0);
   const [messageWidget, setMessageWidget] = useState("");
-
   const {
+    userDispatch,
     userState: {
       popUpOverLay: { open },
     },
@@ -34,6 +34,14 @@ export default function UploadWidget(props) {
     setProgressWidget(0);
     setMessageWidget("");
   };
+
+  window.addEventListener(
+    "MyEventType",
+    function (evt) {
+      props.visibilityImage = false;
+    },
+    false
+  );
 
   function ImageAction() {
     isAddImage === true ? AddImage() : updateImage();
@@ -55,12 +63,20 @@ export default function UploadWidget(props) {
     )
       .then((response) => {
         setMessageWidget(response.data.message);
-        PopUpClose();
+        // PopUpClose();
         //  return getFiles(props.refId);
       })
       .then((files) => {
         setMessageWidget("File Uploaded!");
-        popUpCloseHandler;
+        setTimeout(() => {
+          console.log("Delayed for 2 second.");
+          PopUpClose()(userDispatch);
+          // var evt = document.createEvent("CustomEvent");
+          // evt.initCustomEvent("MyEventType", false, false, {
+          //   test: "Any Object Here",
+          // });
+          // window.dispatchEvent(evt);
+        }, "2000");
         // PopUpClose();
 
         // setImageInfos(files.data.data);

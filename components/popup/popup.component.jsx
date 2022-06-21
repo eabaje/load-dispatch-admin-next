@@ -11,7 +11,7 @@ const CustomPopup = (props) => {
   useEffect(() => {
     setShow(props.show);
   }, [props.show]);
-
+  console.log("props.show", props.show);
   return (
     <div
       style={{
@@ -21,8 +21,8 @@ const CustomPopup = (props) => {
       className="overlay"
     >
       <div className="popup">
-        {props.title && ( <h2>{props.title}</h2>)}
-       
+        {props.title && <h2>{props.title}</h2>}
+
         <span className="close" onClick={closeHandler}>
           &times;
         </span>

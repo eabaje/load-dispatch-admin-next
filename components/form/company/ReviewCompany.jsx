@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { IMG_URL } from "../../../constants";
+import { IMG_URL, MEDIA_URL } from "../../../constants";
 import { useForm, Controller } from "react-hook-form";
 
 import { Country, State } from "country-state-city";
@@ -19,9 +19,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomButton from "../../../components/button/customButton";
 import { SPECIALIZATION_TYPE } from "../../../constants/enum";
 import CustomPopup from "../../../components/popup/popup.component";
-import UpdateUserFileUpload from "../../../components/upload/edit-user-file-upload";
+
 import { toast } from "react-toastify";
-import dynamic from "next/dynamic";
+
+import Pdfviewer from "../../pdf/pdfviewer";
+import { getFiles } from "../../../helpers/uploadImage";
+import Datatable from "../../datatable/datatable-m";
+import { listVehiclesByCompany } from "../../../context/actions/vehicle/vehicle.action";
+import { columns } from "../../../datasource/dataColumns/vehicle";
 
 const ReviewCompany = ({ query }) => {
   const { companyId } = query;
@@ -33,18 +38,14 @@ const ReviewCompany = ({ query }) => {
 
   const isAddMode = !companyId;
 
-  const [IsEdit, setEdit] = useState(false);
+  const [imageInfos, setImageInfos] = useState([]);
   const [country, setCountry] = useState("");
-  const [email, setEmail] = useState("");
   const [countries, setCountries] = useState([]);
   const [pickUpRegion, setPickUpRegion] = useState([]);
-  const [region, setRegion] = useState([]);
-  const [picFile, setpicFile] = useState(null);
-  const [docFile, setdocFile] = useState(null);
-
   const [imgUrl, setImgUrl] = useState("");
   const [selPickUpRegion, setselpickUpRegion] = useState("");
   const [value, setValues] = useState("");
+  const [visibility, setVisibility] = useState(false);
   const [visibilityImage, setVisibilityImage] = useState(false);
   function onChange(event) {
     setValues(event.target.value);
@@ -55,7 +56,10 @@ const ReviewCompany = ({ query }) => {
     //   event.target.options[event.target.selectedIndex].text
     //);
   }
-
+  const popupCloseHandler = (e) => {
+    //  PopUpClose()(userDispatch);
+    setVisibility(e);
+  };
   // Messages
   const required = "This field is required";
   const maxLength = "Your input exceed maximum length";
@@ -91,9 +95,6 @@ const ReviewCompany = ({ query }) => {
   const popupCloseHandlerImage = (e) => {
     setVisibilityImage(e);
   };
-  const onChangePicHandler = async (e) => {
-    setpicFile((picFile) => e.target.files[0]);
-  };
 
   const {
     register,
@@ -116,12 +117,13 @@ const ReviewCompany = ({ query }) => {
     handleSubmit: handleCompany,
   } = useForm();
   const {
-    userDispatch,
-    userState: { User: data, loading },
-  } = useContext(GlobalContext);
-  const {
     authState: { user },
+    vehicleDispatch,
+    vehicleState: {
+      Vehicles: { vehicleData: data, loading },
+    },
   } = useContext(GlobalContext);
+
   const getCompany = (companyId) => {
     fetchData(
       "user/findCompany",
@@ -149,7 +151,12 @@ const ReviewCompany = ({ query }) => {
 
   useEffect(() => {
     getCompany(companyId);
-    setCountries((countries) => (countries = Country.getAllCountries()));
+    if (companyId) {
+      listVehiclesByCompany(companyId)(vehicleDispatch)((res) => {})((err) => {
+        toast.error(err);
+      });
+    }
+    // setCountries((countries) => (countries = Country.getAllCountries()));
     fetchData(
       "carrier/findOne",
       companyId
@@ -169,49 +176,28 @@ const ReviewCompany = ({ query }) => {
       fields.forEach((field) => setValue(field, user[field]));
       setEmail(user["Email"]);
       // setcompanyId(user["CompanyId"]);
-      setPickUpRegion(
-        (pickUpRegion) =>
-          // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
-          (pickUpRegion = State.getStatesOfCountry(user["Country"]))
-      );
+      // setPickUpRegion(
+      //   (pickUpRegion) =>
+      //     // (region = JSON.stringify(State.getStatesOfCountry(e.target.value)))
+      //     (pickUpRegion = State.getStatesOfCountry(user["Country"]))
+      // );
 
-      setselpickUpRegion(user["Region"]);
+      // setselpickUpRegion(user["Region"]);
     })((err) => {
       toast.error(err);
     });
   }, []);
 
-  function onSubmit(formdata) {
-    // console.log(`formdata`, formdata);
-    return isAddMode ? null : UpdateDriver(userId, formdata);
-  }
+  useEffect(() => {
+    if (companyId !== undefined) {
+      getFiles(companyId, "pdf").then((files) => {
+        const doc = files.data.data;
 
-  const UpdateDriver = (data) => {
-    editUser(data)(userDispatch)((res) => {
-      //  console.log(`data`, data);
-      toast.success(`Updated  Driver-${res.data.DriverName} successfully`);
-    })((err) => {
-      toast.error(err);
-    });
-  };
-
-  function onChangePassword(formdata) {
-    formdata.Email = profile?.Email;
-    // console.log("fromPasword", formdata);
-    resetPassword(formdata)(userDispatch)((res) => {
-      toast.success(`Updated  Password successfully`);
-    })((err) => {
-      toast.error(err);
-    });
-  }
-
-  function onChangeCompany(formdata) {
-    updateCompany(formdata, formdata.CompanyId)(userDispatch)((res) => {
-      toast.success(`Updated  Company Profile successfully`);
-    })((err) => {
-      toast.error(err);
-    });
-  }
+        setImageInfos(doc);
+        console.log("GetFiles", doc);
+      });
+    }
+  }, []);
 
   // console.log("userId", userId);
   return (
@@ -231,8 +217,11 @@ const ReviewCompany = ({ query }) => {
               <div className="col-sm-12">
                 <div className="accordion" id="accordionExample">
                   <div className="card mb-0">
-                    <div className="card-header" id="headingOne">
-                      <h5 className="mb-0">
+                    <div
+                      className="card-header alert alert-info"
+                      id="headingOne"
+                    >
+                      <h5 className="mb-0 ">
                         <a
                           href="#!"
                           data-toggle="collapse"
@@ -251,7 +240,7 @@ const ReviewCompany = ({ query }) => {
                       data-parent="#accordionExample"
                     >
                       <div className="card-body">
-                        <form onSubmit={handleCompany(onChangeCompany)}>
+                        <form>
                           <div className="form-group row">
                             <label className="col-sm-2 col-form-label">
                               Company Name
@@ -344,92 +333,83 @@ const ReviewCompany = ({ query }) => {
 
                           <div className="form-group row">
                             <div className="col-md-12">
-                              <h5 className="alert alert-info"> </h5>
+                              {imageInfos.length > 0 && (
+                                <>
+                                  <h5 className="alert alert-info">
+                                    {" "}
+                                    Company Document
+                                  </h5>
+
+                                  <ul className="list-group list-group-flush">
+                                    {imageInfos.map((img, index) => (
+                                      <li
+                                        className="list-group-item"
+                                        key={index}
+                                      >
+                                        {visibility && (
+                                          <CustomPopup
+                                            onClose={popupCloseHandler}
+                                            show={visibility}
+                                          >
+                                            <Pdfviewer
+                                              pdfLink={MEDIA_URL + img.ImgPath}
+                                            />
+                                          </CustomPopup>
+                                        )}
+                                        <a
+                                          href="#"
+                                          onClick={(e) =>
+                                            setVisibility(!visibility)
+                                          }
+                                        >
+                                          <i
+                                            className="first fas fa-download"
+                                            title="View PDF File"
+                                            aria-hidden="true"
+                                            style={{ cursor: "hand" }}
+                                          ></i>
+                                          {img.FileName}{" "}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </>
+                              )}
                             </div>
                           </div>
                           <div className="form-group"></div>
 
+                          <div className="form-group row">
+                            <div className="col-md-12">
+                              {imageInfos.length > 0 && (
+                                <>
+                                  <h5 className="alert alert-info">
+                                    {" "}
+                                    Fleet Info
+                                  </h5>
+                                  <div className="card-body table-border-style">
+                                    <Datatable
+                                      loading={loading}
+                                      col={columns(user)}
+                                      data={data?.data}
+                                    />
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                          <div className="form-group"></div>
                           <div className="form-row">
                             <div className="col-sm-10 "></div>
                             <div className="right" style={{ float: "right" }}>
                               <CustomButton
+                                caption={"Activate User"}
                                 loading={loading}
                                 isAddMode={isAddMode}
                               />
                             </div>
                           </div>
                         </form>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card mb-0">
-                    <div className="card-header" id="headingTwo">
-                      <h5 className="mb-0">
-                        <a
-                          href="#!"
-                          className="collapsed"
-                          data-toggle="collapse"
-                          data-target="#collapseTwo"
-                          aria-expanded="false"
-                          aria-controls="collapseTwo"
-                        >
-                          Company Document
-                        </a>
-                      </h5>
-                    </div>
-                    <div
-                      id="collapseTwo"
-                      className="collapse"
-                      aria-labelledby="headingTwo"
-                      data-parent="#accordionExample"
-                    >
-                      <div className="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high
-                        life accusamus terry richardson ad squid. 3 wolf moon
-                        officia aute, non cupidatat skateboard dolor brunch.
-                        Food truck quinoa nesciunt laborum eiusmod. Brunch 3
-                        wolf moon tempor, sunt aliqua put a bird on it squid
-                        single-origin coffee nulla assumenda shoreditch et.
-                        Nihil anim keffiyeh helvetica, craft beer labore wes
-                        anderson cred nesciunt sapiente ea proident. Ad vegan
-                        excepteur butcher vice lomo. Leggings occaecat craft
-                        beer farm-to-table, raw denim aesthetic synth nesciunt
-                        heard of them accusamus labore sustainable VHS.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card">
-                    <div className="card-header" id="headingThree">
-                      <h5 className="mb-0">
-                        <a
-                          href="#!"
-                          className="collapsed"
-                          data-toggle="collapse"
-                          data-target="#collapseThree"
-                          aria-expanded="false"
-                          aria-controls="collapseThree"
-                        ></a>
-                      </h5>
-                    </div>
-                    <div
-                      id="collapseThree"
-                      className="collapse"
-                      aria-labelledby="headingThree"
-                      data-parent="#accordionExample"
-                    >
-                      <div className="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high
-                        life accusamus terry richardson ad squid. 3 wolf moon
-                        officia aute, non cupidatat skateboard dolor brunch.
-                        Food truck quinoa nesciunt laborum eiusmod. Brunch 3
-                        wolf moon tempor, sunt aliqua put a bird on it squid
-                        single-origin coffee nulla assumenda shoreditch et.
-                        Nihil anim keffiyeh helvetica, craft beer labore wes
-                        anderson cred nesciunt sapiente ea proident. Ad vegan
-                        excepteur butcher vice lomo. Leggings occaecat craft
-                        beer farm-to-table, raw denim aesthetic synth nesciunt
-                        you probably heard of them accusamus labore sustainable
-                        VHS.
                       </div>
                     </div>
                   </div>
