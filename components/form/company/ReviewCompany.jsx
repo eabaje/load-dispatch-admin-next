@@ -204,7 +204,7 @@ const ReviewCompany = ({ query }) => {
     <div className="col-xl-12">
       <div className="card">
         <div className="card-header alert alert-info">
-          <h3>User Profile</h3>
+          <h3>Review Company Info</h3>
           <hr />
           <ul>
             <li>Review Registrant Info</li>
