@@ -61,7 +61,7 @@ function ListCarrier({ query }) {
     <MainLayout>
       <div className="col-sm-12">
         <div className="card">
-          <div className="card-header alert alert-dark">
+          <div className="card-header alert alert-info">
             <h4>View List of carriers</h4>
             <hr />
             <ul>

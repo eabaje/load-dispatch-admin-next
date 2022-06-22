@@ -76,83 +76,83 @@ export const columns = (params) => [
     sortable: true,
     reorder: true,
   },
-  // {
-  //   id: 3,
-  //   name: "Carrier Type",
-  //   selector: (row) =>
-  //     LOAD_TYPE.find((item) => item.value === row.CarrierType).text,
-  //   sortable: true,
-  //   reorder: true,
-  // },
-  // {
-  //   id: 4,
-  //   name: "Fleet Type",
-  //   selector: (row) =>
-  //     LOAD_CAPACITY.find((item) => item.value === row.FleetType).text,
-  //   sortable: true,
-  //   reorder: true,
-  // },
-  // {
-  //   id: 5,
-  //   name: "Fleet Number",
-  //   selector: (row) => row.FleetNumber,
-  //   sortable: true,
-  //   reorder: true,
-  // },
+  {
+    id: 3,
+    name: "Carrier Type",
+    selector: (row) =>
+      LOAD_TYPE.find((item) => item.value === row.CarrierType).text,
+    sortable: true,
+    reorder: true,
+  },
+  {
+    id: 4,
+    name: "Fleet Type",
+    selector: (row) =>
+      LOAD_CAPACITY.find((item) => item.value === row.FleetType).text,
+    sortable: true,
+    reorder: true,
+  },
+  {
+    id: 5,
+    name: "Fleet Number",
+    selector: (row) => row.FleetNumber,
+    sortable: true,
+    reorder: true,
+  },
 
-  // {
-  //   id: 6,
-  //   name: "Licensed?",
-  //   selector: (row) => (
-  //     <Form.Check
-  //       type="checkbox"
-  //       id="custom-switch"
-  //       checked={row.Licensed}
-  //       disabled
-  //     />
-  //   ),
-  //   sortable: true,
-  //   right: true,
-  //   reorder: true,
-  // },
+  {
+    id: 6,
+    name: "Licensed?",
+    selector: (row) => (
+      <Form.Check
+        type="checkbox"
+        id="custom-switch"
+        checked={row.Licensed}
+        disabled
+      />
+    ),
+    sortable: true,
+    right: true,
+    reorder: true,
+  },
 
-  // {
-  //   id: 7,
-  //   name: "AboutUs",
-  //   selector: (row) => row.AboutUs,
-  //   sortable: true,
-  //   reorder: true,
-  // },
-  // {
-  //   id: 8,
-  //   name: "Service Description",
-  //   selector: (row) => row.ServiceDescription,
-  //   sortable: true,
-  //   reorder: true,
-  // },
-  // {
-  //   id: 9,
-  //   name: "Rating",
-  //   selector: (row) => row.Rating,
-  //   sortable: true,
-  //   reorder: true,
-  // },
+  {
+    id: 7,
+    name: "AboutUs",
+    selector: (row) => row.AboutUs,
+    sortable: true,
+    reorder: true,
+  },
+  {
+    id: 8,
+    name: "Service Description",
+    selector: (row) => row.ServiceDescription,
+    sortable: true,
+    reorder: true,
+  },
+  {
+    id: 9,
+    name: "Rating",
+    selector: (row) => row.Rating,
+    sortable: true,
+    reorder: true,
+  },
 
-  // {
-  //   id: 10,
-  //   name: "Created Date",
-  //   selector: (row) => row.createdAt,
-  //   sortable: true,
-  //   right: true,
-  //   reorder: true,
-  // },
+  {
+    id: 10,
+    name: "Created Date",
+    selector: (row) => row.createdAt,
+    sortable: true,
+    right: true,
+    reorder: true,
+  },
 
-  // {
-  //   id: 11,
-  //   name: "Updated Date",
-  //   selector: (row) => row.updatedAt,
-  //   sortable: true,
-  //   right: true,
-  //   reorder: true,
-  // },
+  {
+    id: 11,
+    name: "Updated Date",
+    selector: (row) => row.updatedAt,
+    sortable: true,
+    right: true,
+    reorder: true,
+  },
 ];
