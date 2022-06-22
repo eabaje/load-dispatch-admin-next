@@ -27,6 +27,8 @@ import { getFiles } from "../../../helpers/uploadImage";
 import Datatable from "../../datatable/datatable-m";
 import { listVehiclesByCompany } from "../../../context/actions/vehicle/vehicle.action";
 import { columns } from "../../../datasource/dataColumns/vehicle";
+import { columns as columnsDriver } from "../../../datasource/dataColumns/driver";
+import { listDriversByCompany } from "../../../context/actions/driver/driver.action";
 
 const ReviewCompany = ({ query }) => {
   const { companyId } = query;
@@ -120,7 +122,11 @@ const ReviewCompany = ({ query }) => {
     authState: { user },
     vehicleDispatch,
     vehicleState: {
-      Vehicles: { vehicleData: data, loading },
+      Vehicles: { data: vehicleData, loading },
+    },
+    driverDispatch,
+    driverState: {
+      Drivers: { data: driverData, loading: loadDriver },
     },
   } = useContext(GlobalContext);
 
@@ -155,7 +161,12 @@ const ReviewCompany = ({ query }) => {
       listVehiclesByCompany(companyId)(vehicleDispatch)((res) => {})((err) => {
         toast.error(err);
       });
+
+      listDriversByCompany(companyId)(driverDispatch)((res) => {})((err) => {
+        toast.error(err);
+      });
     }
+
     // setCountries((countries) => (countries = Country.getAllCountries()));
     fetchData(
       "carrier/findOne",
@@ -199,7 +210,7 @@ const ReviewCompany = ({ query }) => {
     }
   }, []);
 
-  // console.log("userId", userId);
+  console.log("VehicleData", vehicleData);
   return (
     <div className="col-xl-12">
       <div className="card">
@@ -216,7 +227,7 @@ const ReviewCompany = ({ query }) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="accordion" id="accordionExample">
-                  <div className="card mb-0">
+                  <div className="card ">
                     <div
                       className="card-header alert alert-info"
                       id="headingOne"
@@ -387,12 +398,12 @@ const ReviewCompany = ({ query }) => {
                                     {" "}
                                     Fleet Info
                                   </h5>
-                                  {data?.data ? (
+                                  {vehicleData?.data ? (
                                     <div className="card-body table-border-style">
                                       <Datatable
                                         loading={loading}
                                         col={columns(user)}
-                                        data={data?.data}
+                                        data={vehicleData?.data}
                                       />
                                     </div>
                                   ) : (
@@ -405,6 +416,7 @@ const ReviewCompany = ({ query }) => {
                           <div className="form-group"></div>
                           <div className="form-row">
                             <div className="col-sm-10 "></div>
+
                             <div className="right" style={{ float: "right" }}>
                               <CustomButton
                                 caption={"Activate User"}
@@ -414,6 +426,169 @@ const ReviewCompany = ({ query }) => {
                             </div>
                           </div>
                         </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card">
+                    <div className="card-header alert-info" id="headingTwo">
+                      <h5 className="mb-0 ">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseTwo"
+                          aria-expanded="false"
+                          aria-controls="collapseTwo"
+                        >
+                          Company Document
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseTwo"
+                      className="collapse"
+                      aria-labelledby="headingTwo"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        <div className="col-md-12">
+                          {imageInfos.length > 0 && (
+                            <>
+                              <h5 className="alert alert-info">
+                                {" "}
+                                Company Document
+                              </h5>
+
+                              <ul className="list-group list-group-flush">
+                                {imageInfos.map((img, index) => (
+                                  <li className="list-group-item" key={index}>
+                                    {visibility && (
+                                      <CustomPopup
+                                        onClose={popupCloseHandler}
+                                        show={visibility}
+                                      >
+                                        <Pdfviewer
+                                          pdfLink={MEDIA_URL + img.ImgPath}
+                                        />
+                                      </CustomPopup>
+                                    )}
+                                    <a
+                                      href="#"
+                                      onClick={(e) =>
+                                        setVisibility(!visibility)
+                                      }
+                                    >
+                                      <i
+                                        className="first fas fa-download"
+                                        title="View PDF File"
+                                        aria-hidden="true"
+                                        style={{ cursor: "hand" }}
+                                      ></i>
+                                      {img.FileName}{" "}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="card">
+                    <div className="card-header alert-info" id="headingThree">
+                      <h5 className="mb-0 ">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseThree"
+                          aria-expanded="false"
+                          aria-controls="collapseThree"
+                        >
+                          Fleet Info
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseThree"
+                      className="collapse"
+                      aria-labelledby="headingThree"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        <div className="col-md-12">
+                          <h6>
+                            {" "}
+                            Total No of Vehicles:&nbsp;
+                            {vehicleData?.data?.length}{" "}
+                          </h6>
+                          {vehicleData?.data?.length > 0 && (
+                            <>
+                              {vehicleData?.data ? (
+                                <div className="card-body table-border-style">
+                                  <Datatable
+                                    loading={loading}
+                                    col={columns(user)}
+                                    data={vehicleData?.data}
+                                  />
+                                </div>
+                              ) : (
+                                <h6> No Fleet info available </h6>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="card">
+                    <div className="card-header alert-info" id="headingFour">
+                      <h5 className="mb-0 ">
+                        <a
+                          href="#!"
+                          className="collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseFour"
+                          aria-expanded="false"
+                          aria-controls="collapseFour"
+                        >
+                          Driver Info
+                        </a>
+                      </h5>
+                    </div>
+                    <div
+                      id="collapseFour"
+                      className="collapse"
+                      aria-labelledby="headingFour"
+                      data-parent="#accordionExample"
+                    >
+                      <div className="card-body">
+                        <div className="col-md-12">
+                          <h6>
+                            {" "}
+                            Total No of Drivers:&nbsp;{
+                              driverData?.data?.length
+                            }{" "}
+                          </h6>
+                          {driverData?.data?.length > 0 && (
+                            <>
+                              {driverData?.data ? (
+                                <div className="card-body table-border-style">
+                                  <Datatable
+                                    loading={loadDriver}
+                                    col={columnsDriver(user)}
+                                    data={driverData?.data}
+                                  />
+                                </div>
+                              ) : (
+                                <h6> No Driver info available </h6>
+                              )}
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -1,5 +1,5 @@
-import {Form} from "react-bootstrap"
-import  Link  from "next/link";
+import { Form } from "react-bootstrap";
+import Link from "next/link";
 import { LOAD_TYPE } from "../../constants/enum";
 export const columns = (params) => [
   {
@@ -7,32 +7,39 @@ export const columns = (params) => [
     sortable: false,
     selector: "null",
     cell: (row) => [
-      (params?.roles === "carrier" ) && (
-        <Link
-          href={"/vehicle/vehicle-action/?vehicleId=" + row.VehicleId}
-          
-        >
-            <a className="btn btn-sm"
-          title="Edit  Vehcile">
-          <i className="first fas fa-pen"></i></a>
+      params?.roles === "carrier" && (
+        <Link href={"/vehicle/vehicle-action/?vehicleId=" + row.VehicleId}>
+          <a className="btn btn-sm" title="Edit  Vehcile">
+            <i className="first fas fa-pen"></i>
+          </a>
         </Link>
       ),
       params?.roles === "carrier" && (
         <Link
-          href={"/vehicle/vehicle-action/?companyId="+ row.CompanyId+ "&vehicleId=" + row.VehicleId + "&driverId=driver"}
-         
+          href={
+            "/vehicle/vehicle-action/?companyId=" +
+            row.CompanyId +
+            "&vehicleId=" +
+            row.VehicleId +
+            "&driverId=driver"
+          }
         >
-         <a  className="btn btn-sm"
-          title="Assign Driver to Vehicle"> <i className="first fas fa-user"></i></a>
+          <a className="btn btn-sm" title="Assign Driver to Vehicle">
+            {" "}
+            <i className="first fas fa-user"></i>
+          </a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
           href={"/delete-data/?tbl=Vehicles&fld=VehcleId&val=" + row.VehicleId}
-        
         >
-          <a   className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"><i className="fas fa-trash-alt"></i></a>
+          <a
+            className="btn btn-sm"
+            title="Delete/Archive (Redundant/Incorrect data)"
+          >
+            <i className="fas fa-trash-alt"></i>
+          </a>
         </Link>
       ),
     ],
@@ -40,7 +47,7 @@ export const columns = (params) => [
   {
     id: 1,
     name: "Carrier Name",
-    selector: (row) => row.Carrier.CarrierType,
+    selector: (row) => row?.Carrier?.CarrierType,
     sortable: true,
     reorder: true,
   },
@@ -55,14 +62,14 @@ export const columns = (params) => [
   {
     id: 3,
     name: "Vehicle Number",
-    selector: (row) => row.VehicleNumber,
+    selector: (row) => row?.VehicleNumber,
     sortable: true,
     reorder: true,
   },
   {
     id: 4,
     name: "Vehicle Color",
-    selector: (row) => row.VehicleColor,
+    selector: (row) => row?.VehicleColor,
     sortable: true,
     reorder: true,
   },
@@ -70,7 +77,7 @@ export const columns = (params) => [
   {
     id: 5,
     name: "Vehicle Model",
-    selector: (row) => row.VehicleModel,
+    selector: (row) => row?.VehicleModel,
     sortable: true,
     reorder: true,
   },
@@ -78,7 +85,7 @@ export const columns = (params) => [
   {
     id: 6,
     name: "License Plate",
-    selector: (row) => row.LicensePlate,
+    selector: (row) => row?.LicensePlate,
     sortable: true,
     reorder: true,
   },
@@ -86,7 +93,7 @@ export const columns = (params) => [
   {
     id: 7,
     name: "Purchase Year",
-    selector: (row) => row.PurchaseYear,
+    selector: (row) => row?.PurchaseYear,
     sortable: true,
     reorder: true,
   },
@@ -94,7 +101,7 @@ export const columns = (params) => [
   {
     id: 8,
     name: "Vehicle Model",
-    selector: (row) => row.VehicleModel,
+    selector: (row) => row?.VehicleModel,
     sortable: true,
     reorder: true,
   },
@@ -105,7 +112,7 @@ export const columns = (params) => [
       <Form.Check
         type="checkbox"
         id="custom-switch"
-        checked={row.Insured}
+        checked={row?.Insured}
         disabled
       />
     ),
@@ -117,36 +124,31 @@ export const columns = (params) => [
   {
     id: 10,
     name: "PicUrl",
-    selector: (row) => row.PicUrl,
+    selector: (row) => row?.PicUrl,
     sortable: true,
     reorder: true,
   },
   {
     id: 11,
     name: "Vehicle Docs",
-    selector: (row) => row.VehicleDocs,
+    selector: (row) => row?.VehicleDocs,
     sortable: true,
     reorder: true,
   },
-  params?.roles === "admin" && (
-  {
+  params?.roles === "admin" && {
     id: 12,
     name: "Created Date",
-    selector: (row) => row.createdAt,
+    selector: (row) => row?.createdAt,
     sortable: true,
     right: true,
     reorder: true,
-  }
-  ),
-  params?.roles === "admin" && (
-  {
+  },
+  params?.roles === "admin" && {
     id: 13,
     name: "Updated Date",
-    selector: (row) => row.updatedAt,
+    selector: (row) => row?.updatedAt,
     sortable: true,
     right: true,
     reorder: true,
-  }),
-
-  
+  },
 ];
