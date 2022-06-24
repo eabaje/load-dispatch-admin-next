@@ -24,6 +24,7 @@ import {
 } from "../../../context/actions/user/user.action";
 //import PDFViewer from "../../pdf/pdf-viewer";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 const AddEditDriver = ({ query }) => {
   const PDFViewer = dynamic(
@@ -32,6 +33,7 @@ const AddEditDriver = ({ query }) => {
       ssr: false,
     }
   );
+  const router = useRouter();
   const { driverId } = query;
   const isAddMode = !driverId;
   let imgPath = "";
@@ -193,6 +195,13 @@ const AddEditDriver = ({ query }) => {
     createDriver(data, picFile, docFile)(driverDispatch)((res) => {
       if (res) {
         toast.success(`Created New Driver-${res.data.DriverName} successfully`);
+        setTimeout(() => {
+          toast.dismiss();
+          router.push(
+            `/driver/?companyId=${user.CompanyId}`
+          );
+        }, 5000);
+
       }
     })((error) => {
       toast.error(error.message);
