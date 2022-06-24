@@ -7,7 +7,7 @@ import {
   editDriver,
 } from "../../../context/actions/driver/driver.action";
 import ImageUpload from "../../../components/upload/uploadImage";
-import "bootstrap";
+//import "bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomButton from "../../../components/button/customButton";
@@ -197,11 +197,8 @@ const AddEditDriver = ({ query }) => {
         toast.success(`Created New Driver-${res.data.DriverName} successfully`);
         setTimeout(() => {
           toast.dismiss();
-          router.push(
-            `/driver/?companyId=${user.CompanyId}`
-          );
+          router.push(`/driver/?companyId=${user.CompanyId}`);
         }, 5000);
-
       }
     })((error) => {
       toast.error(error.message);

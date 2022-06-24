@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Country, State } from "country-state-city";
 import { GlobalContext } from "../../context/Provider";
 import { createTrip, editTrip } from "../../context/actions/trip/trip.action";
-import "bootstrap";
+//import "bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import user from "../../context/reducers/user.reducer";

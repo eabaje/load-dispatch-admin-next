@@ -8,7 +8,7 @@ import {
   createTrip,
   editTrip,
 } from "../../../context/actions/trip/trip.action";
-import "bootstrap";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { fetchData } from "../../../helpers/query";
