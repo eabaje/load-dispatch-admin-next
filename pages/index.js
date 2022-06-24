@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { signin2 } from "../context/actions/auth/auth.action";
 import AuthLayout from "../layout/authLayout";
+import dynamic from "next/dynamic";
 
 function Login() {
   const router = useRouter();
@@ -119,4 +120,5 @@ function Login() {
 
 //Login.layout = "auth";
 
-export default Login;
+//export default Login;
+export default dynamic(() => Promise.resolve(Login), { ssr: false });
