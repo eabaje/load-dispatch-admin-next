@@ -6,6 +6,7 @@ import { GlobalContext } from "../../context/Provider";
 import DriverCard from "../../components/grid/driverCard";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
 
 function ListProfileDriver() {
   const [data, setData] = useState([]);
@@ -30,9 +31,7 @@ function ListProfileDriver() {
   return (
     <>
       <MainLayout>
-        {data.length < 1 ? (
-          <h4 className="alert alert-info">No driver record found</h4>
-        ) : (
+        {data.length > 0 ? (
           <div className="container mt-5">
             <div className="row d-flex justify-content-center">
               <div className="col-md-12">
@@ -53,6 +52,8 @@ function ListProfileDriver() {
               </div>
             </div>
           </div>
+        ) : (
+          <h4 className="alert alert-info">No driver record found</h4>
         )}
       </MainLayout>
     </>
@@ -60,4 +61,8 @@ function ListProfileDriver() {
 }
 
 //Login.layout = "main";
-export default ListProfileDriver;
+//export default ListProfileDriver;
+
+export default dynamic(() => Promise.resolve(ListProfileDriver), {
+  ssr: false,
+});

@@ -102,22 +102,10 @@ const ReviewCompany = ({ query }) => {
     register,
     formState: { errors },
     handleSubmit,
-    setValue,
+    setValue: setValue2,
     control,
   } = useForm();
-  const {
-    register: registerPassword,
-    formState: { errors2 },
-    setValue: setValue1,
-    handleSubmit: handlePassword,
-  } = useForm();
 
-  const {
-    register: registerCompany,
-    formState: { errors3 },
-    setValue: setValue2,
-    handleSubmit: handleCompany,
-  } = useForm();
   const {
     authState: { user },
     vehicleDispatch,
@@ -148,6 +136,7 @@ const ReviewCompany = ({ query }) => {
         "Specialization",
         "RoleType",
         "Website",
+        "IsVetted",
       ];
       fields2.forEach((field2) => setValue2(field2, company[field2]));
     })((err) => {
@@ -209,6 +198,22 @@ const ReviewCompany = ({ query }) => {
       });
     }
   }, []);
+  function SubmitForm(formdata) {
+    console.log("formdata", formdata);
+    return Vet(formdata);
+  }
+  function Vet(formdata) {
+    //  console.log(`formdata`, formdata);
+    updateCompany(formdata)(userDispatch)((res) => {
+      if (res) {
+        toast.success("Company is vetted successfully");
+      }
+
+      //Route to Upload Pictures for vehicle
+    })((err) => {
+      toast.error(err);
+    });
+  }
 
   console.log("VehicleData", vehicleData);
   return (
@@ -342,89 +347,7 @@ const ReviewCompany = ({ query }) => {
                             </div>
                           </div>
 
-                          <div className="form-group row">
-                            <div className="col-md-12">
-                              {imageInfos.length > 0 && (
-                                <>
-                                  <h5 className="alert alert-info">
-                                    {" "}
-                                    Company Document
-                                  </h5>
-
-                                  <ul className="list-group list-group-flush">
-                                    {imageInfos.map((img, index) => (
-                                      <li
-                                        className="list-group-item"
-                                        key={index}
-                                      >
-                                        {visibility && (
-                                          <CustomPopup
-                                            onClose={popupCloseHandler}
-                                            show={visibility}
-                                          >
-                                            <Pdfviewer
-                                              pdfLink={MEDIA_URL + img.ImgPath}
-                                            />
-                                          </CustomPopup>
-                                        )}
-                                        <a
-                                          href="#"
-                                          onClick={(e) =>
-                                            setVisibility(!visibility)
-                                          }
-                                        >
-                                          <i
-                                            className="first fas fa-download"
-                                            title="View PDF File"
-                                            aria-hidden="true"
-                                            style={{ cursor: "hand" }}
-                                          ></i>
-                                          {img.FileName}{" "}
-                                        </a>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </>
-                              )}
-                            </div>
-                          </div>
                           <div className="form-group"></div>
-
-                          <div className="form-group row">
-                            <div className="col-md-12">
-                              {imageInfos.length > 0 && (
-                                <>
-                                  <h5 className="alert alert-info">
-                                    {" "}
-                                    Fleet Info
-                                  </h5>
-                                  {vehicleData?.data ? (
-                                    <div className="card-body table-border-style">
-                                      <Datatable
-                                        loading={loading}
-                                        col={columns(user)}
-                                        data={vehicleData?.data}
-                                      />
-                                    </div>
-                                  ) : (
-                                    <h6> No Fleet info available </h6>
-                                  )}
-                                </>
-                              )}
-                            </div>
-                          </div>
-                          <div className="form-group"></div>
-                          <div className="form-row">
-                            <div className="col-sm-10 "></div>
-
-                            <div className="right" style={{ float: "right" }}>
-                              <CustomButton
-                                caption={"Activate User"}
-                                loading={loading}
-                                isAddMode={isAddMode}
-                              />
-                            </div>
-                          </div>
                         </form>
                       </div>
                     </div>
@@ -454,11 +377,6 @@ const ReviewCompany = ({ query }) => {
                         <div className="col-md-12">
                           {imageInfos.length > 0 && (
                             <>
-                              <h5 className="alert alert-info">
-                                {" "}
-                                Company Document
-                              </h5>
-
                               <ul className="list-group list-group-flush">
                                 {imageInfos.map((img, index) => (
                                   <li className="list-group-item" key={index}>
@@ -593,6 +511,40 @@ const ReviewCompany = ({ query }) => {
                     </div>
                   </div>
                 </div>
+                <form onSubmit={handleSubmit(SubmitForm)}>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
+                      Check to Vet
+                    </label>
+                    <div className="col-sm-2">
+                      <input
+                        type="checkbox"
+                        name="IsVetted"
+                        className="form-check-input-custom-2"
+                        {...register("IsVetted", {
+                          required: true,
+                        })}
+                      />
+                    </div>
+
+                    <div className="col-sm-6" style={{ float: "right" }}>
+                      <input
+                        type="hidden"
+                        name="CompanyId"
+                        value={companyId}
+                        className="form-control"
+                        {...register("CompanyId")}
+                      />
+
+                      <CustomButton
+                        caption={"Vett It"}
+                        loading={loading}
+                        isAddMode={isAddMode}
+                      />
+                    </div>
+                  </div>
+                  <div className="right" style={{ float: "right" }}></div>
+                </form>
               </div>
             </div>
           </div>
