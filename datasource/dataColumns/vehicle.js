@@ -45,31 +45,47 @@ export const columns = (params) => [
     ],
   },
   {
+    id: 3,
+    name: "VIN / CHASIS NO",
+
+    cell: (row) => [
+      <>
+        {" "}
+        <Link href={"/vehicle/vehicle-action/?vehicleId=" + row?.VehicleId}>
+          <a className="btn btn-sm" title="click to view vehicle details">
+            {" "}
+            {row?.VehicleNumber}{" "}
+          </a>
+        </Link>
+      </>,
+    ],
+    sortable: true,
+    reorder: true,
+  },
+  {
     id: 1,
     name: "Carrier Name",
-    selector: (row) => row?.Carrier?.CarrierType,
+    selector: null,
+    cell: (row) => [<>{row?.Carrier?.CarrierType}</>],
     sortable: true,
     reorder: true,
   },
   {
     id: 2,
     name: "Vehicle Type",
-    selector: (row) =>
-      LOAD_TYPE.find((item) => item.value === row?.VehicleType).text,
+    selector: null,
+    cell: (row) => [
+      <>{LOAD_TYPE.find((item) => item.value === row?.VehicleType).text}</>,
+    ],
     sortable: true,
     reorder: true,
   },
-  {
-    id: 3,
-    name: "Vehicle Number",
-    selector: (row) => row?.VehicleNumber,
-    sortable: true,
-    reorder: true,
-  },
+
   {
     id: 4,
     name: "Vehicle Color",
-    selector: (row) => row?.VehicleColor,
+    selector: null,
+    cell: (row) => [<>{row?.VehicleColor}</>],
     sortable: true,
     reorder: true,
   },
@@ -77,7 +93,8 @@ export const columns = (params) => [
   {
     id: 5,
     name: "Vehicle Model",
-    selector: (row) => row?.VehicleModel,
+    selector: null,
+    cell: (row) => [<>{row?.VehicleModel}</>],
     sortable: true,
     reorder: true,
   },
@@ -85,7 +102,8 @@ export const columns = (params) => [
   {
     id: 6,
     name: "License Plate",
-    selector: (row) => row?.LicensePlate,
+    selector: null,
+    cell: (row) => [<>{row?.LicensePlate}</>],
     sortable: true,
     reorder: true,
   },
@@ -93,29 +111,26 @@ export const columns = (params) => [
   {
     id: 7,
     name: "Purchase Year",
-    selector: (row) => row?.PurchaseYear,
+    selector: null,
+    cell: (row) => [<>{row?.PurchaseYear}</>],
     sortable: true,
     reorder: true,
   },
 
   {
-    id: 8,
-    name: "Vehicle Model",
-    selector: (row) => row?.VehicleModel,
-    sortable: true,
-    reorder: true,
-  },
-  {
     id: 9,
     name: "Insured?",
-    selector: (row) => (
-      <Form.Check
-        type="checkbox"
-        id="custom-switch"
-        checked={row?.Insured}
-        disabled
-      />
-    ),
+    selector: null,
+    cell: (row) => [
+      <>
+        <Form.Check
+          type="checkbox"
+          id="custom-switch"
+          checked={row?.Insured}
+          disabled
+        />
+      </>,
+    ],
     sortable: true,
     right: true,
     reorder: true,
@@ -124,21 +139,24 @@ export const columns = (params) => [
   {
     id: 10,
     name: "PicUrl",
-    selector: (row) => row?.PicUrl,
+    selector: null,
+    cell: (row) => [<>{row?.PicUrl}</>],
     sortable: true,
     reorder: true,
   },
   {
     id: 11,
     name: "Vehicle Docs",
-    selector: (row) => row?.VehicleDocs,
+    selector: null,
+    cell: (row) => [<>{row?.VehicleDocs}</>],
     sortable: true,
     reorder: true,
   },
   params?.roles === "admin" && {
     id: 12,
     name: "Created Date",
-    selector: (row) => row?.createdAt,
+    selector: null,
+    cell: (row) => [<>{row?.createdAt}</>],
     sortable: true,
     right: true,
     reorder: true,
@@ -146,7 +164,8 @@ export const columns = (params) => [
   params?.roles === "admin" && {
     id: 13,
     name: "Updated Date",
-    selector: (row) => row?.updatedAt,
+    selector: null,
+    cell: (row) => [<>{row?.updatedAt}</>],
     sortable: true,
     right: true,
     reorder: true,
