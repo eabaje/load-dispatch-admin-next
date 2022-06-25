@@ -559,6 +559,7 @@ textarea {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+    padding: 2px;
 }
 
 button,

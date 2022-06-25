@@ -34,7 +34,7 @@ const AddEditDriver = ({ query }) => {
     }
   );
   const router = useRouter();
-  const { driverId } = query;
+  const { driverId, readOnly } = query;
   const isAddMode = !driverId;
   let imgPath = "";
 
@@ -160,7 +160,6 @@ const AddEditDriver = ({ query }) => {
     let interval;
 
     if (!isAddMode) {
-      alert(open);
       open === false ? loadData(driverId) : loadData(driverId);
     }
     //  console.log(`docUrl`, docUrl);
@@ -289,13 +288,17 @@ const AddEditDriver = ({ query }) => {
                       fieldName="PicUrl"
                       onChangePicHandler={onChangePicHandler}
                     />
-                    {driverId && (
-                      <a href="#" onClick={PopFuncVisibilityImage}>
-                        <i
-                          className="first fas fa-pen"
-                          title="Update your picture"
-                        ></i>
-                      </a>
+                    {readOnly === "true" ? (
+                      <></>
+                    ) : (
+                      driverId && (
+                        <a href="#" onClick={PopFuncVisibilityImage}>
+                          <i
+                            className="first fas fa-pen"
+                            title="Update your picture"
+                          ></i>
+                        </a>
+                      )
                     )}
                   </span>
 
@@ -506,14 +509,16 @@ const AddEditDriver = ({ query }) => {
                         <PDFViewer pdfLink={docUrl} />
                       </CustomPopup>
                     )}
-
-                    <a href="#" onClick={PopFuncVisibilityFile}>
-                      <i
-                        className="first fas fa-pen"
-                        title="Upload PDF File"
-                      ></i>
-                    </a>
-
+                    {readOnly === "true" ? (
+                      <></>
+                    ) : (
+                      <a href="#" onClick={PopFuncVisibilityFile}>
+                        <i
+                          className="first fas fa-pen"
+                          title="Upload PDF File"
+                        ></i>
+                      </a>
+                    )}
                     {visibilityFile && (
                       <CustomPopup onClose={popupCloseHandler} show={open}>
                         <UploadWidget
@@ -548,34 +553,41 @@ const AddEditDriver = ({ query }) => {
                 )}
               </div>
 
-              <div className="form-group row alert alert-info">
-                <div className="col-md-8 "></div>
-                <div className="col-md-4 "></div>
-              </div>
-              <div className="form-group"></div>
+              {readOnly === true && (
+                <>
+                  <div className="form-group row alert alert-info">
+                    <div className="col-md-8 "></div>
+                    <div className="col-md-4 "></div>
+                  </div>
+                  <div className="form-group"></div>
 
-              <div className="form-row">
-                <div className="col-sm-10 ">
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="invalidCheck"
-                      required
-                    />
-                    <label className="form-check-label" htmlFor="invalidCheck">
-                      I confirm all information entered are accurate
-                    </label>
-                    <div className="invalid-feedback">
-                      You must agree before submitting.
+                  <div className="form-row">
+                    <div className="col-sm-10 ">
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="invalidCheck"
+                          required
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="invalidCheck"
+                        >
+                          I confirm all information entered are accurate
+                        </label>
+                        <div className="invalid-feedback">
+                          You must agree before submitting.
+                        </div>
+                      </div>
+                    </div>
+                    <div className="right" style={{ float: "right" }}>
+                      <CustomButton loading={loading} isAddMode={isAddMode} />
                     </div>
                   </div>
-                </div>
-                <div className="right" style={{ float: "right" }}>
-                  <CustomButton loading={loading} isAddMode={isAddMode} />
-                </div>
-              </div>
+                </>
+              )}
             </form>
           </div>
         </div>

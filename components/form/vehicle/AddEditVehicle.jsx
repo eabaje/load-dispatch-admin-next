@@ -18,7 +18,8 @@ import { toast } from "react-toastify";
 import DocumentUpload from "../../upload/doc-file-upload";
 
 const AddEditVehicle = ({ query }) => {
-  const { vehicleId, companyId, carrierId, carrierType, driverId } = query;
+  const { vehicleId, companyId, carrierId, carrierType, driverId, readOnly } =
+    query;
 
   const isAddMode = !vehicleId;
   const [formStep, setFormStep] = useState(0);
@@ -193,6 +194,7 @@ const AddEditVehicle = ({ query }) => {
                         <select
                           id="DriverId"
                           className="form-control"
+                          readOnly={readOnly}
                           {...register("DriverId", {
                             required: true,
                           })}
@@ -214,6 +216,7 @@ const AddEditVehicle = ({ query }) => {
                           name="VehicleNumber"
                           id="VehicleNumber"
                           className="form-control"
+                          readOnly={readOnly}
                           placeholder="Vehicle Number"
                           {...register("VehicleNumber", {
                             required: true,
@@ -237,6 +240,7 @@ const AddEditVehicle = ({ query }) => {
                     <select
                       id="VehicleType"
                       className="form-control"
+                      readOnly={readOnly}
                       {...register("VehicleType", {
                         required: true,
                       })}
@@ -255,12 +259,13 @@ const AddEditVehicle = ({ query }) => {
                   </div>
 
                   <label className="col-sm-2 col-form-label">
-                    Vehicle License Number(VIN)
+                    VIN / CHASIS NUMBER
                   </label>
                   <div className="col-sm-4">
                     <input
                       name="VehicleNumber"
                       className="form-control"
+                      readOnly={readOnly}
                       placeholder="Vehicle Number"
                       {...register("VehicleNumber", {
                         required: true,
@@ -279,6 +284,7 @@ const AddEditVehicle = ({ query }) => {
                       name="SerialNumber"
                       className="form-control"
                       placeholder="Serial Number"
+                      readOnly={readOnly}
                       {...register("SerialNumber", {
                         required: true,
                       })}
@@ -291,6 +297,7 @@ const AddEditVehicle = ({ query }) => {
                     <input
                       name="VehicleMake"
                       className="form-control"
+                      readOnly={readOnly}
                       placeholder="Vehicle Make"
                       {...register("VehicleMake", {
                         required: true,
@@ -305,6 +312,7 @@ const AddEditVehicle = ({ query }) => {
                     <input
                       name="Description"
                       className="form-control"
+                      readOnly={readOnly}
                       placeholder="Description"
                       {...register("Description")}
                     />
@@ -325,6 +333,7 @@ const AddEditVehicle = ({ query }) => {
                     <input
                       name="VehicleColor"
                       className="form-control"
+                      readOnly={readOnly}
                       placeholder="Vehicle Color"
                       {...register("VehicleColor", {
                         required: true,
@@ -339,6 +348,7 @@ const AddEditVehicle = ({ query }) => {
                     <input
                       name="VehicleModel"
                       className="form-control"
+                      readOnly={readOnly}
                       placeholder="Vehicle Model"
                       {...register("VehicleModel", {
                         required: true,
@@ -356,6 +366,7 @@ const AddEditVehicle = ({ query }) => {
                     <input
                       name="LicensePlate"
                       className="form-control"
+                      readOnly={readOnly}
                       placeholder="License Plate"
                       {...register("LicensePlate", {
                         required: true,
@@ -372,6 +383,7 @@ const AddEditVehicle = ({ query }) => {
                       name="VehicleModelYear"
                       placeholder="Vehicle Model Year"
                       className="form-control"
+                      readOnly={readOnly}
                       {...register("VehicleModelYear", {
                         required: true,
                       })}
@@ -388,6 +400,7 @@ const AddEditVehicle = ({ query }) => {
                     <input
                       name="PurchaseYear"
                       className="form-control"
+                      readOnly={readOnly}
                       placeholder=" Enter Purchase year"
                       {...register("PurchaseYear")}
                     />
@@ -399,6 +412,7 @@ const AddEditVehicle = ({ query }) => {
                       <input
                         type="checkbox"
                         name="Insured"
+                        readOnly={readOnly}
                         className="form-check-input-custom-2"
                         {...register("Insured", {
                           required: true,
@@ -407,67 +421,72 @@ const AddEditVehicle = ({ query }) => {
                     </div>
                   </div>
                 </div>
-                <div className="form-group row">
-                  <div className="col-md-12">
-                    <h5 className="alert alert-info"></h5>
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="col-sm-10 ">
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        name="IsValid"
-                        value=""
-                        id="invalidCheck"
-                        required
-                      />
-                      <label className="form-check-label">
-                        I confirm all information entered are accurate
-                      </label>
-                      <div className="invalid-feedback">
-                        You must agree before submitting.
+
+                {readOnly === true && (
+                  <>
+                    <div className="form-group row">
+                      <div className="col-md-12">
+                        <h5 className="alert alert-info"></h5>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-md-6 "></div>
-                  <div className="col-md-4 ">
-                    <span>
-                      {!isAddMode && formStep === 0 && (
-                        <button
-                          type="button"
-                          className="btn  btn-primary"
-                          onClick={() => setFormStep(1)}
-                          style={{ right: "150px" }}
-                        >
-                          <i className="feather mr-2 icon-check-circle"></i>{" "}
-                          {"Upload Picture "}
-                        </button>
-                      )}
-                    </span>
-                    <span>
-                      <button
-                        type="submit"
-                        className="btn  btn-primary"
-                        style={{ float: "right" }}
-                      >
-                        {loading ? (
-                          <i classNameName="fa fa-spinner fa-spin"></i>
-                        ) : (
-                          <i className="feather mr-2 icon-check-circle"></i>
-                        )}{" "}
-                        {isAddMode
-                          ? "Submit"
-                          : driverId
-                          ? "Assign Driver"
-                          : "Update"}
-                      </button>
-                    </span>
-                  </div>
-                </div>
+                    <div className="form-row">
+                      <div className="col-sm-10 ">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="IsValid"
+                            value=""
+                            id="invalidCheck"
+                            required
+                          />
+                          <label className="form-check-label">
+                            I confirm all information entered are accurate
+                          </label>
+                          <div className="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-md-6 "></div>
+                      <div className="col-md-4 ">
+                        <span>
+                          {!isAddMode && formStep === 0 && (
+                            <button
+                              type="button"
+                              className="btn  btn-primary"
+                              onClick={() => setFormStep(1)}
+                              style={{ right: "150px" }}
+                            >
+                              <i className="feather mr-2 icon-check-circle"></i>{" "}
+                              {"Upload Picture "}
+                            </button>
+                          )}
+                        </span>
+                        <span>
+                          <button
+                            type="submit"
+                            className="btn  btn-primary"
+                            style={{ float: "right" }}
+                          >
+                            {loading ? (
+                              <i classNameName="fa fa-spinner fa-spin"></i>
+                            ) : (
+                              <i className="feather mr-2 icon-check-circle"></i>
+                            )}{" "}
+                            {isAddMode
+                              ? "Submit"
+                              : driverId
+                              ? "Assign Driver"
+                              : "Update"}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                )}
               </form>
             )}
             {formStep === 1 && (

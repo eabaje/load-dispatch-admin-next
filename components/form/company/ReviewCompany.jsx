@@ -26,8 +26,8 @@ import Pdfviewer from "../../pdf/pdfviewer";
 import { getFiles } from "../../../helpers/uploadImage";
 import Datatable from "../../datatable/datatable-m";
 import { listVehiclesByCompany } from "../../../context/actions/vehicle/vehicle.action";
-import { columns } from "../../../datasource/dataColumns/vehicle";
-import { columns as columnsDriver } from "../../../datasource/dataColumns/driver";
+import { columns } from "../../../datasource/dataColumns/vehicle-read";
+import { columns as columnsDriver } from "../../../datasource/dataColumns/driver-read";
 import { listDriversByCompany } from "../../../context/actions/driver/driver.action";
 
 const ReviewCompany = ({ query }) => {
