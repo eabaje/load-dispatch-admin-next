@@ -422,7 +422,9 @@ const AddEditVehicle = ({ query }) => {
                   </div>
                 </div>
 
-                {readOnly === true && (
+                {readOnly === "true" ? (
+                  <></>
+                ) : (
                   <>
                     <div className="form-group row">
                       <div className="col-md-12">

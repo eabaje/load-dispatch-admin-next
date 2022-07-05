@@ -24,6 +24,7 @@ export const columns = (params) => [
           <i className="first fas fa-car"></i>
         </a>
       </Link>,
+
       params?.roles === "admin" && (
         <Link
           href={"/delete-data/?tbl=Drivers&fld=DriverId&val=" + row.DriverId}

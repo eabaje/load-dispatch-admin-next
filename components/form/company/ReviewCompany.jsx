@@ -268,7 +268,7 @@ const ReviewCompany = ({ query }) => {
                               </label>
                             </div>
                             <label className="col-sm-2 col-form-label">
-                              Specialization
+                              Industry
                             </label>
 
                             <div className="col-sm-4">

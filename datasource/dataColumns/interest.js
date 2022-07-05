@@ -1,4 +1,4 @@
-import  Link  from "next/link";
+import Link from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE, TRIP_STATUS } from "../../constants/enum";
 import { Country, State } from "country-state-city";
 
@@ -8,36 +8,51 @@ export const columns = (params) => [
     sortable: false,
     selector: "null",
     cell: (row) => [
-      params?.roles !== "carrier" && (
+      params?.roles !== "carrier" && params?.roles !== "driver" && (
         <Link
-          href={"/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId +"&isReadOnly=isReadOnly"}
-        
+          href={
+            "/shipment/shipment-interest-list/?shipmentId=" +
+            row.ShipmentId +
+            "&isReadOnly=isReadOnly"
+          }
         >
-         <a  className="btn btn-sm"
-          title="Check shipment interests"> <i className="first fas fa-check"></i></a>
+          <a className="btn btn-sm" title="Check shipment interests">
+            {" "}
+            <i className="first fas fa-check"></i>
+          </a>
         </Link>
       ),
-      params?.roles !== "shipper" && (
+      params?.roles === "carrier" && (
         <Link
-          href={"/shipment/shipment-interest-list/?IsReadOnly=" + row.ShipmentId}
-         
+          href={
+            "/shipment/shipment-interest-list/?IsReadOnly=" + row.ShipmentId
+          }
         >
-         <a  className="btn btn-sm"
-          title="Show shipment interests"> <i className="first fas fa-heart"></i></a>
+          <a className="btn btn-sm" title="Assign Shipment to Driver">
+            {" "}
+            <i className="first fas fa-heart"></i>
+          </a>
         </Link>
       ),
       params?.roles === "admin" && (
         <Link
-          href={"/delete-data/?tbl=ShipmentsInterested&fld=ShipmentInterestId&val=" + row.ShipmentInterestId}
-         
+          href={
+            "/delete-data/?tbl=ShipmentsInterested&fld=ShipmentInterestId&val=" +
+            row.ShipmentInterestId
+          }
         >
-         <a className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"> <i className="fas fa-trash-alt"></i></a>
+          <a
+            className="btn btn-sm"
+            title="Delete/Archive (Redundant/Incorrect data)"
+          >
+            {" "}
+            <i className="fas fa-trash-alt"></i>
+          </a>
         </Link>
       ),
     ],
   },
- 
+
   {
     id: 1,
     name: "Interested Carrier",
@@ -45,13 +60,11 @@ export const columns = (params) => [
     cell: (row) => [
       <>
         {" "}
-        <Link
-          href={"/user/user-profile/?userId=" + row.UserId}
-         
-        >
-         
-          <a className="btn btn-sm"
-          title="click to view carrier profile"> {row.User?.FullName} </a>
+        <Link href={"/user/user-profile/?userId=" + row.UserId}>
+          <a className="btn btn-sm" title="click to view carrier profile">
+            {" "}
+            {row.User?.FullName}{" "}
+          </a>
         </Link>
       </>,
     ],
@@ -66,12 +79,10 @@ export const columns = (params) => [
     cell: (row) => [
       <>
         {" "}
-        <Link
-          href={"/shipment/?isReadOnly=" + row.ShipmentId}
-         
-        >
-         <a className="btn btn-sm"
-          title="click to shipment info">{row.Shipment?.Description}</a> 
+        <Link href={"/shipment/?isReadOnly=" + row.ShipmentId}>
+          <a className="btn btn-sm" title="click to shipment info">
+            {row.Shipment?.Description}
+          </a>
         </Link>
       </>,
     ],
@@ -286,8 +297,6 @@ export const columns = (params) => [
   //   }
 
   //   ),
-
-  
 ];
 
 // function ShowInterest(ShipmentId, userId) {

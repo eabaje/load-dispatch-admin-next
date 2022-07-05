@@ -1,9 +1,9 @@
-import {Form} from "react-bootstrap"
-import  Link  from "next/link";
+import { Form } from "react-bootstrap";
+import Link from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE, TRIP_STATUS } from "../../constants/enum";
 import { Country, State } from "country-state-city";
 
-export  const columns = (params) => [
+export const columns = (params) => [
   {
     id: 27,
     name: "Action",
@@ -11,49 +11,63 @@ export  const columns = (params) => [
     selector: "null",
     cell: (row) => [
       <></>,
-//params?.roles === "admin"|| params?.roles === "carrier"|| 
-       (params?.UserId === row?.UserId  ) && (
+      //params?.roles === "admin"|| params?.roles === "carrier"||
+      params?.UserId === row?.UserId && (
         <Link
           href={"/shipment/shipment-action/?shipmentId=" + row.ShipmentId}
-         
-          passHref>
-          <a  className="btn btn-sm"
-          title="Edit  Shipment"> 
-          <i className="first fas fa-pen"></i></a>
+          passHref
+        >
+          <a className="btn btn-sm" title="Edit  Shipment">
+            <i className="first fas fa-pen"></i>
+          </a>
         </Link>
       ),
-      params?.UserId === row?.UserId && params?.roles !== "carrier" && (
+      params?.UserId === row?.UserId && params?.roles !== "driver" && (
         <Link
-          href={"/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId}
-         
-          passHref>
-           <a  className="btn btn-sm"
-          title="Check shipment interests">  <i className="first fas fa-check"></i></a>
+          href={
+            "/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId
+          }
+          passHref
+        >
+          <a className="btn btn-sm" title="Check shipment interests">
+            {" "}
+            <i className="first fas fa-check"></i>
+          </a>
         </Link>
       ),
-      params?.UserId !== row?.UserId && params?.roles !== "shipper" && (
-        <Link
-          href={"/shipment/shipment-interest-list/?IsReadOnly=IsReadOnly" + row.ShipmentId}
-         
-          passHref>
-            <a  className="btn btn-sm"
-          title="Place interest"> 
-          <i className="first fas fa-heart"></i></a>
-        </Link>
-      ),
+      params?.UserId !== row?.UserId &&
+        params?.roles !== "shipper" &&
+        params?.roles !== "driver" && (
+          <Link
+            href={
+              "/shipment/shipment-interest-list/?IsReadOnly=IsReadOnly" +
+              row.ShipmentId
+            }
+            passHref
+          >
+            <a className="btn btn-sm" title="Place interest">
+              <i className="first fas fa-heart"></i>
+            </a>
+          </Link>
+        ),
       params?.roles === "admin" && (
         <Link
-          href={"/delete-data/?tbl=Shipments&fld=ShipmentId&val=" + row.ShipmentId}
-         
-          passHref>
-          <a  className="btn btn-sm"
-          title="Delete/Archive (Redundant/Incorrect data)"> 
-          <i className="fas fa-trash-alt"></i></a>
+          href={
+            "/delete-data/?tbl=Shipments&fld=ShipmentId&val=" + row.ShipmentId
+          }
+          passHref
+        >
+          <a
+            className="btn btn-sm"
+            title="Delete/Archive (Redundant/Incorrect data)"
+          >
+            <i className="fas fa-trash-alt"></i>
+          </a>
         </Link>
       ),
     ],
   },
-  
+
   {
     id: 1,
     name: `Name`,
@@ -274,7 +288,4 @@ export  const columns = (params) => [
       right: true,
       reorder: true,
     }),
-
-  
 ];
-
