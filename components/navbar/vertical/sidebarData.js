@@ -1,7 +1,3 @@
-
-
-
-
 const menuItemsPublic = (user) => [
   {
     title: "Dashboard",
@@ -13,8 +9,6 @@ const menuItemsPublic = (user) => [
     path: `/user-subscription/${user.UserId}`,
     icon: "first fas fa-users",
   },
-  
- 
 ];
 
 const menuItemsAudit = (user) => [
@@ -28,10 +22,7 @@ const menuItemsAudit = (user) => [
     path: `/user-subscription/${user.UserId}`,
     icon: "first fas fa-users",
   },
-  
- 
 ];
-
 
 const menuItemsDriver = (user) => [
   {
@@ -40,8 +31,8 @@ const menuItemsDriver = (user) => [
     icon: "first fas fa-home",
   },
   {
-    title: "Find all Vehicles",
-    path: "/shipment/",
+    title: "Find Shipments",
+    path: `/shipment/?assigned=assigned&companyId=${user.CompanyId}`,
     icon: "first fas fa-car",
   },
 
@@ -100,11 +91,10 @@ const menuItemsCarrier = (user) => [
     path: "/dashboard/",
     icon: "first fas fa-home",
   },
-  
+
   {
     title: "Ship Vehicles",
     icon: "first fas fa-car",
-   
 
     submenu: [
       {
@@ -117,9 +107,9 @@ const menuItemsCarrier = (user) => [
       },
       {
         title: "My Shipments",
-        path:`/shipment/?userId=${user.UserId}`,
+        path: `/shipment/?userId=${user.UserId}`,
       },
-     
+
       {
         title: "Vehicle List",
         path: `/vehicle/?companyId=${user.CompanyId}`,
@@ -130,7 +120,7 @@ const menuItemsCarrier = (user) => [
     title: "Carrier",
     icon: "first fas fa-truck",
     submenu: [
-       {
+      {
         title: "List carrier Info",
         path: `/carrier/?companyId=${user.CompanyId}`,
       },
@@ -215,7 +205,7 @@ const menuItemsAdmin = (user) => [
         title: "View Requests",
         path: `/shipment/shipment-interest-list`,
       },
-      
+
       {
         title: "View All Company record(s)",
         path: `/company/`,
@@ -257,4 +247,11 @@ const menuItemsAdmin = (user) => [
   },
 ];
 
-export {menuItemsPublic,menuItemsAudit,menuItemsDriver, menuItemsCarrier, menuItemsAdmin, menuItemsShipper };
+export {
+  menuItemsPublic,
+  menuItemsAudit,
+  menuItemsDriver,
+  menuItemsCarrier,
+  menuItemsAdmin,
+  menuItemsShipper,
+};

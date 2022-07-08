@@ -39,7 +39,7 @@ export const listDriversByCompany =
       .get(`/driver/findAllDriversByCompany/${companyId}`)
       .then((res) => {
         dispatch({ type: GET_DRIVERS_SUCCESS, payload: res.data });
-      
+
         onSuccess(res.data);
       })
       .catch((err) => {
@@ -196,7 +196,7 @@ export const createDriver =
     // data.append("fileLicenseUrl", file2);
     if (file1 !== null) data.append("filePicUrl", file1);
     if (file2 !== null) data.append("fileLicenseUrl", file2);
-   // console.log(`form-action`, data);
+    // console.log(`form-action`, data);
     dispatch({
       type: CREATE_DRIVER_REQUEST,
     });
@@ -285,7 +285,7 @@ export const editDriver =
       DriverDocs: form.DriverDocs || "",
       PicUrl: form.PicUrl || null,
     };
-   // console.log("requestPayload :>> ", form);
+    // console.log("requestPayload :>> ", form);
     let formData = new FormData();
     // if (file1 !== null) data.append("filePicUrl", file1);
     // if (file2 !== null) data.append("fileLicenseUrl", file2);
@@ -356,17 +356,44 @@ export const assignDriverToVehicle =
           type: CREATE_DRIVER_SUCCESS,
           payload: res.data,
         });
-      //  console.log("assignedResult", res.data);
-    
+        //  console.log("assignedResult", res.data);
       })
       .catch((err) => {
-       // console.log("err", err.response);
+        // console.log("err", err.response);
         const message = err.response ? err.response.data : CONNECTION_ERROR;
         dispatch({
           type: CREATE_DRIVER_FAIL,
           payload: message,
         });
         onError(message);
+      });
+  };
+
+export const sendDriverRegistrationLink =
+  (form) => (dispatch) => (onSuccess) => (onError) => {
+    //console.log("requestPayload :>> ", form);
+    dispatch({
+      type: CREATE_DRIVER_REQUEST,
+    });
+
+    axios
+      .post(`/driver/sendDriverRegistrationLink`, form)
+      .then((res) => {
+        dispatch({
+          type: CREATE_DRIVER_SUCCESS,
+          payload: res.data,
+        });
+        console.log("form", form);
+      })
+      .catch((err) => {
+        // console.log("err", err.response);
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({
+          type: CREATE_DRIVER_FAIL,
+          payload: message,
+        });
+        onError(message);
+        console.log("message", message);
       });
   };
 

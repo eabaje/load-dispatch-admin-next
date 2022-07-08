@@ -553,7 +553,7 @@ const AddEditDriver = ({ query }) => {
                 )}
               </div>
 
-              {readOnly === true && (
+              {readOnly !== "true" && (
                 <>
                   <div className="form-group row alert alert-info">
                     <div className="col-md-8 "></div>

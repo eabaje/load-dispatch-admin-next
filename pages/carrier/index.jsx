@@ -68,13 +68,16 @@ function ListCarrier({ query }) {
               <li>Edit and delete Vehicle</li>
               <li>Assign Drivers to Vehicle</li>
             </ul>
-            <h1 className="my-5">
-              <NextLink href="/carrier/carrier-action/" passHref>
-                <a className="mt-0 btn text-white float-right btn  btn-primary">
-                  Create Carrier Info
-                </a>
-              </NextLink>
-            </h1>
+
+            {user.roles !== "driver" && (
+              <h1 className="my-5">
+                <NextLink href="/carrier/carrier-action/" passHref>
+                  <a className="mt-0 btn text-white float-right btn  btn-primary">
+                    Create Carrier Info
+                  </a>
+                </NextLink>
+              </h1>
+            )}
           </div>
 
           <Datatable
