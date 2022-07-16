@@ -24,7 +24,7 @@ export const listShipments = () => (dispatch) => (onSuccess) => (onError) => {
     .get(`/shipment/findAll/`)
     .then((res) => {
       dispatch({ type: GET_SHIPMENTS_SUCCESS, payload: res.data });
-       console.log(`res.data`, res.data);
+      console.log(`res.data`, res.data);
       onSuccess(res.data);
     })
 
@@ -265,7 +265,47 @@ export const listShipmentsInterest =
       .get(`/shipment/findAllShipmentsInterest/`)
       .then((res) => {
         dispatch({ type: GET_INTERESTS_SUCCESS, payload: res.data });
-      
+
+        onSuccess(res.data);
+      })
+
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: GET_INTERESTS_FAIL, payload: message });
+        onError(message);
+      });
+  };
+
+export const listShipmentsInterestByShipmentId =
+  (shipmentId) => (dispatch) => (onSuccess) => (onError) => {
+    dispatch({
+      type: GET_INTERESTS_REQUEST,
+    });
+    axios
+      .get(`/shipment/findAllShipmentsInterestByShipmentId/${shipmentId}`)
+      .then((res) => {
+        dispatch({ type: GET_INTERESTS_SUCCESS, payload: res.data });
+
+        onSuccess(res.data);
+      })
+
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: GET_INTERESTS_FAIL, payload: message });
+        onError(message);
+      });
+  };
+
+export const listShipmentsInterestByCompany =
+  (companyId) => (dispatch) => (onSuccess) => (onError) => {
+    dispatch({
+      type: GET_INTERESTS_REQUEST,
+    });
+    axios
+      .get(`/shipment/findAllShipmentsInterestByCompany/${companyId}`)
+      .then((res) => {
+        dispatch({ type: GET_INTERESTS_SUCCESS, payload: res.data });
+
         onSuccess(res.data);
       })
 
@@ -282,7 +322,26 @@ export const AssignShipmentsToDriver =
     dispatch({ type: CREATE_SHIPMENT_REQUEST });
 
     axios
-      .post(`/shipment/showInterest/`, form)
+      .post(`/shipment/assignDriverShipment/`, form)
+      .then((res) => {
+        dispatch({ type: CREATE_SHIPMENT_SUCCESS, payload: res.data });
+        onSuccess(res.data);
+      })
+
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: CREATE_SHIPMENT_FAIL, payload: message });
+        onError(message);
+      });
+  };
+
+export const AssignShipmentsToCompany =
+  (form) => (dispatch) => (onSuccess) => (onError) => {
+    //  {shipmentId,userId,}
+    dispatch({ type: CREATE_SHIPMENT_REQUEST });
+
+    axios
+      .post(`/shipment/assignCompanyShipment/`, form)
       .then((res) => {
         dispatch({ type: CREATE_SHIPMENT_SUCCESS, payload: res.data });
         onSuccess(res.data);

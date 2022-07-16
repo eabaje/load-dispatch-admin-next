@@ -7,6 +7,8 @@ import { columns } from "../../datasource/dataColumns/interest";
 import { GlobalContext } from "../../context/Provider";
 import {
   listShipments,
+  listShipmentsInterestByCompany,
+  listShipmentsInterestByShipmentId,
   showInterest,
 } from "../../context/actions/shipment/shipment.action";
 import LoadingBox from "../../components/notification/loadingbox";
@@ -14,13 +16,16 @@ import { Button, Modal } from "react-bootstrap";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
+import dynamic from "next/dynamic";
 
-function ListInterest() {
+function ListInterest({ query }) {
+  //  const router = useRouter();
+  const { companyId, shipmentId } = query;
   const [data2, setData] = useState([]);
 
   const [show, setShow] = useState(false);
   const [shipmentName, setshipmentName] = useState("");
-  const [shipmentId, setshipmentId] = useState("");
+  // const [shipmentId, setshipmentId] = useState("");
   const {
     authState: { user },
   } = useContext(GlobalContext);
@@ -39,20 +44,27 @@ function ListInterest() {
   }
 
   useEffect(() => {
-    function saveInterest(shipmentid, userid) {
-      showInterest(shipmentid, userid)(shipmentDispatch)((res) => {})((err) => {
-        toast.error(err);
-      });
-    }
+    // function saveInterest(shipmentid, userid) {
+    //   showInterest(shipmentid, userid)(shipmentDispatch)((res) => {})((err) => {
+    //     toast.error(err);
+    //   });
+    // }
 
     if (data.length === 0) {
       // listShipments()(shipmentDispatch);
-
-      listShipments()(shipmentDispatch)((res) => {
-        setData(res.data);
-      })((err) => {
-        toast.error(err);
-      });
+      companyId
+        ? listShipmentsInterestByCompany(companyId)(shipmentDispatch)((res) => {
+            setData(res.data);
+          })((err) => {
+            toast.error(err);
+          })
+        : listShipmentsInterestByShipmentId(shipmentId)(shipmentDispatch)(
+            (res) => {
+              setData(res.data);
+            }
+          )((err) => {
+            toast.error(err);
+          });
     }
   }, []);
 
@@ -69,7 +81,11 @@ function ListInterest() {
             </ul>
           </div>
           <div className="card-body table-border-style">
-            <Datatable loading={loading} col={columns(user)} data={data.data} />
+            <Datatable
+              loading={loading}
+              col={columns(user)}
+              data={data.data?.filter((item) => item?.IsInterested === true)}
+            />
 
             {/* <Modal show={show} onHide={() => handleModal()}>
               <Modal.Header closeButton>Check your interest</Modal.Header>
@@ -86,4 +102,12 @@ function ListInterest() {
   );
 }
 //ListInterest.layout = "main";
-export default ListInterest;
+//export default ListInterest;
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: { query },
+  };
+}
+
+export default dynamic(() => Promise.resolve(ListInterest), { ssr: false });

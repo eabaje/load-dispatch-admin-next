@@ -31,7 +31,7 @@ import { columns as columnsDriver } from "../../../datasource/dataColumns/driver
 import { listDriversByCompany } from "../../../context/actions/driver/driver.action";
 
 const ReviewCompany = ({ query }) => {
-  const { companyId } = query;
+  const { companyId, readOnly } = query;
 
   const isSingleMode = !companyId;
 
@@ -511,40 +511,42 @@ const ReviewCompany = ({ query }) => {
                     </div>
                   </div>
                 </div>
-                <form onSubmit={handleSubmit(SubmitForm)}>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">
-                      Check to Vet
-                    </label>
-                    <div className="col-sm-2">
-                      <input
-                        type="checkbox"
-                        name="IsVetted"
-                        className="form-check-input-custom-2"
-                        {...register("IsVetted", {
-                          required: true,
-                        })}
-                      />
-                    </div>
+                {readOnly !== "true" && (
+                  <form onSubmit={handleSubmit(SubmitForm)}>
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        Check to Vet
+                      </label>
+                      <div className="col-sm-2">
+                        <input
+                          type="checkbox"
+                          name="IsVetted"
+                          className="form-check-input-custom-2"
+                          {...register("IsVetted", {
+                            required: true,
+                          })}
+                        />
+                      </div>
 
-                    <div className="col-sm-6" style={{ float: "right" }}>
-                      <input
-                        type="hidden"
-                        name="CompanyId"
-                        value={companyId}
-                        className="form-control"
-                        {...register("CompanyId")}
-                      />
+                      <div className="col-sm-6" style={{ float: "right" }}>
+                        <input
+                          type="hidden"
+                          name="CompanyId"
+                          value={companyId}
+                          className="form-control"
+                          {...register("CompanyId")}
+                        />
 
-                      <CustomButton
-                        caption={"Vett It"}
-                        loading={loading}
-                        isAddMode={isAddMode}
-                      />
+                        <CustomButton
+                          caption={"Vett It"}
+                          loading={loading}
+                          isAddMode={isAddMode}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="right" style={{ float: "right" }}></div>
-                </form>
+                    <div className="right" style={{ float: "right" }}></div>
+                  </form>
+                )}
               </div>
             </div>
           </div>

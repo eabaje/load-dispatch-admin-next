@@ -1,29 +1,31 @@
-import React, { useEffect,useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { IMG_URL, LOG_IN } from "../../constants";
 import { GlobalContext } from "../../context/Provider";
 import { signout } from "../../context/actions/auth/auth.action";
 import Link from "next/link";
 import { ROLES } from "../../constants/enum";
+import { useRouter } from "next/router";
 
 function TopHeaderBar() {
+  const router = useRouter();
   const {
     authDispatch,
-    authState: { user},
+    authState: { user, isLoggedIn },
   } = useContext(GlobalContext);
 
   const logOut = () => {
-    
     signout()(authDispatch);
   };
 
   // useEffect(() => {
-   
-  //   const logOut = () => {
-  //     signout()(authDispatch);
-  //   };
-  // //  setUser(JSON.parse(localStorage.getItem("user")));
-  // }, []);
-// console.log('user', user)
+  //   if (isLoggedIn === false) {
+  //     router.push("/");
+  //   }
+
+  //   //  setUser(JSON.parse(localStorage.getItem("user")));
+  // }, [isLoggedIn]);
+  console.log("user", user);
+  console.log("isLoggedIn", isLoggedIn);
   return (
     <>
       {" "}
@@ -193,26 +195,36 @@ function TopHeaderBar() {
                         {user?.FullName}
                         <br />
                         {ROLES.find((item) => item.value === user?.roles)?.text}
-                        
                       </span>
                       <span></span>
 
-                      <Link href='/' >
-                        <a className="dud-logout" title=" Logout"onClick={logOut}>
+                      <Link href="/">
+                        <a
+                          className="dud-logout"
+                          title=" Logout"
+                          onClick={logOut}
+                        >
                           <i className="feather icon-log-out"></i>
                         </a>
                       </Link>
                     </div>
                     <ul className="pro-body">
                       <li>
-                        <Link href={`/user/user-profile?userId=${user?.UserId}`} passHref>
+                        <Link
+                          href={`/user/user-profile?userId=${user?.UserId}`}
+                          passHref
+                        >
                           <a className="dropdown-item" title="My Profile">
-                            <i className="feather icon-user"></i> My Profile 
+                            <i className="feather icon-user"></i> My Profile
                           </a>
                         </Link>
-                      </li>-
+                      </li>
+                      -
                       <li>
-                        <Link href={`/user/user-subscription-list?userId=${user?.UserId}`} passHref>
+                        <Link
+                          href={`/user/user-subscription-list?userId=${user?.UserId}`}
+                          passHref
+                        >
                           <a className="dropdown-item" title=" My Subscription">
                             <i className="feather icon-box"></i> My Subscription
                           </a>

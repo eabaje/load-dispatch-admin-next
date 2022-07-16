@@ -1,39 +1,75 @@
 import Link from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE, TRIP_STATUS } from "../../constants/enum";
 import { Country, State } from "country-state-city";
+import { toast } from "react-toastify";
+import { API_URL } from "../../constants";
+import axios from "axios";
+const AssignShipmentToCompanyAction = async (shipmentId, companyId, userId) => {
+  const data = {
+    ShipmentId: shipmentId,
+    CompanyId: companyId,
+    UserId: userId,
+  };
+
+  try {
+    console.log("shipmentId", data);
+    const res = await axios.post(
+      `${API_URL}shipment/assignCompanyShipment`,
+      data
+    );
+
+    if (res) {
+      toast.success(res.data.message);
+    }
+  } catch (err) {
+    toast.error(err.message);
+  }
+};
 
 export const columns = (params) => [
   {
     name: "Action",
     sortable: false,
     selector: "null",
+    wrap: false,
+    grow: 3,
     cell: (row) => [
-      params?.roles !== "carrier" && params?.roles !== "driver" && (
-        <Link
-          href={
-            "/shipment/shipment-interest-list/?shipmentId=" +
-            row.ShipmentId +
-            "&isReadOnly=isReadOnly"
-          }
-        >
-          <a className="btn btn-sm" title="Check shipment interests">
-            {" "}
-            <i className="first fas fa-check"></i>
-          </a>
-        </Link>
-      ),
       params?.roles === "carrier" && (
         <Link
           href={
-            "/shipment/shipment-interest-list/?IsReadOnly=" + row.ShipmentId
+            "/shipment/assign-shipment/?shipmentId=" +
+            row.ShipmentId +
+            "&driverId=driver&companyId=" +
+            params?.CompanyId
           }
         >
-          <a className="btn btn-sm" title="Assign Shipment to Driver">
+          <a
+            className="btn btn-outline-primary"
+            title="Assign Shipment to Driver"
+          >
             {" "}
-            <i className="first fas fa-heart"></i>
+            <i className="first fas fa-briefcase"></i>
           </a>
         </Link>
       ),
+      params?.roles === "shipper" && (
+        <>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={AssignShipmentToCompanyAction.bind(
+              this,
+              row.ShipmentId,
+              row.CompanyId,
+              params.UserId
+            )}
+          >
+            <i title="Assign Shipment" className="first fas fa-briefcase"></i>
+            Assign Shipment
+          </button>
+        </>
+      ),
+
       params?.roles === "admin" && (
         <Link
           href={
@@ -60,11 +96,14 @@ export const columns = (params) => [
     cell: (row) => [
       <>
         {" "}
-        <Link href={"/user/user-profile/?userId=" + row.UserId}>
-          <a className="btn btn-sm" title="click to view carrier profile">
-            {" "}
-            {row.User?.FullName}{" "}
-          </a>
+        <Link
+          href={
+            "/company/review-company-action/?companyId=" +
+            row.CompanyId +
+            "&readOnly=true"
+          }
+        >
+          <a title="Click to view Carrier Profile"> {row.User?.FullName} </a>
         </Link>
       </>,
     ],
@@ -298,17 +337,3 @@ export const columns = (params) => [
 
   //   ),
 ];
-
-// function ShowInterest(ShipmentId, userId) {
-//   const {
-//     shipmentDispatch,
-//     shipmentState: {
-//       Shipments: { data, loading },
-//       createShipment: { data: createdata }, //loading
-//     },
-//   } = useContext(GlobalContext);
-
-//   showInterest(ShipmentId, userId)(shipmentDispatch)((res) => {})((err) => {
-//     // enqueueSnackbar(err, { variant: "error" });
-//   });
-// }

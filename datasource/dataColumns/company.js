@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 import { Edit } from "react-feather";
-import  Link  from "next/link";
+import Link from "next/link";
 import { ROLES } from "../../constants/enum";
 import { Country, State } from "country-state-city";
 export const columns = (params) => [
@@ -23,9 +23,27 @@ export const columns = (params) => [
   {
     id: 1,
     name: "Company",
-    selector: (row) => row.CompanyName,
+
     sortable: true,
     reorder: true,
+
+    cell: (row) => [
+      <>
+        {" "}
+        <Link
+          href={
+            "/company/review-company-action/?companyId=" +
+            row.CompanyId +
+            "&readOnly=true"
+          }
+        >
+          <a className="btn btn-sm" title="click to view company profile">
+            {" "}
+            {row?.CompanyName}{" "}
+          </a>
+        </Link>
+      </>,
+    ],
   },
   {
     id: 2,
@@ -97,32 +115,34 @@ export const columns = (params) => [
     sortable: false,
     selector: "null",
     cell: (row) => [
-      <>
-        {" "}
-        <Link
-          href={"/company/?companyId=" + row.CompanyId}
-        
-        >
-        <a   className="btn btn-sm"
-          title="Edit  Company">  <i className="first fas fa-pen"></i></a>
+      params?.CompanyId === row.CompanyId && (
+        <Link href={"/company/?companyId=" + row.CompanyId}>
+          <a className="btn btn-sm" title="Edit  Company">
+            {" "}
+            <i className="first fas fa-pen"></i>
+          </a>
         </Link>
+      ),
 
-      
-      </>,
-        params?.roles === "admin" && (
-          <Link
-            href={"/company/?review=true&companyId=" + row.CompanyId}
-           
-          >
-           <a  className="btn btn-sm"
-            title="Review Company Info"> <i className="fas fa-wrench"></i></a>
-          </Link>
-        ),
+      params?.roles === "admin" && (
+        <Link href={"/company/?review=true&companyId=" + row.CompanyId}>
+          <a className="btn btn-sm" title="Review Company Info">
+            {" "}
+            <i className="fas fa-wrench"></i>
+          </a>
+        </Link>
+      ),
       params?.roles === "admin" && (
         <Link
-          href={"/delete-data/?tbl=Companys&fld=CompanyId&val=" + row.CompanyId} >
-          <a  className="btn btn-sm"
-          title="Delete/Archive Redundant/Incorrect data"> <i className="fas fa-trash-alt"></i></a>
+          href={"/delete-data/?tbl=Companys&fld=CompanyId&val=" + row.CompanyId}
+        >
+          <a
+            className="btn btn-sm"
+            title="Delete/Archive Redundant/Incorrect data"
+          >
+            {" "}
+            <i className="fas fa-trash-alt"></i>
+          </a>
         </Link>
       ),
     ],

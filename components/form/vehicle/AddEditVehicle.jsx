@@ -107,6 +107,7 @@ const AddEditVehicle = ({ query }) => {
         });
       }
     }
+
     if (!isAddMode) {
       fetchData(
         "vehicle/findOne",
@@ -177,6 +178,7 @@ const AddEditVehicle = ({ query }) => {
                     {...register("VehicleId")}
                   />
                 )}
+
                 {driverId && (
                   <>
                     <div className="form-group row">
@@ -275,7 +277,7 @@ const AddEditVehicle = ({ query }) => {
                 </div>
 
                 <div className="form-group row">
-                  <label className="col-sm-2 col-form-label">
+                  {/* <label className="col-sm-2 col-form-label">
                     Serial Number
                   </label>
 
@@ -289,7 +291,7 @@ const AddEditVehicle = ({ query }) => {
                         required: true,
                       })}
                     />
-                  </div>
+                  </div> */}
                   <label className="col-sm-2 col-form-label">
                     Vehicle Make
                   </label>
@@ -304,43 +306,7 @@ const AddEditVehicle = ({ query }) => {
                       })}
                     />
                   </div>
-                </div>
 
-                <div className="form-group row">
-                  <label className="col-form-label col-md-2">Description</label>
-                  <div className="col-md-10">
-                    <input
-                      name="Description"
-                      className="form-control"
-                      readOnly={readOnly}
-                      placeholder="Description"
-                      {...register("Description")}
-                    />
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-md-12">
-                    <h5 className="alert alert-info"> Vehicle Information </h5>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label className="col-form-label col-md-2">
-                    Vehicle Color
-                  </label>
-
-                  <div className="col-md-4">
-                    <input
-                      name="VehicleColor"
-                      className="form-control"
-                      readOnly={readOnly}
-                      placeholder="Vehicle Color"
-                      {...register("VehicleColor", {
-                        required: true,
-                      })}
-                      required
-                    />
-                  </div>
                   <label className="col-form-label col-md-2">
                     Vehicle Model
                   </label>
@@ -359,18 +325,19 @@ const AddEditVehicle = ({ query }) => {
 
                 <div className="form-group row">
                   <label className="col-form-label col-md-2">
-                    Vehicle License Plate
+                    Vehicle Color
                   </label>
 
                   <div className="col-md-4">
                     <input
-                      name="LicensePlate"
+                      name="VehicleColor"
                       className="form-control"
                       readOnly={readOnly}
-                      placeholder="License Plate"
-                      {...register("LicensePlate", {
+                      placeholder="Vehicle Color"
+                      {...register("VehicleColor", {
                         required: true,
                       })}
+                      required
                     />
                   </div>
 
@@ -392,6 +359,28 @@ const AddEditVehicle = ({ query }) => {
                 </div>
 
                 <div className="form-group row">
+                  <div className="col-md-12">
+                    <h5 className="alert alert-info"> Vehicle Information </h5>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-form-label col-md-2">
+                    Vehicle License Plate
+                  </label>
+
+                  <div className="col-md-4">
+                    <input
+                      name="LicensePlate"
+                      className="form-control"
+                      readOnly={readOnly}
+                      placeholder="License Plate"
+                      {...register("LicensePlate", {
+                        required: true,
+                      })}
+                    />
+                  </div>
+
                   <label className="col-form-label col-md-2">
                     Purchase Year
                   </label>
@@ -405,7 +394,9 @@ const AddEditVehicle = ({ query }) => {
                       {...register("PurchaseYear")}
                     />
                   </div>
+                </div>
 
+                <div className="form-group row">
                   <label className="col-sm-2 col-form-label">Insured?</label>
                   <div className="col-sm-4">
                     <div className="form-check">
@@ -418,6 +409,41 @@ const AddEditVehicle = ({ query }) => {
                           required: true,
                         })}
                       />
+                    </div>
+                  </div>
+
+                  <label className="col-form-label col-md-2">Description</label>
+                  <div className="col-md-4">
+                    <input
+                      name="Description"
+                      className="form-control"
+                      readOnly={readOnly}
+                      placeholder="Description"
+                      {...register("Description")}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row"></div>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group has-feedback">
+                      <label for="vehicleAdditionalInfo0"></label>
+                      <textarea
+                        rows="4"
+                        maxlength="400"
+                        id="Description"
+                        name="Description"
+                        class="form-control"
+                        placeholder="Additional Vehicle Information"
+                        readOnly={readOnly}
+                      />
+                      <span
+                        class="glyphicon form-control-feedback"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="help-block with-errors text-right small"></span>
                     </div>
                   </div>
                 </div>

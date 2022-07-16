@@ -12,6 +12,7 @@ export const LOAD_TYPE = [
   { value: "Car", text: "Car" },
   { value: "SUV", text: "SUV" },
   { value: "Van", text: "Van" },
+  { value: "Container", text: "Container" },
 ];
 
 export const LOAD_UNIT = [
@@ -20,10 +21,12 @@ export const LOAD_UNIT = [
 ];
 
 export const TRIP_STATUS = [
-  { value: "NotStarted", text: "Not Started" },
-  { value: "In Transit", text: "In Transit" },
-  { value: "Arrived", text: "Arrived Destination" },
+  { value: "NotAssigned", text: "Not Assigned" },
+  { value: "Assigned", text: "Assigned" },
+  { value: "Dispatched", text: "Dispatched" },
+  { value: "PickedUp", text: "Picked Up Shipment" },
   { value: "Delivered", text: "Delivered Shipment" },
+  { value: "Cancelled", text: "Cancelled Shipment" },
 ];
 export const LOAD_CAPACITY = [
   { value: "LowCapacity", text: "Low Capacity 2000" },
@@ -86,5 +89,3 @@ export const ROLES = [
   { value: "driver", text: "driver " },
   { value: "broker", text: "Broker" },
 ];
-
-

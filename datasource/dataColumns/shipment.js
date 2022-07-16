@@ -2,6 +2,31 @@ import { Form } from "react-bootstrap";
 import Link from "next/link";
 import { LOAD_CAPACITY, LOAD_TYPE, TRIP_STATUS } from "../../constants/enum";
 import { Country, State } from "country-state-city";
+import { toast } from "react-toastify";
+
+import { showInterest } from "../../context/actions/shipment/shipment.action";
+import React, { useContext } from "react";
+import { API_URL } from "../../constants";
+import axios from "axios";
+
+const showInterestAction = async (shipmentId, companyId, userId) => {
+  const data = {
+    ShipmentId: shipmentId,
+    CompanyId: companyId,
+    UserId: userId,
+  };
+
+  try {
+    console.log("shipmentId", data);
+    const res = await axios.post(`${API_URL}shipment/showInterest`, data);
+
+    if (res) {
+      toast.success(res.data.message);
+    }
+  } catch (err) {
+    toast.error(err.message);
+  }
+};
 
 export const columns = (params) => [
   {
@@ -9,47 +34,70 @@ export const columns = (params) => [
     name: "Action",
     sortable: false,
     selector: "null",
+    grow: 3,
     cell: (row) => [
       <></>,
-      //params?.roles === "admin"|| params?.roles === "carrier"||
-      params?.UserId === row?.UserId && (
-        <Link
-          href={"/shipment/shipment-action/?shipmentId=" + row.ShipmentId}
-          passHref
-        >
-          <a className="btn btn-sm" title="Edit  Shipment">
-            <i className="first fas fa-pen"></i>
-          </a>
-        </Link>
-      ),
-      params?.UserId === row?.UserId && params?.roles !== "driver" && (
+      //params?.roles === "admin"|| params?.roles === "carrier"||   params?.UserId === row?.UserId
+
+      params?.UserId === row?.UserId && params?.roles === "shipper" && (
         <Link
           href={
             "/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId
           }
           passHref
         >
-          <a className="btn btn-sm" title="Check shipment interests">
+          <a
+            className="btn btn-outline-primary"
+            title="Check shipment interests"
+          >
             {" "}
-            <i className="first fas fa-check"></i>
+            <i className="first fas fa-check"></i>Check shipment interests
           </a>
         </Link>
       ),
-      params?.UserId !== row?.UserId &&
-        params?.roles !== "shipper" &&
-        params?.roles !== "driver" && (
-          <Link
-            href={
-              "/shipment/shipment-interest-list/?IsReadOnly=IsReadOnly" +
-              row.ShipmentId
-            }
-            passHref
+
+      params?.roles === "carrier" && (
+        <>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={showInterestAction.bind(
+              this,
+              row.ShipmentId,
+              params.CompanyId,
+              params.UserId
+            )}
           >
-            <a className="btn btn-sm" title="Place interest">
-              <i className="first fas fa-heart"></i>
-            </a>
-          </Link>
-        ),
+            <i title="Place interest" className="first fas fa-heart"></i>
+            Place interest
+          </button>
+        </>
+        //   <Link
+        //   href={
+        //     "/shipment/shipment-action/?IsReadOnly=IsReadOnly&shipmentId=" +
+        //     row.ShipmentId +
+        //     "&companyId=" +
+        //     params.CompanyId +
+        //     "&userId=" +
+        //     params.UserId
+        //   }
+        //   passHref
+        // >
+        //   <a className="btn btn-sm" title="Place interest">
+        //     <i className="first fas fa-heart"></i>
+        //   </a>
+        // </Link>
+      ),
+      params?.roles === "shipper" && (
+        <Link
+          href={"/shipment/shipment-action/?shipmentId=" + row.ShipmentId}
+          passHref
+        >
+          <a className="btn btn-outline-primary" title="Edit Shipment">
+            <i className="first fas fa-pen"></i>Edit Shipment
+          </a>
+        </Link>
+      ),
       params?.roles === "admin" && (
         <Link
           href={
@@ -83,45 +131,80 @@ export const columns = (params) => [
     reorder: true,
   },
   {
-    id: 3,
-    name: "Load Category",
-    selector: (row) =>
-      LOAD_TYPE.find((item) => item.value === row.LoadCategory).text,
+    id: 27,
+    name: "Price Offer",
+    selector: (row) => row?.ShipmentRequestPrice,
     sortable: true,
     reorder: true,
   },
+  // {
+  //   id: 3,
+  //   name: "Load Category",
+  //   selector: (row) =>
+  //     LOAD_TYPE.find((item) => item.value === row.LoadCategory).text,
+  //   sortable: true,
+  //   reorder: true,
+  // },
   {
     id: 4,
-    name: "Load Weight",
-    selector: (row) => row.LoadWeight,
+    name: "Shipment Item(s)",
+    maxWidth: "350px",
+    cell: (row) => (
+      <div
+        style={{
+          color: "grey",
+          overflow: "hidden",
+          whiteSpace: "wrap",
+          textOverflow: "ellipses",
+        }}
+      >
+        {row.ShipmentDetails.map((detail, i) => (
+          <div key={i}>
+            Type-{detail?.VehicleType}
+            <br />
+            VIN-{detail?.VIN}
+            <br />
+            Make-{detail?.VehicleMake}
+            <br />
+            Model-{detail?.VehicleModel}
+            <br />
+            Color-{detail?.VehicleColor}
+            <br />
+            Year-{detail?.VehicleModelYear}
+            <br />
+            <p></p>
+          </div>
+        ))}
+      </div>
+    ),
     sortable: true,
     reorder: true,
   },
 
-  {
-    id: 5,
-    name: "Load Type",
-    selector: (row) =>
-      LOAD_CAPACITY.find((item) => item.value === row.LoadType).text,
-    sortable: true,
-    reorder: true,
-  },
+  // {
+  //   id: 5,
+  //   name: "Load Type",
+  //   selector: (row) =>
+  //     LOAD_CAPACITY.find((item) => item.value === row.LoadType).text,
+  //   sortable: true,
+  //   reorder: true,
+  // },
 
-  {
-    id: 6,
-    name: "Load Unit",
-    selector: (row) => row.LoadUnit,
-    sortable: true,
-    reorder: true,
-  },
+  // {
+  //   id: 6,
+  //   name: "Load Unit",
+  //   selector: (row) => row.LoadUnit,
+  //   sortable: true,
+  //   reorder: true,
+  // },
 
-  {
-    id: 7,
-    name: "Qty",
-    selector: (row) => row.Qty,
-    sortable: true,
-    reorder: true,
-  },
+  // {
+  //   id: 7,
+  //   name: "Qty",
+  //   selector: (row) => row.Qty,
+  //   sortable: true,
+  //   reorder: true,
+  // },
 
   {
     id: 8,
@@ -134,21 +217,21 @@ export const columns = (params) => [
     sortable: true,
     reorder: true,
   },
-  {
-    id: 9,
-    name: "AssignedShipment?",
-    selector: (row) => (
-      <Form.Check
-        type="checkbox"
-        id="custom-switch"
-        checked={row.AssignedShipment}
-        disabled
-      />
-    ),
-    sortable: true,
-    right: true,
-    reorder: true,
-  },
+  // {
+  //   id: 9,
+  //   name: "AssignedShipment?",
+  //   selector: (row) => (
+  //     <Form.Check
+  //       type="checkbox"
+  //       id="custom-switch"
+  //       checked={row.AssignedShipment}
+  //       disabled
+  //     />
+  //   ),
+  //   sortable: true,
+  //   right: true,
+  //   reorder: true,
+  // },
 
   {
     id: 10,

@@ -16,7 +16,7 @@ import dynamic from "next/dynamic";
 
 function ListCompany({ query }) {
   const router = useRouter();
-  const { companyId } = query;
+  const { companyId, companyType } = query;
 
   const [data2, setData] = useState([]);
 
@@ -56,7 +56,7 @@ function ListCompany({ query }) {
             <div className="card-header alert alert-info">
               <h4>View List of Company</h4>
               <ul>
-                <li>Edit and delete Company</li>
+                <li>Search Company</li>
               </ul>
             </div>
             <Datatable
@@ -66,6 +66,10 @@ function ListCompany({ query }) {
                 companyId
                   ? data.data?.filter(
                       (item) => item?.CompanyId === parseInt(companyId)
+                    )
+                  : companyType
+                  ? data.data?.filter(
+                      (item) => item?.CompanyType === companyType
                     )
                   : data?.data
               }

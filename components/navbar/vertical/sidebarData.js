@@ -51,7 +51,7 @@ const menuItemsDriver = (user) => [
     ],
   },
   {
-    title: "List All Trips",
+    title: "Trip History",
     path: `/trip/?userId=${user.UserId}`,
     icon: "first fas fa-road",
   },
@@ -77,10 +77,9 @@ const menuItemsShipper = (user) => [
       },
     ],
   },
-
   {
-    title: "Connect with Drivers",
-    path: `/driver/driver-profile-list`,
+    title: "Connect with Carriers",
+    path: `/company/?companyType=carrier`,
     icon: "first fas fa-users",
   },
 ];
@@ -91,31 +90,12 @@ const menuItemsCarrier = (user) => [
     path: "/dashboard/",
     icon: "first fas fa-home",
   },
-
   {
-    title: "Ship Vehicles",
+    title: "List all Shipments",
+    path: "/shipment/",
     icon: "first fas fa-car",
-
-    submenu: [
-      {
-        title: "Post a Vehicle",
-        path: `/shipment/shipment-action`,
-      },
-      {
-        title: "List all Shipments",
-        path: `/shipment/`,
-      },
-      {
-        title: "My Shipments",
-        path: `/shipment/?userId=${user.UserId}`,
-      },
-
-      {
-        title: "Vehicle List",
-        path: `/vehicle/?companyId=${user.CompanyId}`,
-      },
-    ],
   },
+
   {
     title: "Carrier",
     icon: "first fas fa-truck",
@@ -128,10 +108,7 @@ const menuItemsCarrier = (user) => [
         title: "Create carrier Info",
         path: `/carrier/carrier-action`,
       },
-      {
-        title: " Find all Vehicles",
-        path: `/vehicle/?companyId=${user.CompanyId}`,
-      },
+
       {
         title: "Vehicle List",
         path: `/vehicle/?companyId=${user.CompanyId}`,
@@ -154,7 +131,7 @@ const menuItemsCarrier = (user) => [
     ],
   },
   {
-    title: "Check Trips Made",
+    title: "Trip History",
     path: `/trip/?companyId=${user.CompanyId}`,
     icon: "first fas fa-road",
   },
@@ -213,7 +190,7 @@ const menuItemsAdmin = (user) => [
     ],
   },
   {
-    title: "View All Trips made",
+    title: "Trip History",
     path: "/trip/",
     icon: "first fas fa-road",
   },
