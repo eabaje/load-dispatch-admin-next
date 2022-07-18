@@ -3,14 +3,15 @@ import { Camera, Trash, Truck, List, Edit, ChevronsDown } from "react-feather";
 import { API_URL } from "../../constants";
 import $ from "jquery";
 import { fetchDataAll } from "../../helpers/query";
-import { columns } from "../../datasource/dataColumns/interest";
+import { columns } from "../../datasource/dataColumns/assign-shipment";
 import { GlobalContext } from "../../context/Provider";
 import {
   listShipments,
   listShipmentsInterest,
   listShipmentsInterestByCompany,
-  listShipmentsInterestByShipmentId,
+  listAllAssignedShipments,
   showInterest,
+  listAllAssignedDriverShipments,
 } from "../../context/actions/shipment/shipment.action";
 import LoadingBox from "../../components/notification/loadingbox";
 import { Button, Modal } from "react-bootstrap";
@@ -20,7 +21,7 @@ import axios from "axios";
 import Datatable from "../../components/datatable/datatable-m";
 import dynamic from "next/dynamic";
 
-function ListInterest({ query }) {
+function AssignShipmentList({ query }) {
   //  const router = useRouter();
   const { companyId, shipmentId } = query;
   const [data2, setData] = useState([]);
@@ -80,17 +81,11 @@ function ListInterest({ query }) {
     if (data.length === 0) {
       // listShipments()(shipmentDispatch);
 
-      companyId
-        ? listShipmentsInterestByCompany(companyId)(shipmentDispatch)((res) => {
-            setData(res.data);
-          })((err) => {
-            toast.error(err);
-          })
-        : listShipmentsInterest()(shipmentDispatch)((res) => {
-            setData(res.data);
-          })((err) => {
-            toast.error(err);
-          });
+      listAllAssignedDriverShipments()(shipmentDispatch)((res) => {
+        setData(res.data);
+      })((err) => {
+        toast.error(err);
+      });
     }
   }, []);
   console.log("data2", data);
@@ -99,7 +94,7 @@ function ListInterest({ query }) {
       <div className="col-xl-12">
         <div className="card">
           <div className="card-header alert alert-info">
-            <h3>List of Interest in Shipments</h3>
+            <h3>List of Shipments Assigned to Drivers </h3>
             <hr />
             <ul>
               <li>Make Request for onboarding services</li>
@@ -109,17 +104,17 @@ function ListInterest({ query }) {
           <div className="card-body table-border-style">
             <Datatable
               loading={loading}
-              col={columns(user, AssignShipmentToCompanyAction, loadSpinner)}
+              col={columns(user)}
               data={
                 shipmentId
                   ? data?.data?.filter(
                       (item) =>
-                        item?.IsInterested === true &&
+                        item?.IsAssigned === true &&
                         item?.ShipmentId === shipmentId
                     )
                   : data.data?.filter(
                       (item) =>
-                        item?.IsInterested === true &&
+                        item?.IsAssigned === true &&
                         item?.CompanyId === companyId
                     )
               }
@@ -148,4 +143,6 @@ export async function getServerSideProps({ query }) {
   };
 }
 
-export default dynamic(() => Promise.resolve(ListInterest), { ssr: false });
+export default dynamic(() => Promise.resolve(AssignShipmentList), {
+  ssr: false,
+});

@@ -7,6 +7,7 @@ function CustomButton(props) {
         type="submit"
         className="btn  btn-primary"
         style={{ float: "right" }}
+        onClick={props.onClick}
       >
         {props.loading ? (
           <>

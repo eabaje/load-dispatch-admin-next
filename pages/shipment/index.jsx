@@ -8,18 +8,21 @@ import { listShipments } from "../../context/actions/shipment/shipment.action";
 
 import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
+import axios from "axios";
 import Datatable from "../../components/datatable/datatable-m";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
+import { API_URL } from "../../constants";
 
 function ListShipment({ query }) {
   const router = useRouter();
-  const { userId, assigned, sent, companyId } = query;
+  const { userId, role, sent, companyId } = query;
 
   const [data2, setData] = useState([]);
   // const [user, setUser] = useState({});
   const [show, setShow] = useState(false);
   const [shipmentName, setshipmentName] = useState("");
+  const [loadSpinner, setLoadSpinner] = useState(false);
   const [shipmentId, setshipmentId] = useState("");
   const {
     authState: { user },
@@ -36,6 +39,119 @@ function ListShipment({ query }) {
     setshipmentId(params.shipmentId);
     setShow(!show);
   }
+
+  const showInterestAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner(true);
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/showInterest`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner(false);
+    }
+  };
+
+  const dispatchShipmentAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner(true);
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/dispatchShipment`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner(false);
+    }
+  };
+
+  const pickedUpShipmentAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner(true);
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/pickUpShipment`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner(false);
+    }
+  };
+
+  const deliveredShipmentAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner(true);
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(
+        `${API_URL}shipment/deliveredShipment`,
+        data
+      );
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner(false);
+    }
+  };
+
+  const cancelShipmentAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner(true);
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/cancelShipment`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner(false);
+    }
+  };
 
   const loadData = () => {
     // listShipments()(shipmentDispatch)((result) => {})((err) => {
@@ -59,7 +175,7 @@ function ListShipment({ query }) {
     }
     //  setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
-  console.log(`user`, user);
+  console.log(`data`, data);
 
   return (
     <MainLayout>
@@ -96,7 +212,13 @@ function ListShipment({ query }) {
                     aria-controls="Listing"
                     aria-selected="true"
                   >
-                    Listing({data.data?.length})
+                    Listing (
+                    {
+                      data.data?.filter(
+                        (item) => item?.ShipmentStatus === "NotAssigned"
+                      ).length
+                    }
+                    )
                   </a>
                 </li>
                 <li class="nav-item">
@@ -109,10 +231,10 @@ function ListShipment({ query }) {
                     aria-controls="Assigned"
                     aria-selected="false"
                   >
-                    Assigned(
+                    Assigned (
                     {
                       data.data?.filter(
-                        (item) => item?.AssignedShipment === false
+                        (item) => item?.ShipmentStatus === "Assigned"
                       ).length
                     }
                     )
@@ -128,7 +250,7 @@ function ListShipment({ query }) {
                     aria-controls="Dispatched"
                     aria-selected="false"
                   >
-                    Dispatched(
+                    Dispatched (
                     {
                       data.data?.filter(
                         (item) => item?.ShipmentStatus === "Dispatched"
@@ -147,7 +269,7 @@ function ListShipment({ query }) {
                     aria-controls="PickedUp"
                     aria-selected="false"
                   >
-                    Picked Up(
+                    Picked Up (
                     {
                       data.data?.filter(
                         (item) => item?.ShipmentStatus === "Arrived"
@@ -166,7 +288,7 @@ function ListShipment({ query }) {
                     aria-controls="Delivered"
                     aria-selected="false"
                   >
-                    Delivered(
+                    Delivered (
                     {
                       data.data?.filter(
                         (item) => item?.ShipmentStatus === "Delivered"
@@ -185,7 +307,7 @@ function ListShipment({ query }) {
                     aria-controls="Cancelled"
                     aria-selected="false"
                   >
-                    Cancelled(
+                    Cancelled (
                     {
                       data.data?.filter(
                         (item) => item?.ShipmentStatus === "Cancelled"
@@ -252,7 +374,7 @@ function ListShipment({ query }) {
                     </div>
                     <Datatable
                       loading={loading}
-                      col={columns(user)}
+                      col={columns(user, showInterestAction, loadSpinner)}
                       data={
                         userId
                           ? data.data?.filter(
@@ -286,19 +408,22 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user)}
+                      col={columns(user, dispatchShipmentAction, loadSpinner)}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
-                                item?.AssignedShipment === true ||
+                                item?.UserId === userId &&
                                 item?.ShipmentStatus === "Assigned"
+                            )
+                          : role
+                          ? data.data?.filter(
+                              (item) => item?.ShipmentStatus === "Assigned"
                             )
                           : data.data?.filter(
                               (item) =>
-                                item?.AssignedShipment === true ||
-                                (item?.ShipmentStatus === "Assigned" &&
-                                  item?.AssignedCarrier === parseInt(companyId))
+                                item?.ShipmentStatus === "Assigned" &&
+                                item?.AssignedCarrier === parseInt(companyId)
                             )
                       }
                     />
@@ -320,13 +445,17 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user)}
+                      col={columns(user, pickedUpShipmentAction, loadSpinner)}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
                                 item?.UserId === userId &&
                                 item?.ShipmentStatus === "Dispatched"
+                            )
+                          : role
+                          ? data.data?.filter(
+                              (item) => item?.ShipmentStatus === "Dispatched"
                             )
                           : data.data?.filter(
                               (item) =>
@@ -354,13 +483,17 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user)}
+                      col={columns(user, deliveredShipmentAction, loadSpinner)}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
                                 item?.UserId === userId &&
                                 item?.ShipmentStatus === "PickedUp"
+                            )
+                          : role
+                          ? data.data?.filter(
+                              (item) => item?.ShipmentStatus === "PickedUp"
                             )
                           : data.data?.filter(
                               (item) =>
@@ -392,13 +525,17 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user)}
+                      col={columns(user, cancelShipmentAction, loadSpinner)}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
                                 item?.UserId === userId &&
                                 item?.ShipmentStatus === "Delivered"
+                            )
+                          : role
+                          ? data.data?.filter(
+                              (item) => item?.ShipmentStatus === "Delivered"
                             )
                           : data.data?.filter(
                               (item) =>
@@ -429,13 +566,17 @@ function ListShipment({ query }) {
                     </p>
                     <Datatable
                       loading={loading}
-                      col={columns(user)}
+                      col={columns(user, showInterestAction, loadSpinner)}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
                                 item?.UserId === userId &&
                                 item?.ShipmentStatus === "Cancelled"
+                            )
+                          : role
+                          ? data.data?.filter(
+                              (item) => item?.ShipmentStatus === "Cancelled"
                             )
                           : data.data?.filter(
                               (item) =>

@@ -1,13 +1,17 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { IMG_URL, LOG_IN } from "../../constants";
 import { GlobalContext } from "../../context/Provider";
 import { signout } from "../../context/actions/auth/auth.action";
 import Link from "next/link";
 import { ROLES } from "../../constants/enum";
 import { useRouter } from "next/router";
+import CustomButton from "../button/customButton";
 
 function TopHeaderBar() {
   const router = useRouter();
+
+  const searchRef = useRef();
+  const [loadSpinner, setLoadSpinner] = useState(false);
   const {
     authDispatch,
     authState: { user, isLoggedIn },
@@ -16,7 +20,20 @@ function TopHeaderBar() {
   const logOut = () => {
     signout()(authDispatch);
   };
+  const SearchCarrierAction = async () => {
+    //  setLoadSpinner(true);
+    router.push(`/carrier/?name=${searchRef.current.value}`);
 
+    try {
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner(false);
+    }
+  };
   // useEffect(() => {
   //   if (isLoggedIn === false) {
   //     router.push("/");
@@ -68,104 +85,26 @@ function TopHeaderBar() {
             <li>
               <div className="dropdown">
                 <a className="dropdown-toggle" href="#" data-toggle="dropdown">
-                  <i className="icon feather icon-bell"></i>
+                  <i className="icon feather icon-search"></i>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right notification">
                   <div className="noti-head">
-                    <h6 className="d-inline-block m-b-0">Notifications</h6>
-                    <div className="float-right">
-                      <a href="#!" className="m-r-10">
-                        mark as read
-                      </a>
-                      <a href="#!">clear all</a>
-                    </div>
+                    <h6 className="d-inline-block m-b-0">
+                      Search Carrier Info
+                    </h6>
                   </div>
-                  <ul className="noti-body">
-                    <li className="n-title">
-                      <p className="m-b-0">NEW</p>
-                    </li>
-                    <li className="notification">
-                      <div className="media">
-                        <img
-                          className="img-radius"
-                          src="assets/images/user/avatar-1.jpg"
-                          alt="Generic placeholder image"
-                        />
-                        <div className="media-body">
-                          <p>
-                            <strong>John Doe</strong>
-                            <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>
-                              5 min
-                            </span>
-                          </p>
-                          <p>New ticket Added</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="n-title">
-                      <p className="m-b-0">EARLIER</p>
-                    </li>
-                    <li className="notification">
-                      <div className="media">
-                        <img
-                          className="img-radius"
-                          src="assets/images/user/avatar-2.jpg"
-                          alt="Generic placeholder image"
-                        />
-                        <div className="media-body">
-                          <p>
-                            <strong>Joseph William</strong>
-                            <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>
-                              10 min
-                            </span>
-                          </p>
-                          <p>Prchace New Theme and make payment</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="notification">
-                      <div className="media">
-                        <img
-                          className="img-radius"
-                          src="assets/images/user/avatar-1.jpg"
-                          alt="Generic placeholder image"
-                        />
-                        <div className="media-body">
-                          <p>
-                            <strong>Sara Soudein</strong>
-                            <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>
-                              12 min
-                            </span>
-                          </p>
-                          <p>currently login</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="notification">
-                      <div className="media">
-                        <img
-                          className="img-radius"
-                          src="assets/images/user/avatar-2.jpg"
-                          alt=""
-                        />
-                        <div className="media-body">
-                          <p>
-                            <strong>Joseph William</strong>
-                            <span className="n-time text-muted">
-                              <i className="icon feather icon-clock m-r-10"></i>
-                              30 min
-                            </span>
-                          </p>
-                          <p>Prchace New Theme and make payment</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <div className="noti-footer">
-                    <a href="#!">show all</a>
+                  <div className="noti-body">
+                    <input
+                      type="text"
+                      name="txtSearch"
+                      className="form-control border-0 shadow-none"
+                      placeholder="Search here"
+                      ref={searchRef}
+                    />
+                    <CustomButton
+                      caption={"Search"}
+                      onClick={SearchCarrierAction}
+                    />
                   </div>
                 </div>
               </div>

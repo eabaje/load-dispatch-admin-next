@@ -92,7 +92,7 @@ const menuItemsCarrier = (user) => [
   },
   {
     title: "List all Shipments",
-    path: "/shipment/",
+    path: `/shipment/?companyId=${user.CompanyId}`,
     icon: "first fas fa-car",
   },
 
@@ -148,20 +148,12 @@ const menuItemsAdmin = (user) => [
     icon: "first fas fa-car",
     submenu: [
       {
-        title: "Post a Vehicle/Shipment",
-        path: `/shipment/shipment-action`,
-      },
-      {
-        title: "List all Vehicles",
-        path: `/vehicle/`,
-      },
-      {
         title: "List all Assigned Shipment",
-        path: `/shipment/?assigned=assigned`,
+        path: `/shipment/?role=admin`,
       },
       {
         title: "List all sent/delivered Shipment",
-        path: `/shipment/?sent=sent`,
+        path: `/shipment/?role=admin`,
       },
     ],
   },

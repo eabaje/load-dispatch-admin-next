@@ -9,86 +9,266 @@ import React, { useContext } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 
-const showInterestAction = async (shipmentId, companyId, userId) => {
-  const data = {
-    ShipmentId: shipmentId,
-    CompanyId: companyId,
-    UserId: userId,
-  };
-
-  try {
-    console.log("shipmentId", data);
-    const res = await axios.post(`${API_URL}shipment/showInterest`, data);
-
-    if (res) {
-      toast.success(res.data.message);
-    }
-  } catch (err) {
-    toast.error(err.message);
-  }
-};
-
-export const columns = (params) => [
+export const columns = (params, params1, loadSpinner) => [
   {
     id: 27,
     name: "Action",
     sortable: false,
     selector: "null",
-    grow: 3,
+    grow: 4,
     cell: (row) => [
       <></>,
       //params?.roles === "admin"|| params?.roles === "carrier"||   params?.UserId === row?.UserId
 
-      params?.UserId === row?.UserId && params?.roles === "shipper" && (
-        <Link
-          href={
-            "/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId
-          }
-          passHref
-        >
-          <a
-            className="btn btn-outline-primary"
-            title="Check shipment interests"
+      params?.UserId === row?.UserId &&
+        params?.roles === "shipper" &&
+        row?.AssignDriverShipment?.IsAssigned !== true && (
+          <Link
+            href={
+              "/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId
+            }
+            passHref
           >
-            {" "}
-            <i className="first fas fa-check"></i>Check shipment interests
-          </a>
-        </Link>
-      ),
+            <a
+              className="btn btn-outline-primary"
+              title="Check shipment interests"
+            >
+              {" "}
+              <i className="first fas fa-check"></i>Check shipment interests
+              &nbsp;({row?.ShipmentsInteresteds.length})
+            </a>
+          </Link>
+        ),
 
-      params?.roles === "carrier" && (
+      params?.roles === "carrier" &&
+        row?.ShipmentStatus !== "NotAssigned" &&
+        // row?.Company?.CompanyId === params?.CompanyId &&
+        row?.AssignDriverShipment?.IsAssigned === true && (
+          <Link
+            href={
+              "/shipment/assign-shipment/?shipmentId=" +
+              row.ShipmentId +
+              "&companyId=" +
+              params?.CompanyId
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="Check Assignment">
+              <i className="first fas fa-eye"></i>Check Assignment
+            </a>
+          </Link>
+        ),
+
+      params?.roles === "carrier" &&
+        row?.ShipmentStatus === "Assigned" &&
+        row?.AssignDriverShipment?.IsAssigned === true && (
+          <Link
+            href={
+              "/shipment/assign-shipment-list/?shipmentId=" +
+              row.ShipmentId +
+              "&companyId=" +
+              params?.CompanyId
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="Check Assignment">
+              <i className="first fas fa-id-card-o"></i>Check Assigned Driver
+            </a>
+          </Link>
+        ),
+
+      params?.roles === "driver" &&
+        row?.ShipmentStatus === "Assigned" &&
+        row?.AssignDriverShipment?.IsAssigned === true &&
+        row?.AssignDriverShipment?.AssignedToDriver === params?.UserId && (
+          <>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={params1.bind(
+                this,
+                row.ShipmentId,
+                params.CompanyId,
+                params.UserId
+              )}
+            >
+              {loadSpinner ? (
+                <>
+                  {" "}
+                  <i className="fa fa-spinner fa-spin"></i> Processing
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <i
+                    title="Place interest"
+                    className="first fas fa-paper-plane"
+                  ></i>
+                  Dispatch Shipment
+                </>
+              )}
+            </button>
+          </>
+        ),
+
+      params?.roles === "driver" &&
+        row?.ShipmentStatus === "Dispatched" &&
+        row?.AssignDriverShipment?.IsAssigned === true &&
+        row?.AssignDriverShipment?.AssignedToDriver === params?.UserId && (
+          <>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={params1.bind(
+                this,
+                row.ShipmentId,
+                params.CompanyId,
+                params.UserId
+              )}
+            >
+              {loadSpinner ? (
+                <>
+                  {" "}
+                  <i className="fa fa-spinner fa-spin"></i> Processing
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <i
+                    title="Place interest"
+                    className="first fas fa-paper-plane"
+                  ></i>
+                  PickUp Shipment
+                </>
+              )}
+            </button>
+          </>
+        ),
+
+      params?.roles === "driver" &&
+        row?.ShipmentStatus === "PickedUp" &&
+        row?.AssignDriverShipment?.IsAssigned === true &&
+        row?.AssignDriverShipment?.AssignedToDriver === params?.UserId && (
+          <>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={params1.bind(
+                this,
+                row.ShipmentId,
+                params.CompanyId,
+                params.UserId
+              )}
+            >
+              {loadSpinner ? (
+                <>
+                  {" "}
+                  <i className="fa fa-spinner fa-spin"></i> Processing
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <i
+                    title="Place interest"
+                    className="first fas fa-paper-plane"
+                  ></i>
+                  Delivered Shipment
+                </>
+              )}
+            </button>
+          </>
+        ),
+
+      params?.roles === "shipper" && row?.ShipmentStatus !== "NotAssigned" && (
         <>
           <button
             type="button"
             className="btn btn-outline-primary"
-            onClick={showInterestAction.bind(
+            onClick={params1.bind(
               this,
               row.ShipmentId,
               params.CompanyId,
               params.UserId
             )}
           >
-            <i title="Place interest" className="first fas fa-heart"></i>
-            Place interest
+            {loadSpinner ? (
+              <>
+                {" "}
+                <i className="fa fa-spinner fa-spin"></i> Processing
+              </>
+            ) : (
+              <>
+                {" "}
+                <i title="Place interest" className="first fas fa-times"></i>
+                Cancel Shipment
+              </>
+            )}
           </button>
         </>
-        //   <Link
-        //   href={
-        //     "/shipment/shipment-action/?IsReadOnly=IsReadOnly&shipmentId=" +
-        //     row.ShipmentId +
-        //     "&companyId=" +
-        //     params.CompanyId +
-        //     "&userId=" +
-        //     params.UserId
-        //   }
-        //   passHref
-        // >
-        //   <a className="btn btn-sm" title="Place interest">
-        //     <i className="first fas fa-heart"></i>
-        //   </a>
-        // </Link>
       ),
-      params?.roles === "shipper" && (
+      params?.roles === "shipper" &&
+        row?.ShipmentStatus === "Assigned" &&
+        row?.AssignDriverShipment?.IsAssigned === true && (
+          <Link
+            href={
+              "/shipment/assign-shipment-list/?shipmentId=" +
+              row.ShipmentId +
+              "&companyId=" +
+              params?.CompanyId
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="Check Assignment">
+              <i className="first fas fa-briefcase"></i>Check Assigned Driver
+            </a>
+          </Link>
+        ),
+      params?.roles === "carrier" &&
+        row?.ShipmentStatus === "Assigned" &&
+        row?.AssignDriverShipment?.IsAssigned !== true && (
+          <Link
+            href={
+              "/shipment/assign-shipment/?shipmentId=" +
+              row.ShipmentId +
+              "&action=company&companyId=" +
+              params?.CompanyId
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="Assign to Driver">
+              <i className="first fas fa-user"></i>Assign to Driver{" "}
+            </a>
+          </Link>
+        ),
+      params?.roles === "carrier" && row?.ShipmentStatus === "NotAssigned" && (
+        <>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={params1.bind(
+              this,
+              row.ShipmentId,
+              params.CompanyId,
+              params.UserId
+            )}
+          >
+            {loadSpinner ? (
+              <>
+                {" "}
+                <i className="fa fa-spinner fa-spin"></i> Processing
+              </>
+            ) : (
+              <>
+                {" "}
+                <i title="Place interest" className="first fas fa-heart"></i>
+                Place interest
+              </>
+            )}
+          </button>
+        </>
+      ),
+
+      params?.roles === "shipper" && row?.ShipmentStatus === "NotAssigned" && (
         <Link
           href={"/shipment/shipment-action/?shipmentId=" + row.ShipmentId}
           passHref
@@ -98,6 +278,7 @@ export const columns = (params) => [
           </a>
         </Link>
       ),
+
       params?.roles === "admin" && (
         <Link
           href={

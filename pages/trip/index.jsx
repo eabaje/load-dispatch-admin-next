@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useRouter } from "next/router";
 import { columns } from "../../datasource/dataColumns/trip";
 import { ChevronsDown } from "react-feather";
 import { GlobalContext } from "../../context/Provider";
@@ -7,8 +8,12 @@ import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 import Datatable from "../../components/datatable/datatable-m";
 import NextLink from "next/link";
+import dynamic from "next/dynamic";
+import { API_URL } from "../../constants";
 
-function ListTrip() {
+function ListTrip({ query }) {
+  const router = useRouter();
+  const { userId, shipmentId, sent, companyId } = query;
   const {
     authState: { user },
   } = useContext(GlobalContext);
@@ -50,16 +55,25 @@ function ListTrip() {
               <li>Get an overview of all trips</li>
               <li>Add Rating</li>
             </ul>
-            <h1 className="my-5">
-              <NextLink href="/trip/trip-action/" passHref>
-                <a className="mt-0 btn text-white float-right btn-success">
-                  Create Trip Info
-                </a>
-              </NextLink>
-            </h1>
+
+            {user.roles === "driver" && user.roles === "carrier" && (
+              <h1 className="my-5">
+                <NextLink href="/trip/trip-action/" passHref>
+                  <a className="mt-0 btn text-white float-right btn-success">
+                    Create Trip Info
+                  </a>
+                </NextLink>{" "}
+              </h1>
+            )}
           </div>
           <div className="card-body table-border-style">
-            <Datatable loading={loading} col={columns(user)} data={data.data} />
+            <Datatable
+              loading={loading}
+              col={columns(user)}
+              data={data?.data?.filter(
+                (item) => item?.ShipmentId === shipmentId
+              )}
+            />
           </div>
         </div>
       </div>
@@ -67,4 +81,11 @@ function ListTrip() {
   );
 }
 //Login.layout = "main";
-export default ListTrip;
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: { query },
+  };
+}
+
+export default dynamic(() => Promise.resolve(ListTrip), { ssr: false });

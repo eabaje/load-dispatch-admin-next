@@ -384,7 +384,9 @@ export const sendDriverRegistrationLink =
           payload: res.data,
         });
         console.log("form", form);
+        onSuccess(res.data);
       })
+
       .catch((err) => {
         // console.log("err", err.response);
         const message = err.response ? err.response.data : CONNECTION_ERROR;

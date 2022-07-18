@@ -82,7 +82,7 @@ const AssignShipment = ({ query }) => {
     setCountries((countries) => (countries = Country.getAllCountries()));
 
     if (driverdata.length === 0) {
-      if (driverId) {
+      if (action) {
         listDriversByCompany(companyId)(driverDispatch)((res) => {})((err) => {
           toast.error(err);
         });
@@ -151,7 +151,7 @@ const AssignShipment = ({ query }) => {
         setRefId(shipmentId);
 
         //  setFormStep(1);
-        console.log("formstep", formStep);
+
         console.log("refId", refId);
       })((err) => {
         toast.error(err);
@@ -185,6 +185,7 @@ const AssignShipment = ({ query }) => {
   }
 
   console.log(`readOnly`, readOnly);
+  console.log("ShipmentInfo", shipmentInfo);
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
     return (
       <div className="input-group mb-3">
@@ -367,7 +368,7 @@ const AssignShipment = ({ query }) => {
                       PickUp Region
                     </label>
 
-                    <div className="col-sm-4">
+                    <div className="col-sm-2">
                       <label className=" col-form-label">
                         {shipmentInfo?.PickUpRegion
                           ? State.getStateByCodeAndCountry(
@@ -381,12 +382,21 @@ const AssignShipment = ({ query }) => {
                       PickUp Country
                     </label>
 
-                    <div className="col-sm-4">
+                    <div className="col-sm-2">
                       <label className=" col-form-label">
                         {shipmentInfo.PickUpCountry
                           ? Country.getCountryByCode(shipmentInfo.PickUpCountry)
                               .name
                           : shipmentInfo.PickUpCountry}
+                      </label>
+                    </div>
+                    <label className="col-form-label col-md-2">
+                      PickUp City
+                    </label>
+
+                    <div className="col-md-2">
+                      <label className=" col-form-label">
+                        {shipmentInfo.PickUpCity}
                       </label>
                     </div>
                   </div>
@@ -398,7 +408,7 @@ const AssignShipment = ({ query }) => {
 
                     <div className="col-md-4">
                       <label className=" col-form-label">
-                        {shipmentInfo.PickUpAddress}
+                        {shipmentInfo.PickUpLocation}
                       </label>
                     </div>
 
@@ -408,7 +418,7 @@ const AssignShipment = ({ query }) => {
 
                     <div className="col-md-4">
                       <label className=" col-form-label">
-                        {Date.parse(shipmentInfo.PickUpDate)}
+                        {shipmentInfo.ExpectedPickUpDate}
                       </label>
                     </div>
                   </div>
@@ -427,7 +437,7 @@ const AssignShipment = ({ query }) => {
                       Delivery Region
                     </label>
 
-                    <div className="col-sm-4">
+                    <div className="col-sm-2">
                       <label className=" col-form-label">
                         {shipmentInfo?.DeliveryRegion
                           ? State.getStateByCodeAndCountry(
@@ -438,10 +448,10 @@ const AssignShipment = ({ query }) => {
                       </label>
                     </div>
                     <label className="col-sm-2 col-form-label">
-                      PickUp Country
+                      Delivery Country
                     </label>
 
-                    <div className="col-sm-4">
+                    <div className="col-sm-2">
                       <label className=" col-form-label">
                         {shipmentInfo.DeliveryCountry
                           ? Country.getCountryByCode(
@@ -450,8 +460,16 @@ const AssignShipment = ({ query }) => {
                           : shipmentInfo.DeliveryCountry}
                       </label>
                     </div>
-                  </div>
 
+                    <label className="col-form-label col-md-2">City</label>
+
+                    <div className="col-md-2">
+                      <label className=" col-form-label">
+                        {shipmentInfo.DeliveryCity}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group row"></div>
                   <div className="form-group row">
                     <label className="col-form-label col-md-2">
                       Location/Address
@@ -459,7 +477,7 @@ const AssignShipment = ({ query }) => {
 
                     <div className="col-md-4">
                       <label className=" col-form-label">
-                        {shipmentInfo.DeliveryAddress}
+                        {shipmentInfo.DeliveryLocation}
                       </label>
                     </div>
 
@@ -468,7 +486,7 @@ const AssignShipment = ({ query }) => {
                     </label>
                     <div className="col-md-4">
                       <label className=" col-form-label">
-                        {Date.parse(shipmentInfo.PickUpDate)}
+                        {shipmentInfo.ExpectedPickUpDate}
                       </label>
                     </div>
                   </div>
@@ -514,60 +532,121 @@ const AssignShipment = ({ query }) => {
                     <label className="col-form-label col-md-2">
                       Shipment Date
                     </label>
-                    <div className="col-md-4">{shipmentInfo.ShipmentDate}</div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">
-                      Load category
-                    </label>
-
                     <div className="col-md-4">
                       {" "}
-                      {shipmentInfo?.LoadCategory
-                        ? LOAD_TYPE.find(
-                            (item) => item.value === shipmentInfo?.LoadCategory
-                          ).text
-                        : shipmentInfo?.LoadCategory}
-                    </div>
-
-                    <label className="col-sm-2 col-form-label">Load Type</label>
-                    <div className="col-md-4">
-                      {shipmentInfo?.LoadType
-                        ? LOAD_CAPACITY.find(
-                            (item) => item.value === shipmentInfo?.LoadType
-                          ).text
-                        : shipmentInfo?.LoadType}
+                      <label className=" col-form-label">
+                        {shipmentInfo.ShipmentDate}
+                      </label>
                     </div>
                   </div>
 
                   <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">
-                      Load Weight
-                    </label>
-
-                    <div className="col-sm-2">{shipmentInfo.LoadWeight}</div>
-                    <label className="col-sm-2 col-form-label">Load Unit</label>
-                    <div className="col-sm-2">
-                      {shipmentInfo?.LoadUnit
-                        ? LOAD_UNIT.find(
-                            (item) => item.value === shipmentInfo?.LoadUnit
-                          ).text
-                        : shipmentInfo?.LoadUnit}
+                    <div className="col-md-12">
+                      <h5 className="alert alert-info">
+                        {" "}
+                        Shipment Information{" "}
+                      </h5>
                     </div>
-
-                    <label className="col-sm-1 col-form-label">Quantity</label>
-
-                    <div className="col-sm-3">{shipmentInfo.Qty}</div>
                   </div>
+                  {shipmentInfo?.ShipmentDetails?.map((vehicle, index) => (
+                    <>
+                      <div id={index}>
+                        <div className="form-group row">
+                          <label className="col-sm-2 col-form-label">
+                            Vehicle Type
+                          </label>
+                          <div className="col-md-4">
+                            <label className=" col-form-label">
+                              {vehicle?.VehicleType
+                                ? LOAD_TYPE.find(
+                                    (item) =>
+                                      item.value === vehicle?.VehicleType
+                                  ).text
+                                : vehicle?.VehicleType}
+                            </label>
+                          </div>
 
-                  <div className="form-group row">
-                    <label className="col-form-label col-md-2">
-                      Description
-                    </label>
-                    <div className="col-md-10">{shipmentInfo.Description}</div>
-                  </div>
+                          <label className="col-sm-2 col-form-label">
+                            VIN / CHASIS NUMBER
+                          </label>
+                          <div className="col-sm-4">
+                            {" "}
+                            <label className=" col-form-label">
+                              {" "}
+                              {vehicle.VIN}
+                            </label>
+                          </div>
+                        </div>
 
+                        <div className="form-group row">
+                          {/* <label className="col-sm-2 col-form-label">
+                    Serial Number
+                  </label>
+
+                  <div className="col-sm-4">
+                    <input
+                      name="SerialNumber"
+                      className="form-control"
+                      placeholder="Serial Number"
+                      readOnly={readOnly}
+                      {...register("SerialNumber", {
+                        required: true,
+                      })}
+                    />
+                  </div> */}
+                          <label className="col-sm-2 col-form-label">
+                            Vehicle Make
+                          </label>
+                          <div className="col-sm-4">
+                            {" "}
+                            <label className=" col-form-label">
+                              {vehicle.VehicleMake}
+                            </label>
+                          </div>
+
+                          <label className="col-form-label col-md-2">
+                            Vehicle Model
+                          </label>
+                          <div className="col-md-4">
+                            {" "}
+                            <label className=" col-form-label">
+                              {vehicle.VehicleModel}
+                            </label>
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label className="col-form-label col-md-2">
+                            Vehicle Color{" "}
+                          </label>
+
+                          <div className="col-md-4">
+                            {" "}
+                            <label className=" col-form-label">
+                              {vehicle.VehicleColor}
+                            </label>
+                          </div>
+
+                          <label className="col-form-label col-md-2">
+                            Vehicle Model Year
+                          </label>
+
+                          <div className="col-md-4">
+                            <label className=" col-form-label">
+                              {new Date(vehicle.VehicleModelYear).getFullYear()}
+                            </label>
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          {index <
+                            shipmentInfo?.ShipmentDetails?.length - 1 && (
+                            <div className="col-md-12 alert alert-info"> </div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  ))}
                   <div className="form-group row">
                     <div className="col-md-12">
                       <h5 className="alert alert-info">
@@ -583,40 +662,47 @@ const AssignShipment = ({ query }) => {
                     </label>
 
                     <div className="col-md-4">
-                      {shipmentInfo.RequestForShipment}
+                      <label className=" col-form-label">
+                        {" "}
+                        {shipmentInfo.RequestForShipment}
+                      </label>
                     </div>
 
                     <label className="col-sm-2 col-form-label">
                       Shipment Status
                     </label>
                     <div className="col-md-2">
-                      {shipmentInfo?.ShipmentStatus
-                        ? TRIP_STATUS.find(
-                            (item) =>
-                              item.value === shipmentInfo?.ShipmentStatus
-                          ).text
-                        : shipmentInfo?.ShipmentStatus}
+                      <label className=" col-form-label">
+                        {" "}
+                        {shipmentInfo?.ShipmentStatus
+                          ? TRIP_STATUS.find(
+                              (item) =>
+                                item.value === shipmentInfo?.ShipmentStatus
+                            ).text
+                          : shipmentInfo?.ShipmentStatus}{" "}
+                      </label>
                     </div>
                   </div>
 
                   <div className="form-group"></div>
-
-                  <div className="form-group row">
-                    <div className="col-md-10">
-                      <button
-                        type="submit"
-                        className="btn  btn-primary"
-                        style={{ float: "right" }}
-                      >
-                        {loading ? (
-                          <i className="fa fa-spinner fa-spin"></i>
-                        ) : (
-                          <i className="feather mr-2 icon-check-circle"></i>
-                        )}{" "}
-                        Assign Shipment
-                      </button>
+                  {action && (
+                    <div className="form-group row">
+                      <div className="col-md-10">
+                        <button
+                          type="submit"
+                          className="btn  btn-primary"
+                          style={{ float: "right" }}
+                        >
+                          {loading ? (
+                            <i className="fa fa-spinner fa-spin"></i>
+                          ) : (
+                            <i className="feather mr-2 icon-check-circle"></i>
+                          )}{" "}
+                          Assign Shipment To Driver
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </form>
               )}
               {/* {formStep === 1 && <UploadImages refId={shipmentId} />} */}

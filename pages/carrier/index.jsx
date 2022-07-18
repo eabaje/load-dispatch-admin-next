@@ -18,7 +18,7 @@ import Datatable from "../../components/datatable/datatable-m";
 // import DataTableExtensions from "react-data-table-component-extensions";
 
 function ListCarrier({ query }) {
-  const { companyId } = query;
+  const { companyId, name } = query;
   // const router = useRouter()
   // const {
   //   query:companyId
@@ -69,7 +69,7 @@ function ListCarrier({ query }) {
               <li>Assign Drivers to Vehicle</li>
             </ul>
 
-            {user.roles !== "driver" && (
+            {user.roles === "carrier" && (
               <h1 className="my-5">
                 <NextLink href="/carrier/carrier-action/" passHref>
                   <a className="mt-0 btn text-white float-right btn  btn-primary">
@@ -88,6 +88,8 @@ function ListCarrier({ query }) {
                 ? data.data?.filter(
                     (item) => item?.CompanyId === parseInt(companyId)
                   )
+                : name
+                ? data.data?.filter((item) => item?.CompanyName.contains(name))
                 : data?.data
             }
           />

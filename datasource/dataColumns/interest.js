@@ -4,29 +4,32 @@ import { Country, State } from "country-state-city";
 import { toast } from "react-toastify";
 import { API_URL } from "../../constants";
 import axios from "axios";
-const AssignShipmentToCompanyAction = async (shipmentId, companyId, userId) => {
-  const data = {
-    ShipmentId: shipmentId,
-    CompanyId: companyId,
-    UserId: userId,
-  };
 
-  try {
-    console.log("shipmentId", data);
-    const res = await axios.post(
-      `${API_URL}shipment/assignCompanyShipment`,
-      data
-    );
+// let loadSpinner = false;
+// const AssignShipmentToCompanyAction = async (shipmentId, companyId, userId) => {
+//   loadSpinner = true;
+//   const data = {
+//     ShipmentId: shipmentId,
+//     CompanyId: companyId,
+//     UserId: userId,
+//   };
 
-    if (res) {
-      toast.success(res.data.message);
-    }
-  } catch (err) {
-    toast.error(err.message);
-  }
-};
+//   try {
+//     const res = await axios.post(
+//       `${API_URL}shipment/assignCompanyShipment`,
+//       data
+//     );
 
-export const columns = (params) => [
+//     if (res) {
+//       toast.success(res.data.message);
+//       loadSpinner = false;
+//     }
+//   } catch (err) {
+//     toast.error(err.message);
+//   }
+// };
+//console.log("shipmentId", loadSpinner);
+export const columns = (params, params1, loadSpinner) => [
   {
     name: "Action",
     sortable: false,
@@ -57,15 +60,30 @@ export const columns = (params) => [
           <button
             type="button"
             className="btn btn-outline-primary"
-            onClick={AssignShipmentToCompanyAction.bind(
+            onClick={params1.bind(
               this,
               row.ShipmentId,
               row.CompanyId,
               params.UserId
             )}
           >
-            <i title="Assign Shipment" className="first fas fa-briefcase"></i>
-            Assign Shipment
+            {loadSpinner ? (
+              <>
+                {" "}
+                <i className="fa fa-spinner fa-spin"></i> Processing
+              </>
+            ) : (
+              <>
+                {" "}
+                <i
+                  title="Assign Shipment"
+                  className="first fas fa-briefcase"
+                ></i>{" "}
+                {row?.Shipment?.ShipmentStatus === "Assigned"
+                  ? " UnAssign Shipment"
+                  : "Assign Shipment"}
+              </>
+            )}
           </button>
         </>
       ),
@@ -90,6 +108,32 @@ export const columns = (params) => [
   },
 
   {
+    id: 2,
+    name: "Shipment Ref No",
+    selector: (row) => row.Shipment?.ShipmentId,
+
+    cell: (row) => [
+      <>
+        {" "}
+        <div>
+          <Link href={"/shipment/?isReadOnly=" + row.ShipmentId}>
+            <a
+              className="btn btn-sm"
+              title="click to shipment info"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {row.Shipment?.ShipmentId}
+            </a>
+          </Link>
+        </div>
+      </>,
+    ],
+    sortable: true,
+    reorder: true,
+  },
+
+  {
     id: 1,
     name: "Interested Carrier",
     selector: (row) => row.User?.FullName,
@@ -103,68 +147,17 @@ export const columns = (params) => [
             "&readOnly=true"
           }
         >
-          <a title="Click to view Carrier Profile"> {row.User?.FullName} </a>
-        </Link>
-      </>,
-    ],
-    sortable: true,
-    reorder: true,
-  },
-  {
-    id: 2,
-    name: "Shipment ",
-    selector: (row) => row.Shipment?.Description,
-
-    cell: (row) => [
-      <>
-        {" "}
-        <Link href={"/shipment/?isReadOnly=" + row.ShipmentId}>
-          <a className="btn btn-sm" title="click to shipment info">
-            {row.Shipment?.Description}
+          <a
+            title="Click to view Carrier Profile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {" "}
+            {row.User?.FullName}{" "}
           </a>
         </Link>
       </>,
     ],
-    sortable: true,
-    reorder: true,
-  },
-  {
-    id: 3,
-    name: "Load Category",
-    selector: (row) =>
-      LOAD_TYPE.find((item) => item.value === row.Shipment.LoadCategory).text,
-    sortable: true,
-    reorder: true,
-  },
-  {
-    id: 4,
-    name: "Load Weight",
-    selector: (row) => row.Shipment.LoadWeight,
-    sortable: true,
-    reorder: true,
-  },
-
-  {
-    id: 5,
-    name: "Load Type",
-    selector: (row) =>
-      LOAD_CAPACITY.find((item) => item.value === row.Shipment.LoadType).text,
-    sortable: true,
-    reorder: true,
-  },
-
-  {
-    id: 6,
-    name: "Load Unit",
-    selector: (row) => row.Shipment.LoadUnit,
-    sortable: true,
-    reorder: true,
-  },
-
-  {
-    id: 7,
-    name: "Qty",
-    selector: (row) => row.Shipment.Qty,
     sortable: true,
     reorder: true,
   },

@@ -316,6 +316,46 @@ export const listShipmentsInterestByCompany =
       });
   };
 
+export const listAllAssignedShipments =
+  () => (dispatch) => (onSuccess) => (onError) => {
+    dispatch({
+      type: GET_INTERESTS_REQUEST,
+    });
+    axios
+      .get(`/shipment/findAllAssignShipment/`)
+      .then((res) => {
+        dispatch({ type: GET_INTERESTS_SUCCESS, payload: res.data });
+
+        onSuccess(res.data);
+      })
+
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: GET_INTERESTS_FAIL, payload: message });
+        onError(message);
+      });
+  };
+
+export const listAllAssignedDriverShipments =
+  () => (dispatch) => (onSuccess) => (onError) => {
+    dispatch({
+      type: GET_INTERESTS_REQUEST,
+    });
+    axios
+      .get(`/shipment/findAllAssignDriverShipment/`)
+      .then((res) => {
+        dispatch({ type: GET_INTERESTS_SUCCESS, payload: res.data });
+
+        onSuccess(res.data);
+      })
+
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: GET_INTERESTS_FAIL, payload: message });
+        onError(message);
+      });
+  };
+
 export const AssignShipmentsToDriver =
   (form) => (dispatch) => (onSuccess) => (onError) => {
     //  {shipmentId,userId,}

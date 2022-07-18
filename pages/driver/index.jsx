@@ -15,6 +15,7 @@ import { PopUpClose, PopUpOpen } from "../../context/actions/user/user.action";
 import CustomPopup from "../../components/popup/popup.component";
 import CustomButton from "../../components/button/customButton";
 import { sendDriverRegistrationLink } from "../../context/actions/driver/driver.action";
+import { Modal } from "react-bootstrap";
 
 function ListDriver({ query }) {
   const router = useRouter();
@@ -47,7 +48,7 @@ function ListDriver({ query }) {
     },
     driverDispatch,
     driverState: {
-      createDriver: { error },
+      createDriver: { loading: driverLoading, error },
     },
   } = useContext(GlobalContext);
 
@@ -70,9 +71,11 @@ function ListDriver({ query }) {
     console.log(`form`, data);
     sendDriverRegistrationLink(data)(driverDispatch)((res) => {
       if (res) {
-        toast.success(`Sent Link to  Driver-${data.DriverName} successfully`);
+        toast.success(`Sent Link to Driver-${data.DriverName} successfully`);
+
         setTimeout(() => {
           toast.dismiss();
+          popupCloseHandler();
           router.push(`/driver/?companyId=${user.CompanyId}`);
         }, 5000);
       }
@@ -166,7 +169,7 @@ function ListDriver({ query }) {
                         <div className="col-sm-10 "></div>
                         <div className="right" style={{ float: "right" }}>
                           <CustomButton
-                            loading={loading}
+                            loading={driverLoading}
                             isAddMode={null}
                             caption={"Send Driver Registration Link"}
                           />

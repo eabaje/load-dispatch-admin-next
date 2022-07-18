@@ -1,6 +1,7 @@
 import { Form } from "react-bootstrap";
 import Link from "next/link";
 import { Country, State } from "country-state-city";
+import { API_URL, IMG_URL, MEDIA_URL } from "../../constants";
 
 export const columns = (params) => [
   {
@@ -120,14 +121,31 @@ export const columns = (params) => [
   {
     id: 10,
     name: "PicUrl",
-    cell: (row) => row.PicUrl,
+    cell: (row) => (
+      <img
+        height="84px"
+        width="56px"
+        className="previewThumb"
+        alt={row?.DriverName}
+        src={MEDIA_URL + row.PicUrl}
+      />
+    ),
     sortable: true,
     reorder: true,
+    grow: 3,
   },
   {
     id: 11,
     name: "License Url",
-    cell: (row) => row.LicenseUrl,
+    cell: (row) => (
+      <a
+        href={MEDIA_URL + row.LicenseUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View License
+      </a>
+    ),
     sortable: true,
     reorder: true,
   },
@@ -142,7 +160,15 @@ export const columns = (params) => [
   {
     id: 13,
     name: "Driver Docs",
-    cell: (row) => row.DriverDocs,
+    cell: (row) => (
+      <a
+        href={MEDIA_URL + row.DriverDocs}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View Driver Docs
+      </a>
+    ),
     sortable: true,
     reorder: true,
   },
@@ -150,7 +176,7 @@ export const columns = (params) => [
   {
     id: 14,
     name: "Created Date",
-    cell: (row) => (row.createdAt ? Date.parse(row.createdAt) : row.createdAt),
+    cell: (row) => (row.createdAt ? row.createdAt : row.createdAt),
     sortable: true,
     right: true,
     reorder: true,
@@ -159,7 +185,7 @@ export const columns = (params) => [
   {
     id: 15,
     name: "Updated Date",
-    cell: (row) => (row.updatedAt ? Date.parse(row.updatedAt) : row.updatedAt),
+    cell: (row) => (row.updatedAt ? row.updatedAt : row.updatedAt),
     sortable: true,
     right: true,
     reorder: true,
