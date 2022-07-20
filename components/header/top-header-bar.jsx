@@ -4,6 +4,7 @@ import { GlobalContext } from "../../context/Provider";
 import { signout } from "../../context/actions/auth/auth.action";
 import Link from "next/link";
 import { ROLES } from "../../constants/enum";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import CustomButton from "../button/customButton";
 
@@ -24,15 +25,15 @@ function TopHeaderBar() {
     //  setLoadSpinner(true);
     router.push(`/carrier/?name=${searchRef.current.value}`);
 
-    try {
-      if (res) {
-        toast.success(res.data.message);
-        setLoadSpinner(false);
-      }
-    } catch (err) {
-      toast.error(err.message);
-      setLoadSpinner(false);
-    }
+    // try {
+    //   if (res) {
+    //     toast.success(res.data.message);
+    //     setLoadSpinner(false);
+    //   }
+    // } catch (err) {
+    //   toast.error(err.message);
+    //   setLoadSpinner(false);
+    // }
   };
   // useEffect(() => {
   //   if (isLoggedIn === false) {
@@ -64,28 +65,14 @@ function TopHeaderBar() {
           </a>
         </div>
         <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <a href="#!" className="pop-search">
-                <i className="feather icon-search"></i>
-              </a>
-              <div className="search-bar">
-                <input
-                  type="text"
-                  className="form-control border-0 shadow-none"
-                  placeholder="Search hear"
-                />
-                <button type="button" className="close" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </li>
-          </ul>
           <ul className="navbar-nav ml-auto">
             <li>
               <div className="dropdown">
                 <a className="dropdown-toggle" href="#" data-toggle="dropdown">
-                  <i className="icon feather icon-search"></i>
+                  <i
+                    className="icon feather icon-search"
+                    title=" Search Carrier Info"
+                  ></i>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right notification">
                   <div className="noti-head">

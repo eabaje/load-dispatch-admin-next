@@ -85,11 +85,13 @@ function ListCarrier({ query }) {
             col={columns(user)}
             data={
               companyId
-                ? data.data?.filter(
+                ? data?.data?.filter(
                     (item) => item?.CompanyId === parseInt(companyId)
                   )
                 : name
-                ? data.data?.filter((item) => item?.CompanyName.contains(name))
+                ? data?.data?.filter((item) =>
+                    item?.Company?.CompanyName.includes(name)
+                  )
                 : data?.data
             }
           />

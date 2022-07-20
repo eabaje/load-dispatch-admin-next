@@ -153,6 +153,26 @@ function ListShipment({ query }) {
     }
   };
 
+  const ArchiveShipmentAction = async (shipmentId) => {
+    setLoadSpinner(true);
+    const data = {
+      ShipmentId: shipmentId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/archiveShipment`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner(false);
+    }
+  };
+
   const loadData = () => {
     // listShipments()(shipmentDispatch)((result) => {})((err) => {
     //   toast.error(err);
@@ -215,7 +235,9 @@ function ListShipment({ query }) {
                     Listing (
                     {
                       data.data?.filter(
-                        (item) => item?.ShipmentStatus === "NotAssigned"
+                        (item) =>
+                          item?.IsArchived === false &&
+                          item?.ShipmentStatus === "NotAssigned"
                       ).length
                     }
                     )
@@ -234,7 +256,10 @@ function ListShipment({ query }) {
                     Assigned (
                     {
                       data.data?.filter(
-                        (item) => item?.ShipmentStatus === "Assigned"
+                        (item) =>
+                          item?.ShipmentStatus === "Assigned" &&
+                          item?.IsArchived === false &&
+                          item?.AssignedCarrier === parseInt(companyId)
                       ).length
                     }
                     )
@@ -253,7 +278,10 @@ function ListShipment({ query }) {
                     Dispatched (
                     {
                       data.data?.filter(
-                        (item) => item?.ShipmentStatus === "Dispatched"
+                        (item) =>
+                          item?.ShipmentStatus === "Dispatched" &&
+                          item?.IsArchived === false &&
+                          item?.AssignedCarrier === parseInt(companyId)
                       ).length
                     }
                     )
@@ -272,7 +300,10 @@ function ListShipment({ query }) {
                     Picked Up (
                     {
                       data.data?.filter(
-                        (item) => item?.ShipmentStatus === "Arrived"
+                        (item) =>
+                          item?.ShipmentStatus === "Arrived" &&
+                          item?.IsArchived === false &&
+                          item?.AssignedCarrier === parseInt(companyId)
                       ).length
                     }
                     )
@@ -291,7 +322,10 @@ function ListShipment({ query }) {
                     Delivered (
                     {
                       data.data?.filter(
-                        (item) => item?.ShipmentStatus === "Delivered"
+                        (item) =>
+                          item?.ShipmentStatus === "Delivered" &&
+                          item?.IsArchived === false &&
+                          item?.AssignedCarrier === parseInt(companyId)
                       ).length
                     }
                     )
@@ -310,7 +344,9 @@ function ListShipment({ query }) {
                     Cancelled (
                     {
                       data.data?.filter(
-                        (item) => item?.ShipmentStatus === "Cancelled"
+                        (item) =>
+                          item?.IsArchived === false &&
+                          item?.ShipmentStatus === "Cancelled"
                       ).length
                     }
                     )
@@ -374,16 +410,24 @@ function ListShipment({ query }) {
                     </div>
                     <Datatable
                       loading={loading}
-                      col={columns(user, showInterestAction, loadSpinner)}
+                      col={columns(
+                        user,
+                        showInterestAction,
+                        loadSpinner,
+                        ArchiveShipmentAction
+                      )}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
                                 item?.UserId === userId &&
+                                item?.IsArchived === false &&
                                 item?.ShipmentStatus === "NotAssigned"
                             )
                           : data.data?.filter(
-                              (item) => item?.ShipmentStatus === "NotAssigned"
+                              (item) =>
+                                item?.IsArchived === false &&
+                                item?.ShipmentStatus === "NotAssigned"
                             )
                       }
                     />
@@ -399,7 +443,7 @@ function ListShipment({ query }) {
                     <p>
                       Your requests to move these vehicles have been emailed to
                       the assigned carrier and have been placed in the
-                      respective carrier's Central Dispatch account. You are
+                      respective carrier's Load Dispatch account. You are
                       waiting for these carriers to sign the dispatch sheet and
                       contract. If the carrier has not responded in a reasonable
                       amount of time you may send them a reminder email taking
@@ -408,20 +452,29 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user, dispatchShipmentAction, loadSpinner)}
+                      col={columns(
+                        user,
+                        dispatchShipmentAction,
+                        loadSpinner,
+                        ArchiveShipmentAction
+                      )}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
                                 item?.UserId === userId &&
+                                item?.IsArchived === false &&
                                 item?.ShipmentStatus === "Assigned"
                             )
                           : role
                           ? data.data?.filter(
-                              (item) => item?.ShipmentStatus === "Assigned"
+                              (item) =>
+                                item?.IsArchived === false &&
+                                item?.ShipmentStatus === "Assigned"
                             )
                           : data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.ShipmentStatus === "Assigned" &&
                                 item?.AssignedCarrier === parseInt(companyId)
                             )
@@ -445,20 +498,29 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user, pickedUpShipmentAction, loadSpinner)}
+                      col={columns(
+                        user,
+                        pickedUpShipmentAction,
+                        loadSpinner,
+                        ArchiveShipmentAction
+                      )}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.UserId === userId &&
                                 item?.ShipmentStatus === "Dispatched"
                             )
                           : role
                           ? data.data?.filter(
-                              (item) => item?.ShipmentStatus === "Dispatched"
+                              (item) =>
+                                item?.IsArchived === false &&
+                                item?.ShipmentStatus === "Dispatched"
                             )
                           : data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.AssignedCarrier === parseInt(companyId) &&
                                 item?.ShipmentStatus === "Dispatched"
                             )
@@ -483,20 +545,29 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user, deliveredShipmentAction, loadSpinner)}
+                      col={columns(
+                        user,
+                        deliveredShipmentAction,
+                        loadSpinner,
+                        ArchiveShipmentAction
+                      )}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.UserId === userId &&
                                 item?.ShipmentStatus === "PickedUp"
                             )
                           : role
                           ? data.data?.filter(
-                              (item) => item?.ShipmentStatus === "PickedUp"
+                              (item) =>
+                                item?.IsArchived === false &&
+                                item?.ShipmentStatus === "PickedUp"
                             )
                           : data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.AssignedCarrier === parseInt(companyId) &&
                                 item?.ShipmentStatus === "PickedUp"
                             )
@@ -525,20 +596,29 @@ function ListShipment({ query }) {
 
                     <Datatable
                       loading={loading}
-                      col={columns(user, cancelShipmentAction, loadSpinner)}
+                      col={columns(
+                        user,
+                        cancelShipmentAction,
+                        loadSpinner,
+                        ArchiveShipmentAction
+                      )}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
                                 item?.UserId === userId &&
+                                item?.IsArchived === false &&
                                 item?.ShipmentStatus === "Delivered"
                             )
                           : role
                           ? data.data?.filter(
-                              (item) => item?.ShipmentStatus === "Delivered"
+                              (item) =>
+                                item?.IsArchived === false &&
+                                item?.ShipmentStatus === "Delivered"
                             )
                           : data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.AssignedCarrier === parseInt(companyId) &&
                                 item?.ShipmentStatus === "Delivered"
                             )
@@ -566,20 +646,29 @@ function ListShipment({ query }) {
                     </p>
                     <Datatable
                       loading={loading}
-                      col={columns(user, showInterestAction, loadSpinner)}
+                      col={columns(
+                        user,
+                        showInterestAction,
+                        loadSpinner,
+                        ArchiveShipmentAction
+                      )}
                       data={
                         userId
                           ? data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.UserId === userId &&
                                 item?.ShipmentStatus === "Cancelled"
                             )
                           : role
                           ? data.data?.filter(
-                              (item) => item?.ShipmentStatus === "Cancelled"
+                              (item) =>
+                                item?.IsArchived === false &&
+                                item?.ShipmentStatus === "Cancelled"
                             )
                           : data.data?.filter(
                               (item) =>
+                                item?.IsArchived === false &&
                                 item?.AssignedCarrier === parseInt(companyId) &&
                                 item?.ShipmentStatus === "Cancelled"
                             )

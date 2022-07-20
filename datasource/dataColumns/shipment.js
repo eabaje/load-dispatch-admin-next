@@ -9,7 +9,13 @@ import React, { useContext } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 
-export const columns = (params, params1, loadSpinner) => [
+export const columns = (
+  params,
+  params1,
+  loadSpinner,
+  params2 = null,
+  params3 = null
+) => [
   {
     id: 27,
     name: "Action",
@@ -101,7 +107,7 @@ export const columns = (params, params1, loadSpinner) => [
                 <>
                   {" "}
                   <i
-                    title="Place interest"
+                    title="Dispatch Shipment"
                     className="first fas fa-paper-plane"
                   ></i>
                   Dispatch Shipment
@@ -135,7 +141,7 @@ export const columns = (params, params1, loadSpinner) => [
                 <>
                   {" "}
                   <i
-                    title="Place interest"
+                    title="PickUp Shipment"
                     className="first fas fa-paper-plane"
                   ></i>
                   PickUp Shipment
@@ -260,8 +266,25 @@ export const columns = (params, params1, loadSpinner) => [
             ) : (
               <>
                 {" "}
-                <i title="Place interest" className="first fas fa-heart"></i>
-                Place interest
+                {row?.ShipmentsInteresteds.filter(
+                  (item) => item?.UserId === params?.UserId
+                ).length > 0 ? (
+                  <>
+                    <i
+                      title="Place interest"
+                      className="first fas fa-times"
+                    ></i>{" "}
+                    Remove interest{" "}
+                  </>
+                ) : (
+                  <>
+                    <i
+                      title="Place interest"
+                      className="first fas fa-heart"
+                    ></i>
+                    Place interest{" "}
+                  </>
+                )}
               </>
             )}
           </button>
@@ -278,6 +301,67 @@ export const columns = (params, params1, loadSpinner) => [
           </a>
         </Link>
       ),
+
+      params?.roles === "shipper" && (
+        <>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={params2.bind(this, row.ShipmentId)}
+          >
+            {loadSpinner ? (
+              <>
+                {" "}
+                <i className="fa fa-spinner fa-spin"></i> Processing
+              </>
+            ) : (
+              <>
+                {" "}
+                {row?.IsAchived === true ? (
+                  <>
+                    <i title="Show Record" className="first fas fa-eye"></i>{" "}
+                    Show Record{" "}
+                  </>
+                ) : (
+                  <>
+                    <i
+                      title="Archive Record"
+                      className="first fas fa-archive"
+                    ></i>
+                    Archive Record{" "}
+                  </>
+                )}
+              </>
+            )}
+          </button>
+        </>
+      ),
+
+      params?.roles === "shipper" &&
+        row?.AssignShipment.IsContractSigned === false && (
+          <>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={params3.bind(this, row.ShipmentId, params.CompanyId)}
+            >
+              {loadSpinner ? (
+                <>
+                  {" "}
+                  <i className="fa fa-spinner fa-envelope-open"></i> Processing
+                </>
+              ) : (
+                <>
+                  <i
+                    title="Archive Record"
+                    className="first fas fa-archive"
+                  ></i>{" "}
+                  Send Remind Email
+                </>
+              )}
+            </button>
+          </>
+        ),
 
       params?.roles === "admin" && (
         <Link
