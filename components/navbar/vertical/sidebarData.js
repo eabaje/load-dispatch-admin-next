@@ -75,6 +75,11 @@ const menuItemsShipper = (user) => [
         title: "My Shipment(s)",
         path: `/shipment/?userId=${user.UserId}`,
       },
+
+      {
+        title: "Archived Shipment(s)",
+        path: `/shipment/archive-shipment/?userId=${user.UserId}`,
+      },
     ],
   },
   {

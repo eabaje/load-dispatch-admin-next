@@ -13,8 +13,9 @@ import dynamic from "next/dynamic";
 function Index() {
   const [dataLength, setDataLength] = useState(0);
   const [dataLengthInterest, setDataLengthInterest] = useState(0);
-  const [user, setUser] = useState({});
+
   const {
+    authState: { user },
     shipmentDispatch,
     shipmentState: {
       Shipments: { data: dataShipment },
@@ -51,6 +52,7 @@ function Index() {
                 <NewsFlash
                   dataShipment={dataShipment}
                   dataInterest={dataInterest}
+                  user={user}
                 />
               </div>
 

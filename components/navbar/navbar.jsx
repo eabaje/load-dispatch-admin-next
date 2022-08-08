@@ -187,12 +187,12 @@ const NavBar = () => {
                   
                 } */}
 
-              {user.isActivated === false &&
+              {/* {user.isActivated === false &&
                 menuItemsPublic(user).map((menu, index) => {
                   return (
                     <Menu key={index} id={index} items={menu} user={user} />
                   );
-                })}
+                })} */}
 
               {user.isExpired === true &&
                 menuItemsPublic(user).map((menu, index) => {

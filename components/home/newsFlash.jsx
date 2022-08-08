@@ -1,13 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import Link from 'next/link'
+import Link from "next/link";
 
-
-function NewsFlash(
-  dataShipment,dataInterest) {
- 
- 
- 
- 
+function NewsFlash({ dataShipment, dataInterest, user }) {
   //console.log(`data`, dataLengthInterest);
   return (
     <>
@@ -28,12 +22,22 @@ function NewsFlash(
                   <div className="card-body cleartfix">
                     <div className="media align-items-stretch">
                       <div className="align-self-center">
-                        <i className="icon-bag primary font-large-2 mr-2"></i>
+                        <i className="first fas fa-globe font-large-2 mr-2"></i>
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Post</h6>
-                        <Link href={"/list-all-shipments"}>
-                        <a><span>click for more details</span></a> 
+                        <Link
+                          href={
+                            user.roles === "shipper"
+                              ? "/shipment/?userId=" + user.UserId
+                              : user.roles === "carrier"
+                              ? "/shipment/?companyId=" + user.CompanyId
+                              : "/shipment/"
+                          }
+                        >
+                          <a>
+                            <span>click for more details</span>
+                          </a>
                         </Link>
                       </div>
                       <div className="align-self-center">
@@ -51,12 +55,22 @@ function NewsFlash(
                   <div className="card-body cleartfix">
                     <div className="media align-items-stretch">
                       <div className="align-self-center">
-                        <i className="icon-like warning font-large-2 mr-2"></i>
+                        <i className="first fas fa-eye font-large-2 mr-2"></i>
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Interest</h6>
-                        <Link href={"/list-all-shipments-interest"}>
-                        <a><span>click for more details</span></a> 
+                        <Link
+                          href={
+                            user.roles === "shipper"
+                              ? "/shipment/?userId=" + user.UserId
+                              : user.roles === "carrier"
+                              ? "/shipment/?companyId=" + user.CompanyId
+                              : "/shipment/"
+                          }
+                        >
+                          <a>
+                            <span>click for more details</span>
+                          </a>
                         </Link>
                       </div>
                       <div className="align-self-center">
@@ -76,21 +90,29 @@ function NewsFlash(
                   <div className="card-body cleartfix">
                     <div className="media align-items-stretch">
                       <div className="align-self-center">
-                        <i className="icon-drawer primary font-large-2 mr-2"></i>
+                        <i className="first fas fa-handshake-o  font-large-2 mr-2"></i>
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Assigned</h6>
-                        <Link href={"/list-all-shipments-assigned"}>
-                         <a><span>click for more details</span></a> 
+                        <Link
+                          href={
+                            user.roles === "shipper"
+                              ? "/shipment/?userId=" + user.UserId
+                              : user.roles === "carrier"
+                              ? "/shipment/?companyId=" + user.CompanyId
+                              : "/shipment/"
+                          }
+                        >
+                          <a>
+                            <span>click for more details</span>
+                          </a>
                         </Link>
                       </div>
                       <div className="align-self-center">
                         <h6>
-                          {
-                            dataShipment.data?.filter(
-                              (item) => item.AssignedShipment === true
-                            ).length || 0 
-                          }
+                          {dataShipment.data?.filter(
+                            (item) => item.AssignedShipment === true
+                          ).length || 0}
                         </h6>
                       </div>
                     </div>
@@ -105,21 +127,29 @@ function NewsFlash(
                   <div className="card-body cleartfix">
                     <div className="media align-items-stretch">
                       <div className="align-self-center">
-                        <i className="icon-plane warning font-large-2 mr-2"></i>
+                        <i className="first fas fa-truck font-large-2 mr-2"></i>
                       </div>
                       <div className="media-body">
                         <h6>Total Shipment Delivered </h6>
-                        <Link href={"/list-all-shipments-sent"}>
-                        <a><span>click for more details</span></a> 
+                        <Link
+                          href={
+                            user.roles === "shipper"
+                              ? "/shipment/?userId=" + user.UserId
+                              : user.roles === "carrier"
+                              ? "/shipment/?companyId=" + user.CompanyId
+                              : "/shipment/"
+                          }
+                        >
+                          <a>
+                            <span>click for more details</span>
+                          </a>
                         </Link>
                       </div>
                       <div className="align-self-center">
                         <h6>
-                          {
-                            dataShipment.data?.filter(
-                              (item) => item.ShipmentStatus === "Delivered"
-                            ).length || 0 
-                          }
+                          {dataShipment.data?.filter(
+                            (item) => item.ShipmentStatus === "Delivered"
+                          ).length || 0}
                         </h6>
                       </div>
                     </div>

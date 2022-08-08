@@ -25268,7 +25268,7 @@ background-size: cover;
     padding: 20px;
     background: #fff;
     border-radius: 5px;
-    width: auto;
+    
     position: relative;
     transition: all 5s ease-in-out;
   }
@@ -25289,18 +25289,21 @@ background-size: cover;
     color: #333;
   }
   .popup .close:hover {
-    cursor: pointer;
+    cursor: hand;
     color: #000;
   }
   .popup .content {
     margin-top: 10px;
-    max-height: 30%;
-    overflow: auto;
+   
+   
+   
+   
   }
   
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 800px) {
     .popup {
-      width: 70%;
+      width: 80%;
+     
     }
   }
 

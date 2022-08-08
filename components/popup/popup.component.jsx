@@ -26,7 +26,14 @@ const CustomPopup = (props) => {
         <span className="close" onClick={closeHandler}>
           &times;
         </span>
-        <div className="content">{props.children}</div>
+        <div
+          style={{
+            height: props.height ? props.height : "auto",
+          }}
+          className="content"
+        >
+          {props.children}
+        </div>
       </div>
     </div>
   );

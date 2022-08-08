@@ -8,42 +8,101 @@ import { showInterest } from "../../context/actions/shipment/shipment.action";
 import React, { useContext } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
+// {
+// showInterestAction,
+// dispatchShipmentAction,
+// pickedUpShipmentAction,
+// deliveredShipmentAction,
+// cancelShipmentAction,
+// archiveShipmentAction,
+// sendRemindEmailAction,
+// contractSignedAction,
+// contractSignedAction,
+// contractAcceptedAction,
+// }
+// = action,
+
+function formatMoney(number, decPlaces, decSep, thouSep) {
+  (decPlaces = isNaN((decPlaces = Math.abs(decPlaces))) ? 2 : decPlaces),
+    (decSep = typeof decSep === "undefined" ? "." : decSep);
+  thouSep = typeof thouSep === "undefined" ? "," : thouSep;
+  var sign = number < 0 ? "-" : "";
+  var i = String(
+    parseInt((number = Math.abs(Number(number) || 0).toFixed(decPlaces)))
+  );
+  var j = (j = i.length) > 3 ? j % 3 : 0;
+
+  return (
+    sign +
+    (j ? i.substr(0, j) + thouSep : "") +
+    i.substr(j).replace(/(\decSep{3})(?=\decSep)/g, "$1" + thouSep) +
+    (decPlaces
+      ? decSep +
+        Math.abs(number - i)
+          .toFixed(decPlaces)
+          .slice(2)
+      : "")
+  );
+}
+
+function format2(n, currency) {
+  return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+}
+
+function format3(n, currency) {
+  return new Intl.NumberFormat("ru", {
+    style: "currency",
+    currency: currency,
+  }).format(n);
+}
+
+function format1(n, currency) {
+  return (
+    currency +
+    Number(n)
+      .toFixed(2)
+      .replace(/./g, function (c, i, a) {
+        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+      })
+  );
+}
 
 export const columns = (
+  loadSpinner,
   params,
   params1,
-  loadSpinner,
   params2 = null,
-  params3 = null
+  params3 = null,
+  params4 = null,
+  params5 = null
 ) => [
   {
     id: 27,
-    name: "Action",
+    name: "",
     sortable: false,
     selector: "null",
     grow: 4,
     cell: (row) => [
-      <></>,
-      //params?.roles === "admin"|| params?.roles === "carrier"||   params?.UserId === row?.UserId
-
       params?.UserId === row?.UserId &&
         params?.roles === "shipper" &&
-        row?.AssignDriverShipment?.IsAssigned !== true && (
-          <Link
-            href={
-              "/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId
-            }
-            passHref
-          >
-            <a
-              className="btn btn-outline-primary"
-              title="Check shipment interests"
+        row?.AssignedShipment !== true && (
+          <div className="col-md-6">
+            <Link
+              href={
+                "/shipment/shipment-interest-list/?shipmentId=" + row.ShipmentId
+              }
+              passHref
             >
-              {" "}
-              <i className="first fas fa-check"></i>Check shipment interests
-              &nbsp;({row?.ShipmentsInteresteds.length})
-            </a>
-          </Link>
+              <a
+                className="btn btn-outline-primary"
+                title="Check shipment interests"
+              >
+                {" "}
+                <i className="first fas fa-check"></i>Check shipment interests
+                &nbsp;({row?.ShipmentsInteresteds.length})
+              </a>
+            </Link>
+          </div>
         ),
 
       params?.roles === "carrier" &&
@@ -55,7 +114,32 @@ export const columns = (
               "/shipment/assign-shipment/?shipmentId=" +
               row.ShipmentId +
               "&companyId=" +
-              params?.CompanyId
+              row?.AssignDriverShipment?.CompanyId +
+              "&driverId=" +
+              row?.AssignDriverShipment?.DriverId +
+              "&action=review&review=review"
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="Check Assignment">
+              <i className="first fas fa-eye"></i>Check Assignment
+            </a>
+          </Link>
+        ),
+
+      params?.roles === "shipper" &&
+        row?.ShipmentStatus !== "NotAssigned" &&
+        // row?.Company?.CompanyId === params?.CompanyId &&
+        row?.AssignDriverShipment?.IsAssigned === true && (
+          <Link
+            href={
+              "/shipment/assign-shipment/?shipmentId=" +
+              row.ShipmentId +
+              "&companyId=" +
+              row?.AssignDriverShipment?.CompanyId +
+              "&driverId=" +
+              row?.AssignDriverShipment?.DriverId +
+              "&action=review&review=review"
             }
             passHref
           >
@@ -82,11 +166,10 @@ export const columns = (
             </a>
           </Link>
         ),
-
+      // row?.AssignDriverShipment?.AssignedToDriver === params?.UserId &&
       params?.roles === "driver" &&
         row?.ShipmentStatus === "Assigned" &&
-        row?.AssignDriverShipment?.IsAssigned === true &&
-        row?.AssignDriverShipment?.AssignedToDriver === params?.UserId && (
+        row?.AssignDriverShipment?.IsAssigned === true && (
           <>
             <button
               type="button"
@@ -98,7 +181,7 @@ export const columns = (
                 params.UserId
               )}
             >
-              {loadSpinner ? (
+              {loadSpinner.loadDispatch ? (
                 <>
                   {" "}
                   <i className="fa fa-spinner fa-spin"></i> Processing
@@ -117,10 +200,10 @@ export const columns = (
           </>
         ),
 
-      params?.roles === "driver" &&
+      //  row?.AssignDriverShipment?.AssignedToDriver === params?.UserId &&
+      params?.roles === "shipper" &&
         row?.ShipmentStatus === "Dispatched" &&
-        row?.AssignDriverShipment?.IsAssigned === true &&
-        row?.AssignDriverShipment?.AssignedToDriver === params?.UserId && (
+        row?.AssignDriverShipment?.IsAssigned === true && (
           <>
             <button
               type="button"
@@ -128,11 +211,12 @@ export const columns = (
               onClick={params1.bind(
                 this,
                 row.ShipmentId,
-                params.CompanyId,
-                params.UserId
+                row?.AssignDriverShipment?.CompanyId,
+                params.UserId,
+                params.roles
               )}
             >
-              {loadSpinner ? (
+              {loadSpinner.loadPickedUp ? (
                 <>
                   {" "}
                   <i className="fa fa-spinner fa-spin"></i> Processing
@@ -144,7 +228,41 @@ export const columns = (
                     title="PickUp Shipment"
                     className="first fas fa-paper-plane"
                   ></i>
-                  PickUp Shipment
+                  Start PickUp Shipment
+                </>
+              )}
+            </button>
+          </>
+        ),
+
+      params?.roles === "driver" &&
+        row?.ShipmentStatus === "Dispatched" &&
+        row?.AssignDriverShipment?.IsAssigned === true && (
+          <>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={params1.bind(
+                this,
+                row.ShipmentId,
+                row?.AssignDriverShipment?.CompanyId,
+                params.UserId,
+                params.roles
+              )}
+            >
+              {loadSpinner.loadPickedUp ? (
+                <>
+                  {" "}
+                  <i className="fa fa-spinner fa-spin"></i> Processing
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <i
+                    title="Confirm PickUp Shipment"
+                    className="first fas fa-paper-plane"
+                  ></i>
+                  Confirm PickUp Shipment
                 </>
               )}
             </button>
@@ -163,10 +281,11 @@ export const columns = (
                 this,
                 row.ShipmentId,
                 params.CompanyId,
-                params.UserId
+                params.UserId,
+                params.roles
               )}
             >
-              {loadSpinner ? (
+              {loadSpinner.loadDelivered ? (
                 <>
                   {" "}
                   <i className="fa fa-spinner fa-spin"></i> Processing
@@ -185,33 +304,45 @@ export const columns = (
           </>
         ),
 
-      params?.roles === "shipper" && row?.ShipmentStatus !== "NotAssigned" && (
-        <>
-          <button
-            type="button"
-            className="btn btn-outline-primary"
-            onClick={params1.bind(
-              this,
-              row.ShipmentId,
-              params.CompanyId,
-              params.UserId
-            )}
-          >
-            {loadSpinner ? (
-              <>
-                {" "}
-                <i className="fa fa-spinner fa-spin"></i> Processing
-              </>
-            ) : (
-              <>
-                {" "}
-                <i title="Place interest" className="first fas fa-times"></i>
-                Cancel Shipment
-              </>
-            )}
-          </button>
-        </>
-      ),
+      params?.roles === "shipper" &&
+        row?.ShipmentStatus === "Delivered" &&
+        //  row?.AssignDriverShipment?.IsAssigned === true &&
+        row?.TrackShipments.find(
+          (item) =>
+            item.EndAction !== "ConfirmDelivered" &&
+            item.StartAction === "Delivered"
+        ) && (
+          <>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={params1.bind(
+                this,
+                row.ShipmentId,
+                params.CompanyId,
+                params.UserId,
+                params.roles
+              )}
+            >
+              {loadSpinner.loadDelivered ? (
+                <>
+                  {" "}
+                  <i className="fa fa-spinner fa-spin"></i> Processing
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <i
+                    title="Place interest"
+                    className="first fas fa-paper-plane"
+                  ></i>
+                  Confirm Delivered Shipment
+                </>
+              )}
+            </button>
+          </>
+        ),
+
       params?.roles === "shipper" &&
         row?.ShipmentStatus === "Assigned" &&
         row?.AssignDriverShipment?.IsAssigned === true && (
@@ -231,12 +362,13 @@ export const columns = (
         ),
       params?.roles === "carrier" &&
         row?.ShipmentStatus === "Assigned" &&
+        row?.AssignShipment?.IsContractAccepted === true &&
         row?.AssignDriverShipment?.IsAssigned !== true && (
           <Link
             href={
               "/shipment/assign-shipment/?shipmentId=" +
               row.ShipmentId +
-              "&action=company&companyId=" +
+              "&action=driver&companyId=" +
               params?.CompanyId
             }
             passHref
@@ -258,7 +390,7 @@ export const columns = (
               params.UserId
             )}
           >
-            {loadSpinner ? (
+            {loadSpinner.loadInterest ? (
               <>
                 {" "}
                 <i className="fa fa-spinner fa-spin"></i> Processing
@@ -267,7 +399,9 @@ export const columns = (
               <>
                 {" "}
                 {row?.ShipmentsInteresteds.filter(
-                  (item) => item?.UserId === params?.UserId
+                  (item) =>
+                    item?.UserId === params?.UserId &&
+                    item?.IsInterested === true
                 ).length > 0 ? (
                   <>
                     <i
@@ -291,93 +425,107 @@ export const columns = (
         </>
       ),
 
-      params?.roles === "shipper" && row?.ShipmentStatus === "NotAssigned" && (
-        <Link
-          href={"/shipment/shipment-action/?shipmentId=" + row.ShipmentId}
-          passHref
-        >
-          <a className="btn btn-outline-primary" title="Edit Shipment">
-            <i className="first fas fa-pen"></i>Edit Shipment
-          </a>
-        </Link>
-      ),
-
-      params?.roles === "shipper" && (
-        <>
-          <button
-            type="button"
-            className="btn btn-outline-primary"
-            onClick={params2.bind(this, row.ShipmentId)}
-          >
-            {loadSpinner ? (
-              <>
-                {" "}
-                <i className="fa fa-spinner fa-spin"></i> Processing
-              </>
-            ) : (
-              <>
-                {" "}
-                {row?.IsAchived === true ? (
+      params?.roles === "shipper" &&
+        row?.AssignShipment?.IsContractSigned === false && (
+          <>
+            <div className="col-md-6">
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={params3.bind(
+                  this,
+                  row.ShipmentId,
+                  row?.AssignShipment?.CompanyId,
+                  row.UserId
+                )}
+              >
+                {loadSpinner.loadRemind ? (
                   <>
-                    <i title="Show Record" className="first fas fa-eye"></i>{" "}
-                    Show Record{" "}
+                    {" "}
+                    <i className="fa fa-spinner fa-spin"></i> Processing
                   </>
                 ) : (
                   <>
+                    {" "}
                     <i
                       title="Archive Record"
-                      className="first fas fa-archive"
+                      className="first fas fa-envelope-open"
                     ></i>
-                    Archive Record{" "}
+                    Send Remind Email{" "}
                   </>
                 )}
-              </>
-            )}
-          </button>
-        </>
-      ),
-
+              </button>
+            </div>
+          </>
+        ),
       params?.roles === "shipper" &&
-        row?.AssignShipment.IsContractSigned === false && (
+        row?.AssignShipment?.IsContractSigned === false && (
           <>
-            <button
-              type="button"
-              className="btn btn-outline-primary"
-              onClick={params3.bind(this, row.ShipmentId, params.CompanyId)}
-            >
-              {loadSpinner ? (
-                <>
-                  {" "}
-                  <i className="fa fa-spinner fa-envelope-open"></i> Processing
-                </>
-              ) : (
-                <>
-                  <i
-                    title="Archive Record"
-                    className="first fas fa-archive"
-                  ></i>{" "}
-                  Send Remind Email
-                </>
-              )}
-            </button>
+            <div className="col-md-6">
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={params4.bind(
+                  this,
+                  row.ShipmentId,
+                  row?.AssignShipment?.CompanyId,
+                  row.UserId
+                )}
+              >
+                {loadSpinner.loadSigned ? (
+                  <>
+                    {" "}
+                    <i className="fa fa-spinner fa-spin"></i> Processing
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <i
+                      title="Archive Record"
+                      className="first fas fa-check"
+                    ></i>
+                    Confirm Contract Signed{" "}
+                  </>
+                )}
+              </button>
+            </div>
           </>
         ),
 
-      params?.roles === "admin" && (
-        <Link
-          href={
-            "/delete-data/?tbl=Shipments&fld=ShipmentId&val=" + row.ShipmentId
-          }
-          passHref
-        >
-          <a
-            className="btn btn-sm"
-            title="Delete/Archive (Redundant/Incorrect data)"
-          >
-            <i className="fas fa-trash-alt"></i>
-          </a>
-        </Link>
-      ),
+      params?.roles === "shipper" &&
+        row?.AssignShipment?.IsContractSigned === true &&
+        row?.AssignShipment?.IsContractAccepted === false && (
+          <>
+            <div className="col-md-6">
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={params5.bind(
+                  this,
+                  row.ShipmentId,
+                  row?.AssignShipment?.CompanyId,
+                  row.UserId
+                )}
+              >
+                {loadSpinner.loadAccept ? (
+                  <>
+                    {" "}
+                    <i className="fa fa-spinner fa-spin"></i> Processing
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <i
+                      title="Accept Dispatch Contract"
+                      className="first fas fa-check-circle-o"
+                    ></i>
+                    Accept Dispatch Contract{" "}
+                  </>
+                )}
+              </button>
+            </div>
+          </>
+        ),
     ],
   },
 
@@ -392,15 +540,35 @@ export const columns = (
     id: 2,
     name: "Company",
     selector: (row) => row?.Company?.CompanyName,
+    cell: (row) => (
+      <div
+        style={{
+          fontWeight: "bold",
+        }}
+      >
+        {row?.Company?.CompanyName}
+      </div>
+    ),
     sortable: true,
     reorder: true,
   },
   {
     id: 27,
     name: "Price Offer",
-    selector: (row) => row?.ShipmentRequestPrice,
     sortable: true,
     reorder: true,
+    grow: 2,
+    cell: (row) => (
+      <div
+        style={{
+          fontWeight: "bold",
+        }}
+      >
+        {row?.ShipmentRequestPrice
+          ? format1(Number(row?.ShipmentRequestPrice).toFixed(1), "NGN")
+          : row?.ShipmentRequestPrice}{" "}
+      </div>
+    ),
   },
   // {
   //   id: 3,
@@ -414,10 +582,15 @@ export const columns = (
     id: 4,
     name: "Shipment Item(s)",
     maxWidth: "350px",
+    grow: 3,
+    style: {
+      backgroundColor: "rgba(63, 195, 128, 0.9)",
+    },
     cell: (row) => (
       <div
         style={{
-          color: "grey",
+          fontWeight: "bold",
+          color: "white",
           overflow: "hidden",
           whiteSpace: "wrap",
           textOverflow: "ellipses",
@@ -425,17 +598,33 @@ export const columns = (
       >
         {row.ShipmentDetails.map((detail, i) => (
           <div key={i}>
-            Type-{detail?.VehicleType}
-            <br />
-            VIN-{detail?.VIN}
-            <br />
-            Make-{detail?.VehicleMake}
-            <br />
-            Model-{detail?.VehicleModel}
-            <br />
-            Color-{detail?.VehicleColor}
-            <br />
-            Year-{detail?.VehicleModelYear}
+            <div>
+              {" "}
+              Type-{detail?.VehicleType}
+              <br />
+              VIN-{detail?.VIN}
+            </div>
+            <div>
+              Make-
+              {detail?.VehicleMake}
+            </div>
+
+            <div>
+              Model-
+              {detail?.VehicleModel}
+            </div>
+
+            <div>
+              {" "}
+              Color-
+              {detail?.VehicleColor}
+            </div>
+
+            <div>
+              Year-
+              {detail?.VehicleModelYear}
+            </div>
+
             <br />
             <p></p>
           </div>
@@ -636,4 +825,102 @@ export const columns = (
       right: true,
       reorder: true,
     }),
+
+  {
+    id: 28,
+    name: "",
+
+    right: true,
+    grow: 3,
+    cell: (row) => [
+      params?.roles === "shipper" && row?.ShipmentStatus === "Assigned" && (
+        <>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={params1.bind(
+              this,
+              row.ShipmentId,
+              params.CompanyId,
+              params.UserId
+            )}
+          >
+            {loadSpinner.loadCancel ? (
+              <>
+                {" "}
+                <i className="fa fa-spinner fa-spin"></i> Processing
+              </>
+            ) : (
+              <>
+                {" "}
+                <i title="Place interest" className="first fas fa-times"></i>
+                Cancel Shipment
+              </>
+            )}
+          </button>
+        </>
+      ),
+      params?.roles === "shipper" && (
+        <>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={params2.bind(this, row.ShipmentId)}
+          >
+            {loadSpinner.loadArchive ? (
+              <>
+                {" "}
+                <i className="fa fa-spinner fa-spin"></i> Processing
+              </>
+            ) : (
+              <>
+                {" "}
+                {row?.IsArchived === true ? (
+                  <>
+                    <i title="Show Record" className="first fas fa-eye"></i>{" "}
+                    Show Record{" "}
+                  </>
+                ) : (
+                  <>
+                    <i
+                      title="Archive Record"
+                      className="first fas fa-archive"
+                    ></i>
+                    Archive Record{" "}
+                  </>
+                )}
+              </>
+            )}
+          </button>
+        </>
+      ),
+
+      params?.roles === "shipper" && row?.ShipmentStatus === "NotAssigned" && (
+        <Link
+          href={"/shipment/shipment-action/?shipmentId=" + row.ShipmentId}
+          passHref
+        >
+          <a className="btn btn-outline-primary" title="Edit Shipment">
+            <i className="first fas fa-pen"></i>Edit Shipment
+          </a>
+        </Link>
+      ),
+
+      params?.roles === "admin" && (
+        <Link
+          href={
+            "/delete-data/?tbl=Shipments&fld=ShipmentId&val=" + row.ShipmentId
+          }
+          passHref
+        >
+          <a
+            className="btn btn-sm"
+            title="Delete/Archive (Redundant/Incorrect data)"
+          >
+            <i className="fas fa-trash-alt"></i>
+          </a>
+        </Link>
+      ),
+    ],
+  },
 ];

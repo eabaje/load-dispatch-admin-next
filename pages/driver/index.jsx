@@ -130,7 +130,12 @@ function ListDriver({ query }) {
                 </a>
               </h1>
               {visibilityFile && (
-                <CustomPopup onClose={popupCloseHandler} show={open}>
+                <CustomPopup
+                  onClose={popupCloseHandler}
+                  show={open}
+                  width={"400px"}
+                  height={"400px"}
+                >
                   <div className="col-md-12 ">
                     <form
                       encType="multipart/form-data"

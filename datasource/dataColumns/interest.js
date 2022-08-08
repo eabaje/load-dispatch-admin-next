@@ -29,7 +29,7 @@ import axios from "axios";
 //   }
 // };
 //console.log("shipmentId", loadSpinner);
-export const columns = (params, params1, loadSpinner) => [
+export const columns = (params, params1, loadSpinner, params2 = null) => [
   {
     name: "Action",
     sortable: false,
@@ -79,7 +79,7 @@ export const columns = (params, params1, loadSpinner) => [
                   title="Assign Shipment"
                   className="first fas fa-briefcase"
                 ></i>{" "}
-                {row?.Shipment?.ShipmentStatus === "Assigned"
+                {row?.Shipment?.ShipmentStatus === "Assigned" && !loadSpinner
                   ? " UnAssign Shipment"
                   : "Assign Shipment"}
               </>
@@ -116,7 +116,13 @@ export const columns = (params, params1, loadSpinner) => [
       <>
         {" "}
         <div>
-          <Link href={"/shipment/?isReadOnly=" + row.ShipmentId}>
+          <Link
+            href={
+              "/shipment/assign-shipment/?shipmentId=" +
+              row.ShipmentId +
+              "&isReadOnly=readOnly"
+            }
+          >
             <a
               className="btn btn-sm"
               title="click to shipment info"
@@ -153,7 +159,8 @@ export const columns = (params, params1, loadSpinner) => [
             rel="noopener noreferrer"
           >
             {" "}
-            {row.User?.FullName}{" "}
+            {row.Company?.CompanyName} <br />
+            {"Contact"}-{row.User?.FullName}
           </a>
         </Link>
       </>,

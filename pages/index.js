@@ -45,17 +45,17 @@ function Login() {
     //  console.log("state:", formdata);
 
     signin2(formdata)(authDispatch)((res) => {
-      res.user.isConfirmed === true
-        ? res.user.isActivated === true
-          ? router.push(`/dashboard/`)
-          : res.user.roles === "carrier"
-          ? (window.location.href = `/carrier/`)
-          : res.user.roles === "shipper"
-          ? (window.location.href = `/shipment/`)
-          : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}&companyId=${res.user.CompanyId}`)
-        : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}&companyId=${res.user.CompanyId}`);
+      // res.user.isConfirmed === true
+      //   ? res.user.isActivated === true
+      //     ? router.push(`/dashboard/`)
+      //     : res.user.roles === "carrier"
+      //     ? (window.location.href = `/carrier/`)
+      //     : res.user.roles === "shipper"
+      //     ? (window.location.href = `/shipment/`)
+      //     : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}&companyId=${res.user.CompanyId}`)
+      //   : (window.location.href = `/user/user-profile/?userId=${res.user.UserId}&companyId=${res.user.CompanyId}`);
 
-      //  window.location.href = '/dashboard/'
+      window.location.href = "/dashboard/";
       // history.push("/dashboard");
     })((err) => {
       console.log(`err`, err);

@@ -20,8 +20,10 @@ import { GlobalContext } from "../../context/Provider";
 import { listDriversByCompany } from "../../context/actions/driver/driver.action";
 import dynamic from "next/dynamic";
 import MainLayout from "../../layout/mainLayout";
+import { useRouter } from "next/router";
 
 const AssignShipment = ({ query }) => {
+  const router = useRouter();
   const { shipmentId, companyId, driverId, review, action } = query;
   // const { SubscribeId } = match.params;
   const isAddMode = !shipmentId;
@@ -57,6 +59,7 @@ const AssignShipment = ({ query }) => {
   const [formStep, setFormStep] = useState(0);
   const [refId, setRefId] = useState("");
   const [driverName, setDriverName] = useState("");
+  const [driverCompany, setDriverCompany] = useState("");
   // const onSubmit = (data) => console.log(data);
 
   const selectPickUpCountry = async (e) => {
@@ -94,6 +97,7 @@ const AssignShipment = ({ query }) => {
         driverId
       )((res) => {
         setDriverName(res.DriverName);
+        setDriverCompany(res.Company.CompanyName);
       })((err) => {
         toast.error(err);
       });
@@ -167,6 +171,17 @@ const AssignShipment = ({ query }) => {
     control,
   } = useForm();
 
+  function redirectPage() {
+    setTimeout(() => {
+      toast.dismiss();
+      user.roles === "carrier"
+        ? router.push(`/shipment/?companyId=${user.CompanyId}`)
+        : user.roles === "shipper"
+        ? router.push(`/shipment/?userId=${user.UserId}`)
+        : router.push(`/shipment/?companyId=${user.CompanyId}`);
+    }, 5000);
+  }
+
   function onSubmit(formdata) {
     AssignShipmentToDriver(formdata);
   }
@@ -178,6 +193,7 @@ const AssignShipment = ({ query }) => {
     AssignShipmentsToDriver(formdata)(shipmentDispatch)((res) => {
       if (res) {
         toast.success(res.message);
+        redirectPage();
       }
     })((error) => {
       toast.error(error);
@@ -185,7 +201,7 @@ const AssignShipment = ({ query }) => {
   }
 
   console.log(`readOnly`, readOnly);
-  console.log("ShipmentInfo", shipmentInfo);
+  console.log("ShipmentInfo", driverdata);
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
     return (
       <div className="input-group mb-3">
@@ -258,6 +274,14 @@ const AssignShipment = ({ query }) => {
                         <div className="col-md-4">
                           <label className=" col-form-label">
                             {driverName}
+                          </label>
+                        </div>
+                        <label className="col-sm-2 col-form-label">
+                          Company
+                        </label>
+                        <div className="col-md-4">
+                          <label className=" col-form-label">
+                            {driverCompany}
                           </label>
                         </div>
                       </div>
@@ -685,7 +709,7 @@ const AssignShipment = ({ query }) => {
                   </div>
 
                   <div className="form-group"></div>
-                  {action && (
+                  {action === "driver" && (
                     <div className="form-group row">
                       <div className="col-md-10">
                         <button

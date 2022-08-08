@@ -28,6 +28,16 @@ export const TRIP_STATUS = [
   { value: "Delivered", text: "Delivered Shipment" },
   { value: "Cancelled", text: "Cancelled Shipment" },
 ];
+export const TRACK_SHIPMENT_STATUS = [
+  { value: "NotAssigned", text: "Not Assigned" },
+  { value: "Assigned", text: "Assigned" },
+  { value: "Dispatched", text: "Dispatched Shipment" },
+  { value: "SubmitForPickedUp", text: "Submit for Picked Up" },
+  { value: "ConfirmPickedUp", text: "Confirm Picked Up" },
+  { value: "Delivered", text: "Delivered Shipment" },
+  { value: "ConfirmDelivered", text: "Confirmed Delivered Delivery" },
+  { value: "Cancelled", text: "Cancelled Shipment" },
+];
 export const LOAD_CAPACITY = [
   { value: "LowCapacity", text: "Low Capacity 2000" },
   { value: "HeavyCapacity", text: "Heavy Capacity 25000" },

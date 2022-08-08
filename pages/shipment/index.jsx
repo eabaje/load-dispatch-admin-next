@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import { useRouter } from "next/router";
-
 import { columns } from "../../datasource/dataColumns/shipment";
 import { GlobalContext } from "../../context/Provider";
 import { listShipments } from "../../context/actions/shipment/shipment.action";
@@ -22,7 +21,30 @@ function ListShipment({ query }) {
   // const [user, setUser] = useState({});
   const [show, setShow] = useState(false);
   const [shipmentName, setshipmentName] = useState("");
-  const [loadSpinner, setLoadSpinner] = useState(false);
+  const [LoadSpinner, setLoadSpinner] = useState({
+    loadInterest: false,
+    loadListing: false,
+    loadAssign: false,
+    loadDispatch: false,
+    loadPickedUp: false,
+    loadDelivery: false,
+    loadCancel: false,
+    loadArchive: false,
+    loadRemind: false,
+    loadAccept: false,
+  });
+
+  const [action, setAction] = useState({
+    showInterestAction: showInterestAction,
+    dispatchShipmentAction: dispatchShipmentAction,
+    pickedUpShipmentAction: pickedUpShipmentAction,
+    deliveredShipmentAction: deliveredShipmentAction,
+    cancelShipmentAction: cancelShipmentAction,
+    archiveShipmentAction: archiveShipmentAction,
+    sendRemindEmailAction: sendRemindEmailAction,
+    contractSignedAction: contractSignedAction,
+    contractAcceptedAction: contractAcceptedAction,
+  });
   const [shipmentId, setshipmentId] = useState("");
   const {
     authState: { user },
@@ -40,8 +62,19 @@ function ListShipment({ query }) {
     setShow(!show);
   }
 
+  function redirectPage() {
+    setTimeout(() => {
+      toast.dismiss();
+      user.roles === "carrier"
+        ? router.reload(`/shipment/?companyId=${user.CompanyId}`)
+        : user.roles === "shipper"
+        ? router.reload(`/shipment/?userId=${user.UserId}`)
+        : router.reload(`/shipment/?companyId=${user.CompanyId}`);
+    }, 5000);
+  }
+
   const showInterestAction = async (shipmentId, companyId, userId) => {
-    setLoadSpinner(true);
+    setLoadSpinner({ loadInterest: false });
     const data = {
       ShipmentId: shipmentId,
       CompanyId: companyId,
@@ -54,16 +87,18 @@ function ListShipment({ query }) {
 
       if (res) {
         toast.success(res.data.message);
-        setLoadSpinner(false);
+        setLoadSpinner({ loadInterest: false });
+
+        redirectPage();
       }
     } catch (err) {
       toast.error(err.message);
-      setLoadSpinner(false);
+      setLoadSpinner({ loadInterest: false });
     }
   };
 
   const dispatchShipmentAction = async (shipmentId, companyId, userId) => {
-    setLoadSpinner(true);
+    setLoadSpinner({ loadDispatch: true });
     const data = {
       ShipmentId: shipmentId,
       CompanyId: companyId,
@@ -76,42 +111,56 @@ function ListShipment({ query }) {
 
       if (res) {
         toast.success(res.data.message);
-        setLoadSpinner(false);
+        setLoadSpinner({ loadDispatch: false });
+        redirectPage();
       }
     } catch (err) {
       toast.error(err.message);
-      setLoadSpinner(false);
+      setLoadSpinner({ loadDispatch: false });
     }
   };
 
-  const pickedUpShipmentAction = async (shipmentId, companyId, userId) => {
-    setLoadSpinner(true);
+  const pickedUpShipmentAction = async (
+    shipmentId,
+    companyId,
+    userId,
+    roles
+  ) => {
+    setLoadSpinner({ loadPickedUp: true });
     const data = {
       ShipmentId: shipmentId,
       CompanyId: companyId,
       UserId: userId,
+      Role: roles,
     };
 
     try {
       console.log("shipmentId", data);
-      const res = await axios.post(`${API_URL}shipment/pickUpShipment`, data);
+      const res = await axios.post(`${API_URL}shipment/pickedUpShipment`, data);
 
       if (res) {
         toast.success(res.data.message);
-        setLoadSpinner(false);
+        setLoadSpinner({ loadPickedUp: false });
+        redirectPage();
       }
     } catch (err) {
       toast.error(err.message);
-      setLoadSpinner(false);
+      setLoadSpinner({ loadPickedUp: false });
     }
   };
 
-  const deliveredShipmentAction = async (shipmentId, companyId, userId) => {
-    setLoadSpinner(true);
+  const deliveredShipmentAction = async (
+    shipmentId,
+    companyId,
+    userId,
+    roles
+  ) => {
+    setLoadSpinner({ loadDelivered: true });
     const data = {
       ShipmentId: shipmentId,
       CompanyId: companyId,
       UserId: userId,
+      Role: roles,
     };
 
     try {
@@ -123,16 +172,17 @@ function ListShipment({ query }) {
 
       if (res) {
         toast.success(res.data.message);
-        setLoadSpinner(false);
+        setLoadSpinner({ loadDelivered: false });
+        redirectPage();
       }
     } catch (err) {
       toast.error(err.message);
-      setLoadSpinner(false);
+      setLoadSpinner({ loadDelivered: false });
     }
   };
 
   const cancelShipmentAction = async (shipmentId, companyId, userId) => {
-    setLoadSpinner(true);
+    setLoadSpinner({ loadCancel: true });
     const data = {
       ShipmentId: shipmentId,
       CompanyId: companyId,
@@ -145,16 +195,17 @@ function ListShipment({ query }) {
 
       if (res) {
         toast.success(res.data.message);
-        setLoadSpinner(false);
+        setLoadSpinner({ loadCancel: false });
+        redirectPage();
       }
     } catch (err) {
       toast.error(err.message);
-      setLoadSpinner(false);
+      setLoadSpinner({ loadCancel: false });
     }
   };
 
-  const ArchiveShipmentAction = async (shipmentId) => {
-    setLoadSpinner(true);
+  const archiveShipmentAction = async (shipmentId) => {
+    setLoadSpinner({ loadArchive: true });
     const data = {
       ShipmentId: shipmentId,
     };
@@ -165,11 +216,81 @@ function ListShipment({ query }) {
 
       if (res) {
         toast.success(res.data.message);
-        setLoadSpinner(false);
+        setLoadSpinner({ loadArchive: false });
+        redirectPage();
       }
     } catch (err) {
       toast.error(err.message);
-      setLoadSpinner(false);
+      setLoadSpinner({ loadArchive: false });
+    }
+  };
+
+  const sendRemindEmailAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner({ loadRemind: true });
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/sendRemindEmail`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner({ loadRemind: false });
+        redirectPage();
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner({ loadRemind: false });
+    }
+  };
+
+  const contractSignedAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner({ loadSigned: true });
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/contractSigned`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner({ loadSigned: false });
+        redirectPage();
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner({ loadSigned: false });
+    }
+  };
+
+  const contractAcceptedAction = async (shipmentId, companyId, userId) => {
+    setLoadSpinner({ loadAccepted: true });
+    const data = {
+      ShipmentId: shipmentId,
+      CompanyId: companyId,
+      UserId: userId,
+    };
+
+    try {
+      console.log("shipmentId", data);
+      const res = await axios.post(`${API_URL}shipment/contractAccepted`, data);
+
+      if (res) {
+        toast.success(res.data.message);
+        setLoadSpinner({ loadAccepted: false });
+        redirectPage();
+      }
+    } catch (err) {
+      toast.error(err.message);
+      setLoadSpinner({ loadAccepted: false });
     }
   };
 
@@ -203,12 +324,7 @@ function ListShipment({ query }) {
         <div className="card">
           <div className="card-header alert alert-info">
             <h3>List of Shipments</h3>
-            <hr />
-            <ul>
-              <li>Edit and delete Shipments</li>
-              <li>Make Request for onboarding services</li>
-              <li>View interest for your shipment</li>
-            </ul>
+
             {user.roles === "shipper" && (
               <h1 className="my-5">
                 <NextLink href="/shipment/shipment-action/" passHref>
@@ -233,13 +349,18 @@ function ListShipment({ query }) {
                     aria-selected="true"
                   >
                     Listing (
-                    {
-                      data.data?.filter(
-                        (item) =>
-                          item?.IsArchived === false &&
-                          item?.ShipmentStatus === "NotAssigned"
-                      ).length
-                    }
+                    {userId
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.UserId === userId &&
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "NotAssigned"
+                        ).length
+                      : data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "NotAssigned"
+                        ).length}
                     )
                   </a>
                 </li>
@@ -254,14 +375,25 @@ function ListShipment({ query }) {
                     aria-selected="false"
                   >
                     Assigned (
-                    {
-                      data.data?.filter(
-                        (item) =>
-                          item?.ShipmentStatus === "Assigned" &&
-                          item?.IsArchived === false &&
-                          item?.AssignedCarrier === parseInt(companyId)
-                      ).length
-                    }
+                    {userId
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.UserId === userId &&
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "Assigned"
+                        ).length
+                      : role
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "Assigned"
+                        ).length
+                      : data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "Assigned" &&
+                            item?.AssignedCarrier === parseInt(companyId)
+                        ).length}
                     )
                   </a>
                 </li>
@@ -276,14 +408,25 @@ function ListShipment({ query }) {
                     aria-selected="false"
                   >
                     Dispatched (
-                    {
-                      data.data?.filter(
-                        (item) =>
-                          item?.ShipmentStatus === "Dispatched" &&
-                          item?.IsArchived === false &&
-                          item?.AssignedCarrier === parseInt(companyId)
-                      ).length
-                    }
+                    {userId
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.UserId === userId &&
+                            item?.ShipmentStatus === "Dispatched"
+                        ).length
+                      : role
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "Dispatched"
+                        ).length
+                      : data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.AssignedCarrier === parseInt(companyId) &&
+                            item?.ShipmentStatus === "Dispatched"
+                        ).length}
                     )
                   </a>
                 </li>
@@ -298,14 +441,25 @@ function ListShipment({ query }) {
                     aria-selected="false"
                   >
                     Picked Up (
-                    {
-                      data.data?.filter(
-                        (item) =>
-                          item?.ShipmentStatus === "Arrived" &&
-                          item?.IsArchived === false &&
-                          item?.AssignedCarrier === parseInt(companyId)
-                      ).length
-                    }
+                    {userId
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.UserId === userId &&
+                            item?.ShipmentStatus === "PickedUp"
+                        ).length
+                      : role
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "PickedUp"
+                        ).length
+                      : data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.AssignedCarrier === parseInt(companyId) &&
+                            item?.ShipmentStatus === "PickedUp"
+                        ).length}
                     )
                   </a>
                 </li>
@@ -320,14 +474,25 @@ function ListShipment({ query }) {
                     aria-selected="false"
                   >
                     Delivered (
-                    {
-                      data.data?.filter(
-                        (item) =>
-                          item?.ShipmentStatus === "Delivered" &&
-                          item?.IsArchived === false &&
-                          item?.AssignedCarrier === parseInt(companyId)
-                      ).length
-                    }
+                    {userId
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.UserId === userId &&
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "Delivered"
+                        ).length
+                      : role
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "Delivered"
+                        ).length
+                      : data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.AssignedCarrier === parseInt(companyId) &&
+                            item?.ShipmentStatus === "Delivered"
+                        ).length}
                     )
                   </a>
                 </li>
@@ -342,13 +507,25 @@ function ListShipment({ query }) {
                     aria-selected="false"
                   >
                     Cancelled (
-                    {
-                      data.data?.filter(
-                        (item) =>
-                          item?.IsArchived === false &&
-                          item?.ShipmentStatus === "Cancelled"
-                      ).length
-                    }
+                    {userId
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.UserId === userId &&
+                            item?.ShipmentStatus === "Cancelled"
+                        ).length
+                      : role
+                      ? data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.ShipmentStatus === "Cancelled"
+                        ).length
+                      : data.data?.filter(
+                          (item) =>
+                            item?.IsArchived === false &&
+                            item?.AssignedCarrier === parseInt(companyId) &&
+                            item?.ShipmentStatus === "Cancelled"
+                        ).length}
                     )
                   </a>
                 </li>
@@ -378,7 +555,7 @@ function ListShipment({ query }) {
 
                     <hr />
 
-                    <div class="row">
+                    {/* <div class="row">
                       <div class="col-lg-6 col-md-7 col-sm-8 margin-bottom-10">
                         <form id="searchForm" class="form-inline">
                           <div class="form-group">
@@ -407,14 +584,14 @@ function ListShipment({ query }) {
                           </div>
                         </form>
                       </div>
-                    </div>
+                    </div> */}
                     <Datatable
                       loading={loading}
                       col={columns(
+                        LoadSpinner,
                         user,
                         showInterestAction,
-                        loadSpinner,
-                        ArchiveShipmentAction
+                        archiveShipmentAction
                       )}
                       data={
                         userId
@@ -453,10 +630,13 @@ function ListShipment({ query }) {
                     <Datatable
                       loading={loading}
                       col={columns(
+                        LoadSpinner,
                         user,
                         dispatchShipmentAction,
-                        loadSpinner,
-                        ArchiveShipmentAction
+                        archiveShipmentAction,
+                        sendRemindEmailAction,
+                        contractSignedAction,
+                        contractAcceptedAction
                       )}
                       data={
                         userId
@@ -499,10 +679,10 @@ function ListShipment({ query }) {
                     <Datatable
                       loading={loading}
                       col={columns(
+                        LoadSpinner,
                         user,
                         pickedUpShipmentAction,
-                        loadSpinner,
-                        ArchiveShipmentAction
+                        archiveShipmentAction
                       )}
                       data={
                         userId
@@ -546,10 +726,10 @@ function ListShipment({ query }) {
                     <Datatable
                       loading={loading}
                       col={columns(
+                        LoadSpinner,
                         user,
                         deliveredShipmentAction,
-                        loadSpinner,
-                        ArchiveShipmentAction
+                        archiveShipmentAction
                       )}
                       data={
                         userId
@@ -597,10 +777,10 @@ function ListShipment({ query }) {
                     <Datatable
                       loading={loading}
                       col={columns(
+                        LoadSpinner,
                         user,
-                        cancelShipmentAction,
-                        loadSpinner,
-                        ArchiveShipmentAction
+                        deliveredShipmentAction,
+                        archiveShipmentAction
                       )}
                       data={
                         userId
@@ -647,10 +827,10 @@ function ListShipment({ query }) {
                     <Datatable
                       loading={loading}
                       col={columns(
+                        LoadSpinner,
                         user,
                         showInterestAction,
-                        loadSpinner,
-                        ArchiveShipmentAction
+                        archiveShipmentAction
                       )}
                       data={
                         userId

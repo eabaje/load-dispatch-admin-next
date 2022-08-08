@@ -53,7 +53,25 @@ export const listShipmentsByShipmentId =
         onError(message);
       });
   };
+export const listShipmentsByUserId =
+  (userId) => (dispatch) => (onSuccess) => (onError) => {
+    dispatch({
+      type: GET_SHIPMENTS_REQUEST,
+    });
+    axiosInstance()
+      .get(`/shipment/findAll/${userId}`)
+      .then((res) => {
+        dispatch({ type: GET_SHIPMENTS_SUCCESS, payload: res.data });
+        console.log(`res.data`, res.data);
+        onSuccess(res.data);
+      })
 
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: GET_SHIPMENTS_FAIL, payload: message });
+        onError(message);
+      });
+  };
 export const listShipmentsByDate = (fromDate, endDate) => async (dispatch) => {
   dispatch({
     type: GET_SHIPMENTS_REQUEST,

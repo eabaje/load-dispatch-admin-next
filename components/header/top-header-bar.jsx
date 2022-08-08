@@ -67,36 +67,6 @@ function TopHeaderBar() {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ml-auto">
             <li>
-              <div className="dropdown">
-                <a className="dropdown-toggle" href="#" data-toggle="dropdown">
-                  <i
-                    className="icon feather icon-search"
-                    title=" Search Carrier Info"
-                  ></i>
-                </a>
-                <div className="dropdown-menu dropdown-menu-right notification">
-                  <div className="noti-head">
-                    <h6 className="d-inline-block m-b-0">
-                      Search Carrier Info
-                    </h6>
-                  </div>
-                  <div className="noti-body">
-                    <input
-                      type="text"
-                      name="txtSearch"
-                      className="form-control border-0 shadow-none"
-                      placeholder="Search here"
-                      ref={searchRef}
-                    />
-                    <CustomButton
-                      caption={"Search"}
-                      onClick={SearchCarrierAction}
-                    />
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
               {user && (
                 <div className="dropdown drp-user">
                   <a
@@ -145,7 +115,7 @@ function TopHeaderBar() {
                           </a>
                         </Link>
                       </li>
-                      -
+
                       <li>
                         <Link
                           href={`/user/user-subscription-list?userId=${user?.UserId}`}
@@ -153,6 +123,36 @@ function TopHeaderBar() {
                         >
                           <a className="dropdown-item" title=" My Subscription">
                             <i className="feather icon-box"></i> My Subscription
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href={`/user/user-rating?userId=${user?.UserId}`}
+                          passHref
+                        >
+                          <a className="dropdown-item" title=" My Ratings">
+                            <i className="feather icon-star"></i> My Ratings
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href={`/user/user-document?userId=${user?.UserId}`}
+                          passHref
+                        >
+                          <a className="dropdown-item" title=" My Documents">
+                            <i className="feather icon-book"></i> My Documents
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href={`/user/user-contract?userId=${user?.UserId}`}
+                          passHref
+                        >
+                          <a className="dropdown-item" title=" My Contract">
+                            <i className="feather icon-sun"></i> My Contract
                           </a>
                         </Link>
                       </li>
@@ -173,6 +173,36 @@ function TopHeaderBar() {
                   </div>
                 </div>
               )}
+            </li>
+            <li>
+              <div className="dropdown">
+                <a className="dropdown-toggle" href="#" data-toggle="dropdown">
+                  <i
+                    className="icon feather icon-search"
+                    title=" Search Carrier Info"
+                  ></i>
+                </a>
+                <div className="dropdown-menu dropdown-menu-right notification">
+                  <div className="noti-head">
+                    <h6 className="d-inline-block m-b-0">
+                      Search Carrier Info
+                    </h6>
+                  </div>
+                  <div className="noti-body">
+                    <input
+                      type="text"
+                      name="txtSearch"
+                      className="form-control border-0 shadow-none"
+                      placeholder="Search here"
+                      ref={searchRef}
+                    />
+                    <CustomButton
+                      caption={"Search"}
+                      onClick={SearchCarrierAction}
+                    />
+                  </div>
+                </div>
+              </div>
             </li>
           </ul>
         </div>

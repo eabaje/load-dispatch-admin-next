@@ -67,6 +67,7 @@ export default class MyDocument extends Document {
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"
             />
             <link rel="stylesheet" href="/assets/css/style.css" />
+            {/* <link rel="stylesheet" href="/assets/css/base.css" /> */}
           </Head>
           <body>
             <Main />
