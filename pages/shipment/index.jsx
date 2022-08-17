@@ -254,6 +254,7 @@ function ListShipment({ query }) {
       ShipmentId: shipmentId,
       CompanyId: companyId,
       UserId: userId,
+      Role: user?.roles,
     };
 
     try {
@@ -325,7 +326,7 @@ function ListShipment({ query }) {
           <div className="card-header alert alert-info">
             <h3>List of Shipments</h3>
 
-            {user.roles === "shipper" && (
+            {user?.roles === "shipper" && (
               <h1 className="my-5">
                 <NextLink href="/shipment/shipment-action/" passHref>
                   <a className="mt-0 btn text-white float-right btn  btn-primary">
@@ -541,7 +542,7 @@ function ListShipment({ query }) {
                     <p>
                       These vehicles are listed on Load Dispatch and are not yet
                       assigned to a carrier.{" "}
-                      {user.roles === "shipper" && (
+                      {user?.roles === "shipper" && (
                         <>
                           Once you have found a carrier to move your vehicle,
                           your next step is to "Assign" it to them so that they

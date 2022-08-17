@@ -32,7 +32,7 @@ const menuItemsDriver = (user) => [
   },
   {
     title: "Find Shipments",
-    path: `/shipment/?assigned=assigned&companyId=${user.CompanyId}`,
+    path: `/shipment/?companyId=${user.CompanyId}`,
     icon: "first fas fa-car",
   },
 
@@ -42,7 +42,7 @@ const menuItemsDriver = (user) => [
     submenu: [
       {
         title: "Update Driver Profile",
-        path: `/driver/driver-action/?userid=${user.UserId}`,
+        path: `/driver/driver-action/?driverId=${user.UserId}`,
       },
       {
         title: " View Assigned Vehicle To Driver",

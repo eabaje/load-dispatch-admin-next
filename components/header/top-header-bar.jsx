@@ -21,6 +21,15 @@ function TopHeaderBar() {
   const logOut = () => {
     signout()(authDispatch);
   };
+
+  // window.onbeforeunload = () => {
+  //   alert("closing tab");
+  //   localStorage.removeItem("user");
+  // };
+  // window.onunload = () => {
+  //   // Clear the local storage
+  //   localStorage.removeItem("user");
+  // };
   const SearchCarrierAction = async () => {
     //  setLoadSpinner(true);
     router.push(`/carrier/?name=${searchRef.current.value}`);
@@ -35,13 +44,13 @@ function TopHeaderBar() {
     //   setLoadSpinner(false);
     // }
   };
-  // useEffect(() => {
-  //   if (isLoggedIn === false) {
-  //     router.push("/");
-  //   }
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
 
-  //   //  setUser(JSON.parse(localStorage.getItem("user")));
-  // }, [isLoggedIn]);
+    //  setUser(JSON.parse(localStorage.getItem("user")));
+  }, [isLoggedIn]);
   console.log("user", user);
   console.log("isLoggedIn", isLoggedIn);
   return (
@@ -146,16 +155,19 @@ function TopHeaderBar() {
                           </a>
                         </Link>
                       </li>
-                      <li>
-                        <Link
-                          href={`/user/user-contract?userId=${user?.UserId}`}
-                          passHref
-                        >
-                          <a className="dropdown-item" title=" My Contract">
-                            <i className="feather icon-sun"></i> My Contract
-                          </a>
-                        </Link>
-                      </li>
+                      {user?.roles === "shipper" && (
+                        <li>
+                          <Link
+                            href={`/user/user-contract?userId=${user?.UserId}`}
+                            passHref
+                          >
+                            <a className="dropdown-item" title=" My Contract">
+                              <i className="feather icon-sun"></i> My Contract
+                            </a>
+                          </Link>
+                        </li>
+                      )}
+
                       <li>
                         <Link href={`/my-messages/${user?.UserId}`} passHref>
                           <a className="dropdown-item" title=" My Messages">

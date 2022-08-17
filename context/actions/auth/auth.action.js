@@ -105,9 +105,8 @@ export const signin2 = (form) => (dispatch) => (onSuccess) => (onError) => {
 };
 
 export const signout = () => (dispatch) => {
-  typeof window !== "undefined" ||
-    localStorage.removeItem("user")(typeof window !== "undefined") ||
-    localStorage.removeItem("token");
+  typeof window !== "undefined" || localStorage.removeItem("user");
+  typeof window !== "undefined" || localStorage.removeItem("token");
   //localStorage.removeItem("user");
   // localStorage.removeItem("token");
   // console.log('user', JSON.parse(localStorage.getItem("user")))

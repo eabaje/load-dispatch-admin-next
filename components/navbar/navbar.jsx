@@ -194,35 +194,35 @@ const NavBar = () => {
                   );
                 })} */}
 
-              {user.isExpired === true &&
+              {user?.isExpired === true &&
                 menuItemsPublic(user).map((menu, index) => {
                   return (
                     <Menu key={index} id={index} items={menu} user={user} />
                   );
                 })}
 
-              {user.roles === "carrier" &&
+              {user?.roles === "carrier" &&
                 menuItemsCarrier(user).map((menu, index) => {
                   return (
                     <Menu key={index} id={index} items={menu} user={user} />
                   );
                 })}
 
-              {user.roles === "driver" &&
+              {user?.roles === "driver" &&
                 menuItemsDriver(user).map((menu, index) => {
                   return (
                     <Menu key={index} id={index} items={menu} user={user} />
                   );
                 })}
 
-              {user.roles === "shipper" &&
+              {user?.roles === "shipper" &&
                 menuItemsShipper(user).map((menu, index) => {
                   return (
                     <Menu key={index} id={index} items={menu} user={user} />
                   );
                 })}
 
-              {user.roles === "admin" &&
+              {user?.roles === "admin" &&
                 menuItemsAdmin(user).map((menu, index) => {
                   return (
                     <Menu key={index} id={index} items={menu} user={user} />

@@ -22,7 +22,7 @@ import dynamic from "next/dynamic";
 import MainLayout from "../../layout/mainLayout";
 import { useRouter } from "next/router";
 
-const AssignShipment = ({ query }) => {
+const DispatchShipment = ({ query }) => {
   const router = useRouter();
   const { shipmentId, companyId, driverId, review, action } = query;
   // const { SubscribeId } = match.params;
@@ -175,10 +175,10 @@ const AssignShipment = ({ query }) => {
     setTimeout(() => {
       toast.dismiss();
       user.roles === "carrier"
-        ? router.reload(`/shipment/?companyId=${user.CompanyId}`)
+        ? router.push(`/shipment/?companyId=${user.CompanyId}`)
         : user.roles === "shipper"
-        ? router.reload(`/shipment/?userId=${user.UserId}`)
-        : router.reload(`/shipment/?companyId=${user.CompanyId}`);
+        ? router.push(`/shipment/?userId=${user.UserId}`)
+        : router.push(`/shipment/?companyId=${user.CompanyId}`);
     }, 5000);
   }
 
@@ -519,7 +519,7 @@ const AssignShipment = ({ query }) => {
                     <div className="col-md-12">
                       <h5 className="alert alert-info">
                         {" "}
-                        Contact Information{" "}
+                        Fill in the information in the form accurately{" "}
                       </h5>
                     </div>
                   </div>
@@ -727,6 +727,25 @@ const AssignShipment = ({ query }) => {
                       </div>
                     </div>
                   )}
+
+                  {action === "dispatch" && (
+                    <div className="form-group row">
+                      <div className="col-md-10">
+                        <button
+                          type="submit"
+                          className="btn  btn-primary"
+                          style={{ float: "right" }}
+                        >
+                          {loading ? (
+                            <i className="fa fa-spinner fa-spin"></i>
+                          ) : (
+                            <i className="feather mr-2 icon-check-circle"></i>
+                          )}{" "}
+                          Assign Shipment To Driver
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </form>
               )}
               {/* {formStep === 1 && <UploadImages refId={shipmentId} />} */}
@@ -746,4 +765,4 @@ export async function getServerSideProps({ query }) {
   };
 }
 
-export default dynamic(() => Promise.resolve(AssignShipment), { ssr: false });
+export default dynamic(() => Promise.resolve(DispatchShipment), { ssr: false });

@@ -13,6 +13,9 @@ import {
   GET_INTERESTS_SUCCESS,
   GET_INTERESTS_REQUEST,
   GET_INTERESTS_FAIL,
+  GET_SHIPMENT_SUCCESS,
+  GET_SHIPMENT_FAIL,
+  GET_SHIPMENT_REQUEST,
 } from "../../constants/actionTypes";
 
 const shipments = (state, { type, payload }) => {
@@ -156,6 +159,37 @@ const shipments = (state, { type, payload }) => {
         ...state,
         Shipments: {
           ...state.Shipments,
+          loading: false,
+          error: payload,
+        },
+      };
+
+    case GET_SHIPMENT_REQUEST:
+      return {
+        ...state,
+        Shipment: {
+          ...state.Shipment,
+          loading: true,
+          error: null,
+        },
+      };
+
+    case GET_SHIPMENT_SUCCESS:
+      return {
+        ...state,
+        Shipment: {
+          ...state.Shipment,
+          loading: false,
+          data: payload,
+          error: null,
+        },
+      };
+
+    case GET_SHIPMENT_FAIL:
+      return {
+        ...state,
+        Shipment: {
+          ...state.Shipment,
           loading: false,
           error: payload,
         },

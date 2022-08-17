@@ -459,7 +459,8 @@ export const columns = (
           </>
         ),
       params?.roles === "shipper" &&
-        row?.AssignShipment?.IsContractSigned === false && (
+        row?.AssignShipment?.IsContractSigned === true &&
+        row?.AssignShipment?.IsContractConfirmed === false && (
           <>
             <div className="col-md-6">
               <button
@@ -492,8 +493,50 @@ export const columns = (
           </>
         ),
 
+      params?.roles === "carrier" &&
+        row?.ShipmentStatus === "Assigned" &&
+        row?.ShipmentDocs &&
+        row?.AssignShipment?.IsContractSigned === false && (
+          <Link
+            href={
+              "/user/user-contract/?shipmentId=" +
+              row.ShipmentId +
+              "&userId=" +
+              params.UserId +
+              "&companyId=" +
+              params.CompanyId +
+              "&action=sign"
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="Check Contract">
+              <i className="first fas fa-eye"></i>Check Contract{" "}
+            </a>
+          </Link>
+        ),
+
       params?.roles === "shipper" &&
-        row?.AssignShipment?.IsContractSigned === true &&
+        //  row?.ShipmentStatus === "Assigned" &&
+        // row?.AssignShipment?.IsContractSigned === false &&
+        row?.ShipmentDocs === null && (
+          <Link
+            href={
+              "/user/user-contract/?shipmentId=" +
+              row.ShipmentId +
+              "&userId=" +
+              row.UserId +
+              "&action=add"
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="Add Contract">
+              <i className="first fas fa-eye"></i>Add Contract{" "}
+            </a>
+          </Link>
+        ),
+
+      params?.roles === "shipper" &&
+        row?.AssignShipment?.IsContractConfirmed === true &&
         row?.AssignShipment?.IsContractAccepted === false && (
           <>
             <div className="col-md-6">
@@ -519,7 +562,7 @@ export const columns = (
                       title="Accept Dispatch Contract"
                       className="first fas fa-check-circle-o"
                     ></i>
-                    Accept Dispatch Contract{" "}
+                    Accept Signed Contract{" "}
                   </>
                 )}
               </button>
@@ -751,7 +794,7 @@ export const columns = (
 
   {
     id: 17,
-    name: "Request For Shipment",
+    name: "Special Instrauction",
     selector: (row) => row.RequestForShipment,
     sortable: true,
     reorder: true,
@@ -800,13 +843,13 @@ export const columns = (
     sortable: true,
     reorder: true,
   },
-  {
-    id: 24,
-    name: "Shipment Docs",
-    selector: (row) => row.ShipmentDocs,
-    sortable: true,
-    reorder: true,
-  },
+  // {
+  //   id: 24,
+  //   name: "Shipment Docs",
+  //   selector: (row) => row.ShipmentDocs,
+  //   sortable: true,
+  //   reorder: true,
+  // },
 
   params?.roles === "admin" &&
     ({
@@ -894,6 +937,26 @@ export const columns = (
           </button>
         </>
       ),
+
+      params?.roles === "shipper" &&
+        //  row?.ShipmentStatus === "Assigned" &&
+        // row?.AssignShipment?.IsContractSigned === false &&
+        row?.ShipmentDocs !== null && (
+          <Link
+            href={
+              "/user/user-contract/?shipmentId=" +
+              row.ShipmentId +
+              "&userId=" +
+              row.UserId +
+              "&action=review"
+            }
+            passHref
+          >
+            <a className="btn btn-outline-primary" title="View your Contract">
+              <i className="first fas fa-edit"></i>View Contract{" "}
+            </a>
+          </Link>
+        ),
 
       params?.roles === "shipper" && row?.ShipmentStatus === "NotAssigned" && (
         <Link

@@ -5,6 +5,9 @@ import {
   GET_SHIPMENTS_FAIL,
   GET_SHIPMENTS_REQUEST,
   GET_SHIPMENTS_SUCCESS,
+  GET_SHIPMENT_FAIL,
+  GET_SHIPMENT_REQUEST,
+  GET_SHIPMENT_SUCCESS,
   EDIT_SHIPMENT_FAIL,
   EDIT_SHIPMENT_REQUEST,
   EDIT_SHIPMENT_SUCCESS,
@@ -38,18 +41,18 @@ export const listShipments = () => (dispatch) => (onSuccess) => (onError) => {
 export const listShipmentsByShipmentId =
   (shipmentId) => (dispatch) => (onSuccess) => (onError) => {
     dispatch({
-      type: GET_SHIPMENTS_REQUEST,
+      type: GET_SHIPMENT_REQUEST,
     });
-    axios
+    axiosInstance()
       .get(`/shipment/findOne/${shipmentId}`)
       .then((res) => {
-        dispatch({ type: GET_SHIPMENTS_SUCCESS, payload: res.data });
+        dispatch({ type: GET_SHIPMENT_SUCCESS, payload: res.data });
         onSuccess(res.data);
       })
 
       .catch((err) => {
         const message = err.response ? err.response.data : CONNECTION_ERROR;
-        dispatch({ type: GET_SHIPMENTS_FAIL, payload: message });
+        dispatch({ type: GET_SHIPMENT_FAIL, payload: message });
         onError(message);
       });
   };
@@ -240,7 +243,7 @@ export const editShipment =
     };
 
     dispatch({ type: EDIT_SHIPMENT_REQUEST });
-
+    console.log("shipmentId", shipmentId);
     axios
       .put(`/shipment/update/${shipmentId}`, form)
       .then((res) => {

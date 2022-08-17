@@ -1059,29 +1059,6 @@ const AddEditShipment = ({ query }) => {
                       {...shipmentform("ShipmentRequestPrice")}
                     />
                   </div>
-
-                  <label className="col-sm-2 col-form-label">
-                    Shipment Status
-                  </label>
-                  <div className="col-md-2">
-                    <select
-                      id="ShipmentStatus"
-                      name="ShipmentStatus"
-                      readOnly={readOnly}
-                      className="form-control"
-                      {...shipmentform("ShipmentStatus", {
-                        required: true,
-                      })}
-                    >
-                      <option selected>Select Status</option>
-
-                      {TRIP_STATUS.map((item) => (
-                        <option key={item.value} value={item.value}>
-                          {item.text}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
                 </div>
 
                 <div className="form-group row">
@@ -1095,7 +1072,7 @@ const AddEditShipment = ({ query }) => {
 
                 <div className="form-group row">
                   <label className="col-form-label col-md-2">
-                    Request For Shipment
+                    Special Instruction
                   </label>
 
                   <div className="col-md-4">
@@ -1103,7 +1080,7 @@ const AddEditShipment = ({ query }) => {
                       name="RequestForShipment"
                       readOnly={readOnly}
                       className="form-control"
-                      placeholder=" State your requirement expectations"
+                      placeholder=" Special Instruction"
                       {...shipmentform("RequestForShipment")}
                     />
                   </div>
