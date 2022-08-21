@@ -1,11 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import { listUserSubscriptions } from "../../context/actions/user/user.action";
+import { useForm, Controller } from "react-hook-form";
+import {
+  listUserSubscriptions,
+  updateCompanyDoc,
+  uploadCompanyDoc,
+} from "../../context/actions/user/user.action";
 import { GlobalContext } from "../../context/Provider";
 import { columns } from "../../datasource/dataColumns/usersubscription";
 import MainLayout from "../../layout/mainLayout";
 import { toast } from "react-toastify";
 
 import dynamic from "next/dynamic";
+import { DOC_TYPE } from "../../constants/enum";
 // import DocumentUpload from "../../components/upload/doc-file-upload";
 
 // import SortIcon from "@mui/icons-material/ArrowDownward";
@@ -13,7 +19,7 @@ import dynamic from "next/dynamic";
 function UserDocument({ query }) {
   // const router = useRouter()
   const { companyId, userId } = query;
-
+  const [docFile, setdocFile] = useState([]);
   const {
     authState: { user },
   } = useContext(GlobalContext);
@@ -24,7 +30,90 @@ function UserDocument({ query }) {
     },
   } = useContext(GlobalContext);
 
+  const {
+    register: documentform,
+    formState: { errors },
+    handleSubmit: handleSubmit,
+    setValue,
+    control,
+  } = useForm();
+
+  const [rowsData, setRowsData] = useState([]);
+
+  const addTableRows = () => {
+    const rowsInput = {
+      DocName: "",
+      DocTitle: "",
+    };
+    setRowsData([...rowsData, rowsInput]);
+  };
+
+  const deleteTableRows = (index) => {
+    const rows = [...rowsData];
+    rows.splice(index, 1);
+    setRowsData(rows);
+  };
+
+  const onChangeDocHandler = async (e) => {
+    setdocFile((docFile) => [...docFile, e.target.files[0]]);
+  };
+
+  const handleChange = (index, evnt) => {
+    const { name, value } = evnt.target;
+    const rowsInput = [...rowsData];
+    rowsInput[index][name] = value;
+    setRowsData(rowsInput);
+  };
+  function onSubmit(formdata, docFile) {
+    console.log("formdata", formdata);
+    return uploadCompanyDocAction(formdata, docFile);
+
+    // return companyId
+    //   ? uploadCompanyDocAction(shipmentId, companyId, userId)
+    //   : updateCompanyDocAction(formdata, companyId);
+  }
+
+  function updateCompanyDocAction(formdata, shipmentId) {
+    updateCompanyDoc(formdata, companyId)(userDispatch)((res) => {
+      if (res) {
+        toast.success("Contract created successfully");
+      }
+      setTimeout(() => {
+        toast.dismiss();
+        router.reload(`/user/?companyId=${user.CompanyId}`);
+      }, 5000);
+    })((error) => {
+      toast.error(error);
+    });
+  }
+
+  const uploadCompanyDocAction = (formdata, docFile) => {
+    //   setLoadSpinner({ loadSigned: true });
+    uploadCompanyDoc(formdata, docFile)(userDispatch)((res) => {
+      if (res) {
+        toast.success("Contract created successfully");
+      }
+      setTimeout(() => {
+        toast.dismiss();
+        router.reload(`/user/?companyId=${user.CompanyId}`);
+      }, 5000);
+    })((error) => {
+      toast.error(error);
+    });
+  };
+
+  function redirectPage() {
+    setTimeout(() => {
+      toast.dismiss();
+      user.roles === "carrier"
+        ? router.reload(`/shipment/?companyId=${user.CompanyId}`)
+        : user.roles === "shipper"
+        ? router.reload(`/shipment/?userId=${user.UserId}`)
+        : router.reload(`/shipment/?companyId=${user.CompanyId}`);
+    }, 5000);
+  }
   useEffect(() => {
+    addTableRows();
     if (data.length === 0) {
       listUserSubscriptions()(userDispatch)((res) => {})((err) => {
         toast.error(err);
@@ -32,7 +121,7 @@ function UserDocument({ query }) {
     }
     // console.log(`loading`, loading);
   }, []);
-  //  console.log(`data`, data);
+  console.log(`doc`, docFile);
   return (
     <MainLayout>
       <div className="col-xl-12">
@@ -44,67 +133,128 @@ function UserDocument({ query }) {
           <div className="card-body table-border-style">
             <p class="lead">
               A Document Packet ("Docpack") is a compilation of your{" "}
-              <strong>U.S. DOT Certification</strong>,{" "}
+              <strong>Certificate of InCoporation</strong>,{" "}
               <strong>Insurance and/or Bond Certificate</strong>,{" "}
               <strong>A Completed W-9 Form</strong>, and Other Licenses (if
-              any). Once you fax us your documents, we securely store them and
+              any).Kindly upload a scanned copy, we securely store them and
               allow you to give either temporary or permanent viewing access at
               your discretion.
             </p>
 
             <hr />
 
-            <h3>Creating and submitting your docpack</h3>
-
-            <ol>
-              <li>
-                <a href="/protected/docpack/coversheet" target="_blank">
-                  Download
-                </a>{" "}
-                & print fax cover sheet
-                <br />
-                <strong>
-                  Please only use the fax cover sheet provided by Load Dispatch.
-                </strong>
-              </li>
-              <li>
-                Print & complete{" "}
-                <a
-                  href="http://www.irs.gov/pub/irs-pdf/fw9.pdf"
-                  target="_blank"
-                >
-                  W-9
-                </a>
-                <br />
-                <strong>
-                  Do not include your social security number on your W-9. Your
-                  docpack will be rejected if you do. Only include your EIN, if
-                  you have one, or do not include your W-9 with your docpack.
-                </strong>
-              </li>
-              <li>
-                Please place your documents in the following order:
-                <ol>
-                  <li>Fax Cover</li>
-                  <li>DOT Certificate or License</li>
-                  <li>Insurance or Bond Certificate</li>
-                  <li>Completed w-9 (w/o instructions)</li>
-                </ol>
-              </li>
-              <li>
-                Fax all documents in the appropriate order to{" "}
-                <strong>(858 408-1835)</strong>
-              </li>
-            </ol>
-
-            <hr />
-
             <p>
-              You will be notified by email as soon as your docpack has been
-              uploaded.
+              Once we are satisfied with you documents as stated ,you will be
+              notified by email .
             </p>
 
             <br />
+            <div class="mb-0">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-group row">
+                  <div className="col-md-12">
+                    <div className="col-md-12 alert alert-info">
+                      <h6>
+                        {" "}
+                        User document List
+                        {/* <a
+                                href="javascript:void()"
+                                className=" right"
+                                onClick={addTableRows}
+                              >
+                                + Add Vehicle
+                              </a> */}
+                        <button
+                          type="button"
+                          className=" btn-outline-primary right"
+                          onClick={addTableRows}
+                        >
+                          + Add Document
+                        </button>
+                      </h6>
+                    </div>
+                  </div>
+                  <input
+                    type="hidden"
+                    name="RefId"
+                    value={companyId}
+                    className="form-control"
+                    {...documentform("RefId")}
+                  />
+                  <input
+                    type="hidden"
+                    name="CompanyId"
+                    value={companyId}
+                    className="form-control"
+                    {...documentform("CompanyId")}
+                  />
+                </div>
+                {rowsData.map((document, index) => (
+                  <>
+                    <div id={index}>
+                      <div className="form-group row">
+                        <div className="col-sm-4">
+                          <select
+                            required="required"
+                            className="form-control"
+                            name={`document[${index}].DocType`}
+                            id={`document[${index}].DocType`}
+                            {...documentform(`document[${index}].DocType`)}
+                          >
+                            <option value="">Choose Document Type</option>
+                            {DOC_TYPE.map((item) => (
+                              <option key={item.value} value={item.value}>
+                                {item.text}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-md-4">
+                          <input
+                            name={`document[${index}].DocTitle`}
+                            className="form-control"
+                            placeholder="Document Title"
+                            {...documentform(`document[${index}].DocTitle`, {
+                              required: true,
+                            })}
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <input
+                            className="form-control"
+                            type="file"
+                            id={`document[${index}].DocName`}
+                            name={`document[${index}].DocName`}
+                            {...documentform(`document[${index}].DocName`)}
+                            onChange={(e) => onChangeDocHandler(e)}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-group row">
+                        <div className="col-md-12 alert alert-info">
+                          {index > 0 && (
+                            <button
+                              type="button"
+                              className="btn btn-outline-danger right"
+                              onClick={() => deleteTableRows(index)}
+                            >
+                              x
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ))}
+
+                <div className="col-md-6">
+                  <button type="submit" className="btn  btn-primary">
+                    Upload
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
 
           {/* <DocumentUpload

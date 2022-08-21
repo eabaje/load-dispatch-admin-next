@@ -147,7 +147,7 @@ function TopHeaderBar() {
                       </li>
                       <li>
                         <Link
-                          href={`/user/user-document?userId=${user?.UserId}`}
+                          href={`/user/user-document?userId=${user?.UserId}&companyId=${user?.CompanyId}`}
                           passHref
                         >
                           <a className="dropdown-item" title=" My Documents">
@@ -158,7 +158,7 @@ function TopHeaderBar() {
                       {user?.roles === "shipper" && (
                         <li>
                           <Link
-                            href={`/user/user-contract?userId=${user?.UserId}`}
+                            href={`/user/user-contract?userId=${user?.UserId}&companyId=${user?.CompanyId}`}
                             passHref
                           >
                             <a className="dropdown-item" title=" My Contract">

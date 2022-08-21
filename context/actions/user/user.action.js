@@ -601,6 +601,81 @@ export const updateCompany =
       });
   };
 
+export const uploadCompanyDoc =
+  (form, docFile) => (dispatch) => (onSuccess) => (onError) => {
+    let data = new FormData();
+
+    data.append("CompanyId", form.CompanyId);
+    data.append("RefId", form.CompanyId);
+
+    // data.append("Email", form.Email);
+    // data.append("Phone", form.Phone);
+    // data.append("DOB", form.DOB);
+    // data.append("Address", form.Address);
+    // data.append("City", form.City);
+    // data.append("Region", form.Region);
+    // data.append("Country", form.Country);
+    // data.append("Licensed", form.Licensed);
+
+    form.document.map((document, index) => {
+      data.append(`document[${index}].DocType`, document.DocType);
+      data.append(`document[${index}].DocTitle`, document.DocTitle);
+    });
+    data.append("file", docFile);
+    // // data.append("filePicUrl", file1);
+    // // data.append("fileLicenseUrl", file2);
+    // if (file1 !== null) data.append("filePicUrl", file1);
+    // if (file2 !== null) data.append("fileLicenseUrl", file2);
+
+    dispatch({ type: CREATE_COMPANY_REQUEST });
+
+    axios
+      .post(`/user/uploadCompanyDoc/`, data)
+      .then((res) => {
+        dispatch({
+          type: CREATE_COMPANY_SUCCESS,
+          payload: res.data,
+        });
+        onSuccess(res.data);
+      })
+
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: CREATE_COMPANY_FAIL, payload: message });
+        onError(message);
+      });
+  };
+
+export const updateCompanyDoc =
+  (form, CompanyId) => (dispatch) => (onSuccess) => (onError) => {
+    // const requestPayload = {
+    //   UserSubscriptionId: form.UserSubscriptionId || "",
+    //   SubscriptionId: form.SubscriptionId || "",
+    //   SubscriptionName: form.SubscriptionName || "",
+    //   UserId: form.UserId || "",
+    //   Active: form.Active ? true : false,
+    //   StartDate: form.StartDate || "",
+    //   EndDate: form.EndDate || "",
+    // };
+
+    dispatch({ type: EDIT_COMPANY_REQUEST });
+
+    axios
+      .put(`/user/updateCompany/${CompanyId}`, form)
+      .then((res) => {
+        dispatch({
+          type: EDIT_COMPANY_SUCCESS,
+          payload: res.data,
+        });
+        onSuccess(res.data);
+      })
+
+      .catch((err) => {
+        const message = err.response ? err.response.data : CONNECTION_ERROR;
+        dispatch({ type: EDIT_COMPANY_FAIL, payload: message });
+        onError(message);
+      });
+  };
 export const PopUpClose = () => (dispatch) => {
   dispatch({ type: POP_UP_CLOSE });
 };

@@ -19,6 +19,11 @@ export const LOAD_UNIT = [
   { value: "Kg", text: "Kg" },
   { value: "Tons", text: "Tons" },
 ];
+export const DOC_TYPE = [
+  { value: "CompanyCertificate", text: "Certificate of InCoporation" },
+  { value: "InsuranceCertificate", text: "Insurance or Bond Certificate" },
+  { value: "Others", text: "Others" },
+];
 
 export const TRIP_STATUS = [
   { value: "NotAssigned", text: "Not Assigned" },
